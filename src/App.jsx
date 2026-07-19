@@ -1265,7 +1265,7 @@ export default function Portfolio() {
                   </div>
                   <p style={{ fontSize: ".98rem", lineHeight: 1.7, color: t.muted }}>{PROFILE.careerGoal}</p>
                 </div>
-                <a href="#" className="btn-p" onClick={e => { e.preventDefault(); alert("CV download coming soon!"); }}>{I.dl} Download CV</a>
+                <a href="/cv.pdf" download="Arosh_Wijesinghe_CV.pdf" className="btn-p">{I.dl} Download CV</a>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                 {[{ l: "University", v: "UoM", e: "🎓", c: "#10b981" }, { l: "Year", v: "2nd Year", e: "📅", c: "#8b5cf6" }, { l: "Focus", v: "ML / AI", e: "🤖", c: "#f97316" }, { l: "Projects", v: `${PROJECTS.length}+`, e: "🚀", c: "#06b6d4" }].map(s => (
