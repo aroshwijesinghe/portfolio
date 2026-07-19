@@ -100,6 +100,14 @@ const SKILLS = [
 
 const PROJECTS = [
   {
+    title: "BulkThreads",
+    desc: "A group buying platform for premium clothing at wholesale prices. Features a React frontend, Python backend, Supabase Auth with JWT, Row Level Security, and comprehensive order management.",
+    tech: ["React", "Python", "Supabase", "SQL"],
+    color: "#7c3aed",
+    link: "https://github.com/aroshwijesinghe/clo-bulk",
+    demoLink: "https://clo-bulk.vercel.app",
+  },
+  {
     title: "Smart Asset Management System",
     desc: "AI-based system predicting product/asset maintenance needs with a prediction dashboard, sensor data visualization, maintenance events tracking, KPI metrics, and an integrated chatbot assistant.",
     tech: ["React", "Python", "ML", "Supabase"],
