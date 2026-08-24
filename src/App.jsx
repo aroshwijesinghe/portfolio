@@ -102,7 +102,7 @@ const PROJECTS = [
   {
     title: "Smart Asset Management System",
     desc: "AI-based system predicting product/asset maintenance needs with a prediction dashboard, sensor data visualization, maintenance events tracking, KPI metrics, and an integrated chatbot assistant.",
-    tech: ["React", "Python", "ML", "Supabase"],
+    tech: ["React", "Python", "ML", "Supabase", "RAG", "Chatbot"],
     color: "#00d4ff",
     links: [
       { label: "Frontend", url: "https://github.com/Dinusha-Ekanayake/PredictiX-Frontend" },
