@@ -112,8 +112,11 @@ const PROJECTS = [
     desc: "AI-based system predicting product/asset maintenance needs with a prediction dashboard, sensor data visualization, maintenance events tracking, KPI metrics, and an integrated chatbot assistant.",
     tech: ["React", "Python", "ML", "Supabase"],
     color: "#00d4ff",
-    link: null,
-    demoLink: null,
+    links: [
+      { label: "Frontend", url: "https://github.com/Dinusha-Ekanayake/PredictiX-Frontend" },
+      { label: "Backend", url: "https://github.com/Dinusha-Ekanayake/PredictiX_Backend" },
+    ],
+    demoLink: "https://predicti-x-frontend.vercel.app/",
   },
   {
     title: "Tummy Boy — Pushup App",
@@ -268,7 +271,7 @@ const LangIcons = {
   matplotlib: (
     <svg viewBox="0 0 128 128" width="20" height="20">
       <rect width="128" height="128" rx="8" fill="#11557C"/>
-      <path fill="#fff" d="M16 100 L40 55 L64 70 L88 35 L112 60" stroke="#fff" strokeWidth="4" fill="none"/>
+      <path d="M16 100 L40 55 L64 70 L88 35 L112 60" stroke="#fff" strokeWidth="4" fill="none"/>
       <circle cx="40" cy="55" r="4" fill="#E24A33"/>
       <circle cx="64" cy="70" r="4" fill="#E24A33"/>
       <circle cx="88" cy="35" r="4" fill="#E24A33"/>
@@ -1339,19 +1342,36 @@ export default function Portfolio() {
                   <div style={{ padding: 32 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}>
                       <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 36, height: 36, borderRadius: 10, background: `${p.color}15`, border: `1px solid ${p.color}30`, color: p.color, fontSize: ".85rem", fontWeight: 600, fontFamily: "'Fira Code',monospace" }}>0{i + 1}</div>
-                      <div style={{ display: "flex", gap: 8 }}>
-                        {p.link && (
-                          <a
-                            href={p.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="proj-link"
-                            style={{ color: p.color, borderColor: `${p.color}44`, background: `${p.color}10` }}
-                            onMouseEnter={e => { e.currentTarget.style.background = `${p.color}25`; e.currentTarget.style.borderColor = `${p.color}88`; e.currentTarget.style.transform = "translateY(-2px)"; }}
-                            onMouseLeave={e => { e.currentTarget.style.background = `${p.color}10`; e.currentTarget.style.borderColor = `${p.color}44`; e.currentTarget.style.transform = ""; }}
-                          >
-                            {I.gh} GitHub
-                          </a>
+                      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "flex-end" }}>
+                        {p.links ? (
+                          p.links.map((l, lIdx) => (
+                            <a
+                              key={lIdx}
+                              href={l.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="proj-link"
+                              style={{ color: p.color, borderColor: `${p.color}44`, background: `${p.color}10` }}
+                              onMouseEnter={e => { e.currentTarget.style.background = `${p.color}25`; e.currentTarget.style.borderColor = `${p.color}88`; e.currentTarget.style.transform = "translateY(-2px)"; }}
+                              onMouseLeave={e => { e.currentTarget.style.background = `${p.color}10`; e.currentTarget.style.borderColor = `${p.color}44`; e.currentTarget.style.transform = ""; }}
+                            >
+                              {l.icon === "ext" ? I.ext : I.gh} {l.label}
+                            </a>
+                          ))
+                        ) : (
+                          p.link && (
+                            <a
+                              href={p.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="proj-link"
+                              style={{ color: p.color, borderColor: `${p.color}44`, background: `${p.color}10` }}
+                              onMouseEnter={e => { e.currentTarget.style.background = `${p.color}25`; e.currentTarget.style.borderColor = `${p.color}88`; e.currentTarget.style.transform = "translateY(-2px)"; }}
+                              onMouseLeave={e => { e.currentTarget.style.background = `${p.color}10`; e.currentTarget.style.borderColor = `${p.color}44`; e.currentTarget.style.transform = ""; }}
+                            >
+                              {I.gh} GitHub
+                            </a>
+                          )
                         )}
                         {p.demoLink && (
                           <a
@@ -1363,10 +1383,10 @@ export default function Portfolio() {
                             onMouseEnter={e => { e.currentTarget.style.background = `${t.accent}25`; e.currentTarget.style.borderColor = `${t.accent}88`; e.currentTarget.style.transform = "translateY(-2px)"; }}
                             onMouseLeave={e => { e.currentTarget.style.background = `${t.accent}10`; e.currentTarget.style.borderColor = `${t.accent}44`; e.currentTarget.style.transform = ""; }}
                           >
-                            {I.ext} {p.demoLink.includes("linkedin.com") ? "LinkedIn" : "Live Demo"}
+                            {I.ext} {p.demoLink.includes("linkedin.com") ? "LinkedIn" : "Live Site"}
                           </a>
                         )}
-                        {!p.link && !p.demoLink && (
+                        {!p.links && !p.link && !p.demoLink && (
                           <span style={{ fontSize: ".78rem", color: t.faint, fontFamily: "'Fira Code',monospace", padding: "8px 0" }}>Private</span>
                         )}
                       </div>
