@@ -119,6 +119,22 @@ const PROJECTS = [
     demoLink: "https://predicti-x-frontend.vercel.app/",
   },
   {
+    title: "RAGLab — VS Code Studio for RAG",
+    subtitle: "VS CODE EXTENSION & LOCAL RAG WORKBENCH",
+    desc: "Interactive GUI Studio for RAG (Retrieval-Augmented Generation) in VS Code. Inspect document metrics, visually tune chunking strategies, simulate vector search, and optimize LLM context budgets—100% locally with zero cloud dependencies.",
+    contributions: [
+      "Visual document profiling & token boundary analysis",
+      "Interactive chunking studio with recursive boundary-aware splitting",
+      "Context budget simulation & lexical density optimization",
+      "Official VS Code Marketplace extension with 100% local processing",
+    ],
+    tech: ["TypeScript", "VS Code API", "React", "RAG", "LLMs", "Vector Search"],
+    color: "#0ea5e9",
+    image: "/projects/raglab.png",
+    link: "https://github.com/aroshwijesinghe/RAGLab",
+    demoLink: "https://marketplace.visualstudio.com/items?itemName=aroshwijesinghe.raglab&ssr=false#review-details",
+  },
+  {
     title: "Timeline Studio",
     subtitle: "INTERACTIVE GOOGLE MAPS TIMELINE & ANALYTICS",
     desc: "Interactive, privacy-first Google Maps Timeline viewer. Replay visited routes with animated playback, GPS breadcrumbs, and travel analytics—100% client-side.",
@@ -1957,7 +1973,7 @@ export default function Portfolio() {
                             onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = `0 6px 20px ${p.color}50`; }}
                             onMouseLeave={e => { e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = "none"; }}
                           >
-                            {I.ext} {p.demoLink.includes("linkedin.com") ? "View on LinkedIn" : "Live Demo"}
+                            {I.ext} {p.demoLink.includes("marketplace.visualstudio.com") ? "VS Code Marketplace" : p.demoLink.includes("linkedin.com") ? "View on LinkedIn" : "Live Demo"}
                           </a>
                         )}
                       </div>
