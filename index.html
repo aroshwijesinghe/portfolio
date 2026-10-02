@@ -2,7 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" id="viewport-meta" content="width=1280, initial-scale=0.32, minimum-scale=0.2, maximum-scale=3.0, user-scalable=yes">
+    <script>
+      (function() {
+        try {
+          var pref = localStorage.getItem("preferred_view_mode");
+          var meta = document.getElementById("viewport-meta");
+          if (pref === "mobile" && meta) {
+            meta.setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes");
+          }
+        } catch(e) {}
+      })();
+    </script>
     <meta name="description" content="Personal portfolio of Arosh Nimantha Wijesinghe - AI/ML Engineer">
     <meta name="author" content="Arosh Nimantha Wijesinghe">
     <title>Arosh Nimantha - Portfolio</title>

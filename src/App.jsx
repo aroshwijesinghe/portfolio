@@ -1108,6 +1108,35 @@ export default function Portfolio() {
   const [hoveredProject, setHoveredProject] = useState(null);
   const [activeGalleryImage, setActiveGalleryImage] = useState({});
 
+  /* desktop mode preference: default true on mobile/tablets, can be toggled manually */
+  const [isDesktopMode, setIsDesktopMode] = useState(() => {
+    const saved = localStorage.getItem("preferred_view_mode");
+    if (saved !== null) return saved === "desktop";
+    return true; // Default to desktop mode as requested
+  });
+
+  useEffect(() => {
+    let meta = document.querySelector('meta[name="viewport"]');
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.name = "viewport";
+      document.head.appendChild(meta);
+    }
+    if (isDesktopMode) {
+      meta.setAttribute("content", "width=1280, initial-scale=0.32, minimum-scale=0.2, maximum-scale=3.0, user-scalable=yes");
+    } else {
+      meta.setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes");
+    }
+  }, [isDesktopMode]);
+
+  const toggleDesktopMode = () => {
+    setIsDesktopMode(prev => {
+      const next = !prev;
+      localStorage.setItem("preferred_view_mode", next ? "desktop" : "mobile");
+      return next;
+    });
+  };
+
   /* smooth scroll & hover-intent debouncing to prevent card stutter during active scrolling */
   const hoverTimeoutRef = useRef(null);
   const isScrollingRef = useRef(false);
@@ -1489,11 +1518,67 @@ export default function Portfolio() {
               {navs.map(n => <button key={n.id} className={`nl ${active === n.id ? "on" : ""}`} onClick={() => goTo(n.id)}>{n.l}</button>)}
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              {/* Desktop Mode Toggle Button */}
+              <button
+                onClick={toggleDesktopMode}
+                title={isDesktopMode ? "Desktop View is Active (Click to switch to Mobile view)" : "Mobile View is Active (Click to switch to Desktop view)"}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  padding: "6px 12px",
+                  borderRadius: 20,
+                  fontSize: ".75rem",
+                  fontFamily: "'Fira Code', monospace",
+                  fontWeight: 600,
+                  background: isDesktopMode ? `${t.accent}20` : t.glass,
+                  border: `1px solid ${isDesktopMode ? t.accent : t.gBorderS}`,
+                  color: isDesktopMode ? t.accent : t.muted,
+                  cursor: "pointer",
+                  transition: "all .3s ease",
+                }}
+              >
+                {isDesktopMode ? (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                    <line x1="8" y1="21" x2="16" y2="21"/>
+                    <line x1="12" y1="17" x2="12" y2="21"/>
+                  </svg>
+                ) : (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                    <line x1="12" y1="18" x2="12.01" y2="18"/>
+                  </svg>
+                )}
+                <span>{isDesktopMode ? "DESKTOP" : "MOBILE"}</span>
+              </button>
+
               <button className="mob-btn" onClick={() => setMenu(!menuOpen)} style={{ background: "none", border: "none", color: t.text, cursor: "pointer", display: "none", alignItems: "center" }}>{menuOpen ? I.close : I.menu}</button>
             </div>
           </div>
           {menuOpen && <div className="mob-menu" style={{ position: "absolute", top: "100%", left: 0, right: 0, padding: "20px 24px", display: "flex", flexDirection: "column", gap: 16, background: t.navBg, backdropFilter: "blur(30px)", borderBottom: `1px solid ${t.gBorder}` }}>
             {navs.map(n => <button key={n.id} className="nl" onClick={() => goTo(n.id)} style={{ textAlign: "left", fontSize: "1.1rem" }}>{n.l}</button>)}
+            <button
+              onClick={() => { toggleDesktopMode(); setMenu(false); }}
+              style={{
+                alignSelf: "flex-start",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "8px 16px",
+                borderRadius: 20,
+                fontSize: ".82rem",
+                fontFamily: "'Fira Code', monospace",
+                fontWeight: 600,
+                background: isDesktopMode ? `${t.accent}20` : t.glass,
+                border: `1px solid ${isDesktopMode ? t.accent : t.gBorderS}`,
+                color: isDesktopMode ? t.accent : t.muted,
+                cursor: "pointer",
+                marginTop: 6,
+              }}
+            >
+              {isDesktopMode ? "Switch to Mobile View" : "Switch to Desktop View"}
+            </button>
           </div>}
         </nav>
 
