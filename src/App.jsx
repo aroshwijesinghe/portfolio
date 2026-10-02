@@ -1220,6 +1220,16 @@ export default function Portfolio() {
         @media(max-width:600px){.proj-contrib-grid{grid-template-columns:1fr !important}}
         @media(max-width:768px){.hero-grid{flex-direction:column-reverse !important;text-align:center}.hero-btns{justify-content:center !important}.pgrid{grid-template-columns:1fr !important}.sgrid{grid-template-columns:1fr !important}.agrid{grid-template-columns:1fr !important}.cgrid{grid-template-columns:1fr !important}.nav-d{display:none !important}.mob-btn{display:flex !important}.htitle{font-size:2.2rem !important}.stitle{font-size:2rem !important}.hero-portrait-wrap{width:330px !important;max-width:92vw !important;margin:0 auto 16px !important}.hero-portrait-img{max-height:480px !important}.hero-badge-hide-mob{display:none !important}.srow{justify-content:center !important}}
         @media(min-width:769px){.mob-btn{display:none !important}.mob-menu{display:none !important}}
+        @keyframes tasselSway{0%,100%{transform:rotate(0deg)}50%{transform:rotate(14deg)}}
+        @keyframes flamePulse{0%,100%{transform:scaleY(1);opacity:.85}50%{transform:scaleY(1.35);opacity:1}}
+        @keyframes eyeGlow{0%,100%{opacity:.75;filter:drop-shadow(0 0 2px #fdba74)}50%{opacity:1;filter:drop-shadow(0 0 6px #fdba74)}}
+        @keyframes dotPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
+        .stat-anim-tassel{transform-origin:38px 20px;animation:tasselSway 2.5s ease-in-out infinite}
+        .stat-anim-flame{transform-origin:24px 34px;animation:flamePulse .55s ease-in-out infinite alternate}
+        .stat-anim-eye{animation:eyeGlow 2.4s ease-in-out infinite}
+        .stat-anim-pulse{transform-origin:24px 5px;animation:dotPulse 1.8s ease-in-out infinite}
+        .stat-icon-wrap{transition:transform .3s ease;display:inline-flex;align-items:center;justify-content:center}
+        .stat-icon-wrap:hover{transform:translateY(-2px) scale(1.12)}
       `}</style>
       <style>{`:root{--icon-nextjs-inner:${t.nextInner}}`}</style>
 
@@ -1569,7 +1579,9 @@ export default function Portfolio() {
                     fontWeight: 600,
                     color: t.text,
                   }}>
-                    <span style={{ color: t.accent }}>⚡</span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill={t.accent} style={{ filter: `drop-shadow(0 0 6px ${t.accent})`, flexShrink: 0 }}>
+                      <path d="M13 2 L3 14 H12 L11 22 L21 10 H12 L13 2 Z"/>
+                    </svg>
                     Full-Stack &amp; AI Engineer
                   </div>
 
@@ -1626,13 +1638,111 @@ export default function Portfolio() {
                 <a href="/cv.pdf" download="Arosh_Wijesinghe_CV.pdf" className="btn-p">{I.dl} Download CV</a>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-                {[{ l: "University", v: "UoM", e: "🎓", c: "#10b981" }, { l: "Year", v: "3rd Year", e: "📅", c: "#8b5cf6" }, { l: "Focus", v: "ML / AI", e: "🤖", c: "#f97316" }, { l: "Projects", v: `${PROJECTS.length}+`, e: "🚀", c: "#06b6d4" }].map(s => (
-                  <div key={s.l} style={{ background: t.bgAlt, border: `2px solid ${t.gBorder}`, borderTop: `3px solid ${s.c}`, backdropFilter: "blur(20px)", borderRadius: 16, padding: 24, textAlign: "center", transition: "all .3s", cursor: "pointer" }}
+                {[
+                  {
+                    l: "University",
+                    v: "UoM",
+                    c: "#10b981",
+                    icon: (
+                      <div className="stat-icon-wrap" style={{ width: 44, height: 44, borderRadius: 12, background: "#10b98118", border: "1px solid #10b98135", marginBottom: 8 }}>
+                        <svg width="30" height="30" viewBox="0 0 48 48" fill="none">
+                          <defs>
+                            <linearGradient id="gradUoM" x1="0%" y1="0%" x2="100%" y2="100%">
+                              <stop offset="0%" stopColor="#34d399"/>
+                              <stop offset="100%" stopColor="#059669"/>
+                            </linearGradient>
+                          </defs>
+                          <polygon points="24,8 44,18 24,28 4,18" fill="url(#gradUoM)"/>
+                          <path d="M12 23.5 V33 C12 37 24 41 24 41 C24 41 36 37 36 33 V23.5" fill="#047857" opacity="0.9"/>
+                          <path d="M38 20.5 V32" stroke="#6ee7b7" strokeWidth="2.5" strokeLinecap="round" className="stat-anim-tassel"/>
+                          <circle cx="38" cy="33" r="2.5" fill="#a7f3d0"/>
+                          <circle cx="24" cy="18" r="2" fill="#fff"/>
+                        </svg>
+                      </div>
+                    ),
+                  },
+                  {
+                    l: "Year",
+                    v: "3rd Year",
+                    c: "#8b5cf6",
+                    icon: (
+                      <div className="stat-icon-wrap" style={{ width: 44, height: 44, borderRadius: 12, background: "#8b5cf618", border: "1px solid #8b5cf635", marginBottom: 8 }}>
+                        <svg width="30" height="30" viewBox="0 0 48 48" fill="none">
+                          <defs>
+                            <linearGradient id="gradCal" x1="0%" y1="0%" x2="100%" y2="100%">
+                              <stop offset="0%" stopColor="#a78bfa"/>
+                              <stop offset="100%" stopColor="#7c3aed"/>
+                            </linearGradient>
+                          </defs>
+                          <rect x="7" y="11" width="34" height="31" rx="8" fill="#1e1b4b" stroke="#8b5cf6" strokeWidth="1.8"/>
+                          <path d="M7 19 H41 V11 C41 7.5 38.5 7 35 7 H13 C9.5 7 7 7.5 7 11 Z" fill="url(#gradCal)"/>
+                          <line x1="15" y1="4" x2="15" y2="10" stroke="#c4b5fd" strokeWidth="3" strokeLinecap="round"/>
+                          <line x1="33" y1="4" x2="33" y2="10" stroke="#c4b5fd" strokeWidth="3" strokeLinecap="round"/>
+                          <text x="24" y="34" textAnchor="middle" fill="#c4b5fd" fontSize="13" fontWeight="800" fontFamily="'Fira Code', monospace">3rd</text>
+                        </svg>
+                      </div>
+                    ),
+                  },
+                  {
+                    l: "Focus",
+                    v: "ML / AI",
+                    c: "#f97316",
+                    icon: (
+                      <div className="stat-icon-wrap" style={{ width: 44, height: 44, borderRadius: 12, background: "#f9731618", border: "1px solid #f9731635", marginBottom: 8 }}>
+                        <svg width="30" height="30" viewBox="0 0 48 48" fill="none">
+                          <defs>
+                            <linearGradient id="gradAi" x1="0%" y1="0%" x2="100%" y2="100%">
+                              <stop offset="0%" stopColor="#fb923c"/>
+                              <stop offset="100%" stopColor="#ea580c"/>
+                            </linearGradient>
+                          </defs>
+                          <rect x="8" y="14" width="32" height="26" rx="8" fill="#271506" stroke="#f97316" strokeWidth="1.8"/>
+                          <line x1="24" y1="6" x2="24" y2="14" stroke="#fb923c" strokeWidth="2.5"/>
+                          <circle cx="24" cy="5" r="3" fill="#fdba74" className="stat-anim-pulse"/>
+                          <rect x="14" y="22" width="6" height="5" rx="2" fill="#fdba74" className="stat-anim-eye"/>
+                          <rect x="28" y="22" width="6" height="5" rx="2" fill="#fdba74" className="stat-anim-eye"/>
+                          <path d="M16 33 H32" stroke="#ea580c" strokeWidth="2" strokeLinecap="round" strokeDasharray="2 3"/>
+                          <rect x="4" y="22" width="4" height="8" rx="2" fill="#f97316"/>
+                          <rect x="40" y="22" width="4" height="8" rx="2" fill="#f97316"/>
+                        </svg>
+                      </div>
+                    ),
+                  },
+                  {
+                    l: "Projects",
+                    v: `${PROJECTS.length}+`,
+                    c: "#06b6d4",
+                    icon: (
+                      <div className="stat-icon-wrap" style={{ width: 44, height: 44, borderRadius: 12, background: "#06b6d418", border: "1px solid #06b6d435", marginBottom: 8 }}>
+                        <svg width="30" height="30" viewBox="0 0 48 48" fill="none">
+                          <defs>
+                            <linearGradient id="gradRocket" x1="0%" y1="0%" x2="100%" y2="100%">
+                              <stop offset="0%" stopColor="#22d3ee"/>
+                              <stop offset="100%" stopColor="#0891b2"/>
+                            </linearGradient>
+                            <linearGradient id="gradFlame" x1="0%" y1="0%" x2="0%" y2="100%">
+                              <stop offset="0%" stopColor="#fef08a"/>
+                              <stop offset="100%" stopColor="#f97316"/>
+                            </linearGradient>
+                          </defs>
+                          <g transform="rotate(-45 24 24)">
+                            <path d="M24 6 C30 14 31 28 31 34 L17 34 C17 28 18 14 24 6 Z" fill="url(#gradRocket)"/>
+                            <circle cx="24" cy="20" r="3.5" fill="#083344" stroke="#a5f3fc" strokeWidth="1.5"/>
+                            <path d="M17 28 L11 34 L17 34 Z" fill="#0e7490"/>
+                            <path d="M31 28 L37 34 L31 34 Z" fill="#0e7490"/>
+                            <path d="M20 34 Q24 43 28 34 Z" fill="url(#gradFlame)" className="stat-anim-flame"/>
+                          </g>
+                        </svg>
+                      </div>
+                    ),
+                  },
+                ].map(s => (
+                  <div key={s.l} style={{ background: t.bgAlt, border: `2px solid ${t.gBorder}`, borderTop: `3px solid ${s.c}`, backdropFilter: "blur(20px)", borderRadius: 16, padding: "20px 16px", textAlign: "center", transition: "all .3s", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center" }}
                     onMouseEnter={e => { e.currentTarget.style.borderColor = s.c; e.currentTarget.style.boxShadow = `0 0 25px ${s.c}40, inset 0 0 15px ${s.c}15`; }}
                     onMouseLeave={e => { e.currentTarget.style.borderColor = t.gBorder; e.currentTarget.style.boxShadow = "none"; }}>
-                    <div style={{ fontSize: "1.4rem", marginBottom: 4 }}>{s.e}</div>
-                    <div style={{ fontSize: "1.5rem", fontWeight: 700, color: t.accent, fontFamily: "'Fira Code',monospace" }}>{s.v}</div>
-                    <div style={{ fontSize: ".85rem", color: t.faint, marginTop: 4 }}>{s.l}</div>
+                    {s.icon}
+                    <div style={{ fontSize: "1.45rem", fontWeight: 700, color: t.accent, fontFamily: "'Fira Code',monospace" }}>{s.v}</div>
+                    <div style={{ fontSize: ".82rem", color: t.faint, marginTop: 4 }}>{s.l}</div>
                   </div>
                 ))}
               </div>
@@ -1776,8 +1886,12 @@ export default function Portfolio() {
                                       background: `radial-gradient(circle at 50% 50%, ${p.color}20 0%, ${t.bgAlt} 80%)`,
                                     }}
                                   >
-                                    <div style={{ width: 56, height: 56, borderRadius: 16, background: `${p.color}20`, border: `1.5px dashed ${p.color}60`, display: "flex", alignItems: "center", justifyContent: "center", color: p.color, fontSize: "1.6rem" }}>
-                                      🖼️
+                                    <div style={{ width: 56, height: 56, borderRadius: 16, background: `${p.color}20`, border: `1.5px dashed ${p.color}60`, display: "flex", alignItems: "center", justifyContent: "center", color: p.color }}>
+                                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                                        <polyline points="21 15 16 10 5 21"/>
+                                      </svg>
                                     </div>
                                     <span style={{ fontSize: ".85rem", color: t.faint, fontFamily: "'Fira Code',monospace" }}>
                                       Preview Coming Soon
@@ -1847,7 +1961,11 @@ export default function Portfolio() {
                                       zIndex: 7,
                                     }}
                                   >
-                                    🔍 Click to Enlarge
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                                      <circle cx="11" cy="11" r="8"/>
+                                      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                    </svg>
+                                    <span>Click to Enlarge</span>
                                   </div>
                                 </>
                               ) : (
@@ -1863,8 +1981,12 @@ export default function Portfolio() {
                                 background: `radial-gradient(circle at 50% 50%, ${p.color}20 0%, ${t.bgAlt} 80%)`,
                               }}
                             >
-                              <div style={{ width: 56, height: 56, borderRadius: 16, background: `${p.color}20`, border: `1.5px dashed ${p.color}60`, display: "flex", alignItems: "center", justifyContent: "center", color: p.color, fontSize: "1.6rem" }}>
-                                🖼️
+                              <div style={{ width: 56, height: 56, borderRadius: 16, background: `${p.color}20`, border: `1.5px dashed ${p.color}60`, display: "flex", alignItems: "center", justifyContent: "center", color: p.color }}>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                                  <polyline points="21 15 16 10 5 21"/>
+                                </svg>
                               </div>
                               <span style={{ fontSize: ".85rem", color: t.faint, fontFamily: "'Fira Code',monospace" }}>
                                 Preview Coming Soon
@@ -2002,8 +2124,12 @@ export default function Portfolio() {
                               style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                             />
                           ) : (
-                            <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: p.color, fontSize: "1.4rem" }}>
-                              🖼️
+                            <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: p.color }}>
+                              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                <polyline points="21 15 16 10 5 21"/>
+                              </svg>
                             </div>
                           )}
                         </div>
@@ -2159,7 +2285,11 @@ export default function Portfolio() {
                 onMouseLeave={e => { e.currentTarget.style.borderColor = `${t.accent}30`; e.currentTarget.style.boxShadow = "none"; }}>
                 {sent ? (
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100%", gap: 16, textAlign: "center" }}>
-                    <div style={{ fontSize: "3rem" }}>✅</div>
+                    <div style={{ width: 64, height: 64, borderRadius: "50%", background: `${t.accent}18`, border: `2px solid ${t.accent}`, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 0 30px ${t.accent}35` }}>
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={t.accent} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </div>
                     <p style={{ color: t.accent, fontWeight: 600, fontSize: "1.1rem" }}>Message sent!</p>
                     <p style={{ color: t.muted, fontSize: ".9rem" }}>Your email client opened. I'll get back to you soon.</p>
                   </div>
