@@ -100,13 +100,14 @@ const SKILLS = [
 
 const PROJECTS = [
   {
-    title: "Smart Asset Management System",
+    title: "PredictiX — AI-Powered Asset Management",
     desc: "AI-based system predicting product/asset maintenance needs with a prediction dashboard, sensor data visualization, maintenance events tracking, KPI metrics, and an integrated chatbot assistant.",
     tech: ["React", "Python", "ML", "Supabase", "RAG", "Chatbot"],
     color: "#00d4ff",
+    image: "/projects/smart-asset.png",
     links: [
-      { label: "Frontend", url: "https://github.com/Dinusha-Ekanayake/PredictiX-Frontend" },
-      { label: "Backend", url: "https://github.com/Dinusha-Ekanayake/PredictiX_Backend" },
+      { label: "Frontend", url: "https://github.com/aroshwijesinghe/PredictiX_Frontend" },
+      { label: "Backend", url: "https://github.com/aroshwijesinghe/PredictiX-Backend" },
     ],
     demoLink: "https://predicti-x-frontend.vercel.app/",
   },
@@ -115,6 +116,7 @@ const PROJECTS = [
     desc: "A group buying platform for premium clothing at wholesale prices. Features a React frontend, Python backend, Supabase Auth with JWT, Row Level Security, and comprehensive order management.",
     tech: ["React", "Python", "Supabase", "SQL"],
     color: "#7c3aed",
+    image: "/projects/bulkthreads.png",
     link: "https://github.com/aroshwijesinghe/clo-bulk",
     demoLink: "https://clo-bulk.vercel.app",
   },
@@ -123,6 +125,7 @@ const PROJECTS = [
     desc: "Fitness tracking mobile application featuring workout tracking, rep counting, and detailed progress analytics with visual charts to help users stay consistent.",
     tech: ["Mobile", "Fitness", "Analytics"],
     color: "#a855f7",
+    image: "/projects/tummy-boy.png",
     link: "https://github.com/aroshwijesinghe/Tummy_boy",
     demoLink: null,
   },
@@ -131,6 +134,7 @@ const PROJECTS = [
     desc: "Finance and productivity mobile application helping users manage budgets, track expenses, balance income, and build better financial habits.",
     tech: ["Mobile", "Finance", "Productivity"],
     color: "#22c55e",
+    image: "/projects/money-balancing.png",
     link: "https://github.com/aroshwijesinghe/money-balancing",
     demoLink: null,
   },
@@ -139,6 +143,7 @@ const PROJECTS = [
     desc: "This very website — a modern, responsive portfolio built with React featuring glassmorphism, smooth animations, dark/light mode, and futuristic aesthetics.",
     tech: ["React", "Tailwind", "Framer Motion"],
     color: "#f59e0b",
+    image: "/projects/portfolio.png",
     link: "https://github.com/aroshwijesinghe/portfoilo",
     demoLink: null,
   },
@@ -147,6 +152,7 @@ const PROJECTS = [
     desc: "Co-founded a technology company focused on delivering innovative software solutions and AI-driven products. Leading strategic direction, product development, and building a team to create real-world digital impact.",
     tech: ["Startup", "AI", "Software", "Co-Founder"],
     color: "#6366f1",
+    image: "/projects/advance-loop.png",
     link: null,
     demoLink: "https://www.linkedin.com/company/advance-loop-solution/?viewAsMember=true",
   },
@@ -155,6 +161,7 @@ const PROJECTS = [
     desc: "Hardware + AI university project (CM-1900 Intelligent Machine) built as an AI student at University of Moratuwa. A smart chair that uses sensors and machine learning to analyse the user's sitting posture in real time and provide actionable feedback.",
     tech: ["Hardware", "AI", "Sensors", "ML", "IoT"],
     color: "#f97316",
+    image: "/projects/smart-chair.png",
     link: null,
     demoLink: "https://www.linkedin.com/feed/update/urn:li:activity:7387849804007206912/",
   },
@@ -1002,6 +1009,7 @@ export default function Portfolio() {
 
   /* contact modal state */
   const [contactModal, setContactModal] = useState(null); // "email" | "phone" | null
+  const [previewModal, setPreviewModal] = useState(null); // { image, title, color, demoLink, link }
   const [copied, setCopied] = useState(false);
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
@@ -1116,6 +1124,10 @@ export default function Portfolio() {
         .btn-p{background:linear-gradient(135deg,${t.accent},${isDark?"#0099cc":"#005fa3"});color:${isDark?"#000":"#fff"};font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;padding:12px 28px;border:none;border-radius:50px;cursor:pointer;font-size:.95rem;transition:all .3s;display:inline-flex;align-items:center;gap:8px;text-decoration:none}.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 30px ${t.accent}40}
         .btn-o{background:transparent;color:${t.accent};font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;padding:12px 28px;border:1px solid ${t.accent}66;border-radius:50px;cursor:pointer;font-size:.95rem;transition:all .3s;display:inline-flex;align-items:center;gap:8px;text-decoration:none}.btn-o:hover{background:${t.accent}18;border-color:${t.accent};transform:translateY(-2px)}
         .pcard{transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s}.pcard:hover{transform:translateY(-8px);box-shadow:0 20px 60px ${t.shadow}}
+        .pcard-img{transition:transform .5s cubic-bezier(.16,1,.3,1)}
+        .pcard:hover .pcard-img{transform:scale(1.05)}
+        .preview-zoom-btn{transition:all .3s ease}
+        .pcard:hover .preview-zoom-btn{opacity:1 !important}
         .stag{transition:all .3s}.stag:hover{background:${t.accent}18 !important;border-color:${t.accent}55 !important;transform:translateY(-2px)}
         .nl{position:relative;color:${t.muted};text-decoration:none;font-size:.9rem;font-weight:400;letter-spacing:.02em;transition:color .3s;cursor:pointer;background:none;border:none;font-family:'Plus Jakarta Sans',sans-serif;padding:4px 0}.nl:hover,.nl.on{color:${t.text}}.nl.on::after{content:'';position:absolute;bottom:-2px;left:0;width:100%;height:2px;background:${t.accent};border-radius:1px}
         input,textarea{width:100%;background:${t.inputBg};border:1px solid ${t.inputB};border-radius:12px;padding:14px 18px;color:${t.text};font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;transition:border-color .3s,box-shadow .3s;outline:none}input:focus,textarea:focus{border-color:${t.accent}80;box-shadow:0 0 20px ${t.accent}15}input::placeholder,textarea::placeholder{color:${t.faint}}textarea{resize:vertical;min-height:120px}
@@ -1186,6 +1198,122 @@ export default function Portfolio() {
           </div>
         );
       })()}
+
+      {/* ── PROJECT PREVIEW LIGHTBOX MODAL ── */}
+      {previewModal && (
+        <div
+          onClick={() => setPreviewModal(null)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(0,0,0,.85)",
+            backdropFilter: "blur(12px)",
+            padding: 24,
+            animation: "fadeIn .2s ease",
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: t.bgAlt,
+              border: `2px solid ${previewModal.color}`,
+              borderRadius: 24,
+              maxWidth: 900,
+              width: "100%",
+              overflow: "hidden",
+              boxShadow: `0 0 50px ${previewModal.color}40, 0 30px 80px rgba(0,0,0,.8)`,
+              position: "relative",
+              animation: "slideUp .25s cubic-bezier(.16,1,.3,1)",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "18px 24px",
+                borderBottom: `1px solid ${t.gBorder}`,
+                background: t.bgAlt,
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <div style={{ width: 10, height: 10, borderRadius: "50%", background: previewModal.color }} />
+                <span style={{ fontWeight: 600, fontSize: "1.1rem", color: t.text }}>{previewModal.title}</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                {(previewModal.demoLink || previewModal.link) && (
+                  <a
+                    href={previewModal.demoLink || previewModal.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      padding: "6px 14px",
+                      borderRadius: 20,
+                      background: `${previewModal.color}20`,
+                      border: `1px solid ${previewModal.color}60`,
+                      color: previewModal.color,
+                      fontSize: ".82rem",
+                      textDecoration: "none",
+                      fontFamily: "'Fira Code',monospace",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 6,
+                    }}
+                  >
+                    {I.ext} Open Link
+                  </a>
+                )}
+                <button
+                  onClick={() => setPreviewModal(null)}
+                  style={{
+                    background: t.glass,
+                    border: `1px solid ${t.gBorder}`,
+                    borderRadius: "50%",
+                    width: 34,
+                    height: 34,
+                    cursor: "pointer",
+                    color: t.muted,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "1.1rem",
+                    lineHeight: 1,
+                  }}
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+            <div
+              style={{
+                maxHeight: "75vh",
+                overflow: "hidden",
+                background: isDark ? "#06080d" : "#f1f5f9",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: 12,
+              }}
+            >
+              <img
+                src={previewModal.image}
+                alt={previewModal.title}
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "70vh",
+                  objectFit: "contain",
+                  borderRadius: 12,
+                  display: "block",
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       <div style={{ position: "relative", minHeight: "100vh" }}>
         <InteractiveBg dark={isDark} />
@@ -1335,11 +1463,154 @@ export default function Portfolio() {
             <div style={{ width: 60, height: 3, background: `linear-gradient(90deg,${t.accent},transparent)`, borderRadius: 2, marginBottom: 48 }} />
             <div className="pgrid" style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 24 }}>
               {PROJECTS.map((p, i) => (
-                <div key={i} className="pcard glow-border" style={{ background: t.bgAlt, border: `2px solid ${t.gBorder}`, borderTop: `3px solid ${p.color}`, backdropFilter: "blur(20px)", borderRadius: 20, overflow: "hidden", position: "relative", transition: "all .3s" }}
+                <div key={i} className="pcard glow-border" style={{ background: t.bgAlt, border: `2px solid ${t.gBorder}`, borderTop: `3px solid ${p.color}`, backdropFilter: "blur(20px)", borderRadius: 20, overflow: "hidden", position: "relative", transition: "all .3s", display: "flex", flexDirection: "column" }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = p.color; e.currentTarget.style.boxShadow = `0 0 30px ${p.color}40, inset 0 0 20px ${p.color}15`; }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = t.gBorder; e.currentTarget.style.boxShadow = "none"; }}>
 
-                  <div style={{ padding: 32 }}>
+                  {/* Project Image Preview */}
+                  <div
+                    style={{
+                      position: "relative",
+                      width: "100%",
+                      height: 200,
+                      overflow: "hidden",
+                      background: `linear-gradient(180deg, ${p.color}14 0%, ${t.bgAlt} 100%)`,
+                      borderBottom: `1px solid ${t.gBorder}`,
+                      cursor: p.image ? "pointer" : "default",
+                    }}
+                    onClick={() => {
+                      if (p.image) setPreviewModal({ image: p.image, title: p.title, color: p.color, demoLink: p.demoLink, link: p.link || (p.links && p.links[0]?.url) });
+                    }}
+                  >
+                    {p.image ? (
+                      <>
+                        <img
+                          src={p.image}
+                          alt={p.title}
+                          className="pcard-img"
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                            display: "block",
+                          }}
+                          onError={(e) => {
+                            e.currentTarget.style.display = "none";
+                            if (e.currentTarget.nextElementSibling) {
+                              e.currentTarget.nextElementSibling.style.display = "flex";
+                            }
+                          }}
+                        />
+                        <div
+                          style={{
+                            display: "none",
+                            position: "absolute",
+                            inset: 0,
+                            alignItems: "center",
+                            justifyContent: "center",
+                            flexDirection: "column",
+                            gap: 10,
+                            background: `radial-gradient(circle at 50% 50%, ${p.color}20 0%, ${t.bgAlt} 80%)`,
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: 48,
+                              height: 48,
+                              borderRadius: 12,
+                              background: `${p.color}20`,
+                              border: `1.5px dashed ${p.color}60`,
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              color: p.color,
+                              fontSize: "1.3rem",
+                            }}
+                          >
+                            🖼️
+                          </div>
+                          <span style={{ fontSize: ".8rem", color: t.faint, fontFamily: "'Fira Code',monospace" }}>
+                            Preview Coming Soon
+                          </span>
+                        </div>
+                      </>
+                    ) : (
+                      <div
+                        style={{
+                          position: "absolute",
+                          inset: 0,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexDirection: "column",
+                          gap: 10,
+                          background: `radial-gradient(circle at 50% 50%, ${p.color}20 0%, ${t.bgAlt} 80%)`,
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: 48,
+                            height: 48,
+                            borderRadius: 12,
+                            background: `${p.color}20`,
+                            border: `1.5px dashed ${p.color}60`,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            color: p.color,
+                            fontSize: "1.3rem",
+                          }}
+                        >
+                          🖼️
+                        </div>
+                        <span style={{ fontSize: ".8rem", color: t.faint, fontFamily: "'Fira Code',monospace" }}>
+                          Preview Coming Soon
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Gradient fade overlay at bottom */}
+                    <div
+                      style={{
+                        position: "absolute",
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        height: 50,
+                        background: `linear-gradient(to top, ${t.bgAlt} 0%, transparent 100%)`,
+                        pointerEvents: "none",
+                      }}
+                    />
+
+                    {/* Hover badge to indicate preview/click */}
+                    {p.image && (
+                      <div
+                        className="preview-zoom-btn"
+                        style={{
+                          position: "absolute",
+                          top: 12,
+                          right: 12,
+                          padding: "5px 12px",
+                          borderRadius: 20,
+                          background: "rgba(0,0,0,0.65)",
+                          backdropFilter: "blur(8px)",
+                          border: `1px solid ${p.color}60`,
+                          color: "#fff",
+                          fontSize: ".72rem",
+                          fontFamily: "'Fira Code',monospace",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 6,
+                          opacity: 0,
+                          pointerEvents: "none",
+                        }}
+                      >
+                        🔍 Preview
+                      </div>
+                    )}
+                  </div>
+
+                  <div style={{ padding: 28, display: "flex", flexDirection: "column", flex: 1 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}>
                       <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 36, height: 36, borderRadius: 10, background: `${p.color}15`, border: `1px solid ${p.color}30`, color: p.color, fontSize: ".85rem", fontWeight: 600, fontFamily: "'Fira Code',monospace" }}>0{i + 1}</div>
                       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "flex-end" }}>
@@ -1392,8 +1663,8 @@ export default function Portfolio() {
                       </div>
                     </div>
                     <h3 style={{ fontSize: "1.25rem", fontWeight: 600, marginBottom: 12 }}>{p.title}</h3>
-                    <p style={{ fontSize: ".92rem", lineHeight: 1.7, color: t.faint, marginBottom: 20 }}>{p.desc}</p>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                    <p style={{ fontSize: ".92rem", lineHeight: 1.7, color: t.faint, marginBottom: 20, flex: 1 }}>{p.desc}</p>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: "auto" }}>
                       {p.tech.map(tc => <span key={tc} style={{ padding: "4px 12px", borderRadius: 50, fontSize: ".78rem", background: `${p.color}10`, border: `1px solid ${p.color}25`, color: p.color, fontFamily: "'Fira Code',monospace" }}>{tc}</span>)}
                     </div>
                   </div>
