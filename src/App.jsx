@@ -119,8 +119,8 @@ const PROJECTS = [
     demoLink: "https://predicti-x-frontend.vercel.app/",
   },
   {
-    title: "RAGLab — VS Code Studio for RAG",
-    subtitle: "VS CODE EXTENSION & LOCAL RAG WORKBENCH",
+    title: "RAGLab — VS Code Extension",
+    subtitle: "VS CODE EXTENSION",
     desc: "Interactive GUI Studio for RAG (Retrieval-Augmented Generation) in VS Code. Inspect document metrics, visually tune chunking strategies, simulate vector search, and optimize LLM context budgets—100% locally with zero cloud dependencies.",
     contributions: [
       "Visual document profiling & token boundary analysis",
