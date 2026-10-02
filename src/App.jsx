@@ -20,8 +20,8 @@ const PROFILE = {
   github: "https://github.com/aroshwijesinghe",
   linkedin: "https://www.linkedin.com/in/arosh-wijesinghe-078423341/",
   careerGoal:
-    "Becoming a Machine Learning Engineer — building production ML systems, data pipelines, and intelligent applications that make real-world impact.",
-  about: `I am an undergraduate student at the University of Moratuwa pursuing a BSc (Hons) in Artificial Intelligence. I am passionate about building AI-powered software solutions that solve real-world problems. My interests include machine learning, deep learning, full-stack development, mobile app development, and startup innovation. I enjoy creating modern, user-friendly applications and continuously learning new technologies. My goal is to become an ML Engineer and entrepreneur who builds impactful digital products.`,
+    "Becoming an AI Engineer — building production AI systems, intelligent applications, and scalable pipelines that make real-world impact.",
+  about: `I am an undergraduate student at the University of Moratuwa pursuing a BSc (Hons) in Artificial Intelligence. I am passionate about building AI-powered software solutions that solve real-world problems. My interests include artificial intelligence, machine learning, deep learning, full-stack development, mobile app development, and startup innovation. I enjoy creating modern, user-friendly applications and continuously learning new technologies. My goal is to become an AI Engineer and entrepreneur who builds impactful digital products.`,
 };
 
 const SKILLS = [
@@ -1096,7 +1096,7 @@ export default function Portfolio() {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
 
-  const typed = useTypingAnimation(["ML Engineer", "AI Enthusiast", "Full-Stack Developer", "Mobile App Builder", "Problem Solver"]);
+  const typed = useTypingAnimation(["AI Engineer", "ML Enthusiast", "Full-Stack Developer", "Mobile App Builder", "Problem Solver"]);
 
   /* hide loading screen quickly (< 1s) */
   useEffect(() => {
