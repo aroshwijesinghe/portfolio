@@ -1607,7 +1607,7 @@ export default function Portfolio() {
                       style={{
                         width: "100%",
                         height: "auto",
-                        maxHeight: 560,
+                        maxHeight: 600,
                         objectFit: "contain",
                         display: "block",
                         filter: `drop-shadow(0 20px 40px rgba(0,0,0,0.65)) drop-shadow(0 0 35px ${t.accent}25)`,
