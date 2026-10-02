@@ -1227,7 +1227,7 @@ export default function Portfolio() {
         @media(max-width:960px){.proj-showcase-grid{grid-template-columns:1fr !important;gap:28px !important;padding:24px !important}}
         @media(max-width:680px){.proj-compact-row{flex-direction:column;align-items:flex-start !important;gap:14px}.proj-compact-img{width:100% !important;height:140px !important}.proj-compact-expand{display:none !important}}
         @media(max-width:600px){.proj-contrib-grid{grid-template-columns:1fr !important}}
-        @media(max-width:768px){.hero-grid{flex-direction:column-reverse !important;text-align:center}.hero-btns{justify-content:center !important}.pgrid{grid-template-columns:1fr !important}.sgrid{grid-template-columns:1fr !important}.agrid{grid-template-columns:1fr !important}.cgrid{grid-template-columns:1fr !important}.nav-d{display:none !important}.mob-btn{display:flex !important}.htitle{font-size:2.2rem !important}.stitle{font-size:2rem !important}.hero-portrait-wrap{width:290px !important;max-width:88vw !important;margin:0 auto 16px !important}.hero-portrait-img{max-height:400px !important}.hero-badge-hide-mob{display:none !important}.srow{justify-content:center !important}}
+        @media(max-width:768px){.hero-grid{flex-direction:column-reverse !important;text-align:center}.hero-btns{justify-content:center !important}.pgrid{grid-template-columns:1fr !important}.sgrid{grid-template-columns:1fr !important}.agrid{grid-template-columns:1fr !important}.cgrid{grid-template-columns:1fr !important}.nav-d{display:none !important}.mob-btn{display:flex !important}.htitle{font-size:2.2rem !important}.stitle{font-size:2rem !important}.hero-portrait-wrap{width:330px !important;max-width:92vw !important;margin:0 auto 16px !important}.hero-portrait-img{max-height:480px !important}.hero-badge-hide-mob{display:none !important}.srow{justify-content:center !important}}
         @media(min-width:769px){.mob-btn{display:none !important}.mob-menu{display:none !important}}
       `}</style>
       <style>{`:root{--icon-nextjs-inner:${t.nextInner}}`}</style>
@@ -1429,7 +1429,7 @@ export default function Portfolio() {
           </div>}
         </nav>
 
-        <section id="home" style={{ minHeight: "100vh", display: "flex", alignItems: "center", position: "relative", zIndex: 1, padding: "120px 24px 80px" }}>
+        <section id="home" style={{ minHeight: "100vh", display: "flex", alignItems: "center", position: "relative", zIndex: 1, padding: "100px 24px 60px" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto", width: "100%" }}>
             <div className="hero-grid" style={{ display: "flex", alignItems: "center", gap: 60 }}>
               <div style={{ flex: 1 }}>
@@ -1464,15 +1464,15 @@ export default function Portfolio() {
                 </div>
               </div>
               <div style={{ flex: "0 0 auto" }}>
-                <div className="hero-portrait-wrap float-a" style={{ position: "relative", width: 380, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div className="hero-portrait-wrap" style={{ position: "relative", width: 480, maxWidth: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   {/* Atmospheric Studio Backlight Glow */}
                   <div style={{
                     position: "absolute",
-                    width: 440,
-                    height: 440,
+                    width: 540,
+                    height: 540,
                     borderRadius: "50%",
                     background: `radial-gradient(circle, ${t.accent}38 0%, ${t.accent2}20 50%, transparent 70%)`,
-                    filter: "blur(60px)",
+                    filter: "blur(70px)",
                     pointerEvents: "none",
                     zIndex: 0,
                   }} />
@@ -1480,20 +1480,19 @@ export default function Portfolio() {
                   {/* Subtle Geometric Orbital Ring */}
                   <div style={{
                     position: "absolute",
-                    width: 410,
-                    height: 410,
+                    width: 500,
+                    height: 500,
                     borderRadius: "50%",
                     border: `1.5px dashed ${t.accent}35`,
                     pointerEvents: "none",
                     zIndex: 0,
-                    animation: "spin 35s linear infinite",
                   }} />
 
                   {/* Floating Tech Badge 1: Top Right */}
                   <div style={{
                     position: "absolute",
-                    top: 24,
-                    right: -16,
+                    top: 28,
+                    right: -12,
                     background: t.glass,
                     backdropFilter: "blur(16px)",
                     border: `1px solid ${t.accent}50`,
@@ -1507,7 +1506,6 @@ export default function Portfolio() {
                     fontFamily: "'Fira Code', monospace",
                     fontSize: ".82rem",
                     color: t.accent,
-                    animation: "float 4.5s ease-in-out infinite",
                   }}>
                     <span style={{ width: 7, height: 7, borderRadius: "50%", background: t.accent, boxShadow: `0 0 10px ${t.accent}` }} />
                     &lt;AI / ML&gt;
@@ -1516,10 +1514,10 @@ export default function Portfolio() {
                   {/* Floating Tech Badge 2: Top Left */}
                   <div className="hero-badge-hide-mob" style={{
                     position: "absolute",
-                    top: 80,
-                    left: -20,
-                    width: 42,
-                    height: 42,
+                    top: 90,
+                    left: -24,
+                    width: 44,
+                    height: 44,
                     borderRadius: "50%",
                     background: t.glass,
                     backdropFilter: "blur(16px)",
@@ -1533,7 +1531,6 @@ export default function Portfolio() {
                     fontSize: "1rem",
                     fontWeight: 700,
                     color: t.accent2,
-                    animation: "float 5.5s ease-in-out infinite 1s",
                   }}>
                     {"{ }"}
                   </div>
@@ -1541,7 +1538,7 @@ export default function Portfolio() {
                   {/* Floating Tech Badge 3: Mid Right */}
                   <div className="hero-badge-hide-mob" style={{
                     position: "absolute",
-                    bottom: 140,
+                    bottom: 180,
                     right: -24,
                     width: 44,
                     height: 44,
@@ -1558,7 +1555,6 @@ export default function Portfolio() {
                     fontSize: ".95rem",
                     fontWeight: 700,
                     color: t.accent,
-                    animation: "float 6s ease-in-out infinite 2s",
                   }}>
                     &lt;/&gt;
                   </div>
@@ -1566,22 +1562,21 @@ export default function Portfolio() {
                   {/* Floating Tech Badge 4: Bottom Pill */}
                   <div style={{
                     position: "absolute",
-                    bottom: 12,
+                    bottom: 14,
                     background: t.glass,
                     backdropFilter: "blur(16px)",
                     border: `1px solid ${t.gBorderS}`,
                     borderRadius: 30,
-                    padding: "6px 16px",
+                    padding: "7px 18px",
                     display: "flex",
                     alignItems: "center",
                     gap: 8,
                     boxShadow: `0 12px 32px ${t.shadow}`,
                     zIndex: 3,
                     fontFamily: "'Plus Jakarta Sans', sans-serif",
-                    fontSize: ".82rem",
+                    fontSize: ".84rem",
                     fontWeight: 600,
                     color: t.text,
-                    animation: "float 5s ease-in-out infinite 1.5s",
                   }}>
                     <span style={{ color: t.accent }}>⚡</span>
                     Full-Stack &amp; AI Engineer
@@ -1601,9 +1596,10 @@ export default function Portfolio() {
                       alt={PROFILE.name}
                       className="hero-portrait-img"
                       style={{
-                        width: "100%",
+                        width: "auto",
+                        maxWidth: "100%",
                         height: "auto",
-                        maxHeight: 600,
+                        maxHeight: 780,
                         objectFit: "contain",
                         display: "block",
                         filter: `drop-shadow(0 20px 40px rgba(0,0,0,0.65)) drop-shadow(0 0 35px ${t.accent}25)`,
