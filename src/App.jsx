@@ -14,7 +14,7 @@ const PROFILE = {
   tagline: "Building AI-powered solutions that solve real-world problems",
   university: "University of Moratuwa",
   degree: "BSc (Hons) in Artificial Intelligence",
-  year: "Second Year",
+  year: "Third Year",
   email: "aroshnimantha386@gmail.com",
   phone: "+94 77 873 4776",
   github: "https://github.com/aroshwijesinghe",
@@ -243,7 +243,7 @@ const TIMELINE = [
     year: "2024 – Present",
     title: "BSc (Hons) in Artificial Intelligence",
     place: "University of Moratuwa",
-    desc: "Second year undergraduate specializing in AI, machine learning, and software engineering.",
+    desc: "Third year undergraduate specializing in AI, machine learning, and software engineering.",
     active: true,
   },
   {
@@ -1626,7 +1626,7 @@ export default function Portfolio() {
                 <a href="/cv.pdf" download="Arosh_Wijesinghe_CV.pdf" className="btn-p">{I.dl} Download CV</a>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-                {[{ l: "University", v: "UoM", e: "🎓", c: "#10b981" }, { l: "Year", v: "2nd Year", e: "📅", c: "#8b5cf6" }, { l: "Focus", v: "ML / AI", e: "🤖", c: "#f97316" }, { l: "Projects", v: `${PROJECTS.length}+`, e: "🚀", c: "#06b6d4" }].map(s => (
+                {[{ l: "University", v: "UoM", e: "🎓", c: "#10b981" }, { l: "Year", v: "3rd Year", e: "📅", c: "#8b5cf6" }, { l: "Focus", v: "ML / AI", e: "🤖", c: "#f97316" }, { l: "Projects", v: `${PROJECTS.length}+`, e: "🚀", c: "#06b6d4" }].map(s => (
                   <div key={s.l} style={{ background: t.bgAlt, border: `2px solid ${t.gBorder}`, borderTop: `3px solid ${s.c}`, backdropFilter: "blur(20px)", borderRadius: 16, padding: 24, textAlign: "center", transition: "all .3s", cursor: "pointer" }}
                     onMouseEnter={e => { e.currentTarget.style.borderColor = s.c; e.currentTarget.style.boxShadow = `0 0 25px ${s.c}40, inset 0 0 15px ${s.c}15`; }}
                     onMouseLeave={e => { e.currentTarget.style.borderColor = t.gBorder; e.currentTarget.style.boxShadow = "none"; }}>
