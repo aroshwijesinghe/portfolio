@@ -834,6 +834,7 @@ function InteractiveBg({ dark }) {
     const smooth = { x: window.innerWidth / 2,  y: window.innerHeight / 2 };
     const vel    = { x: 0, y: 0 };
     let   speed  = 0;
+    let   lastMouseMove = 0;
 
     const resize = () => { cv.width = window.innerWidth; cv.height = window.innerHeight; };
     resize();
@@ -845,6 +846,7 @@ function InteractiveBg({ dark }) {
       speed = Math.sqrt(vel.x ** 2 + vel.y ** 2);
       mouse.x = e.clientX;
       mouse.y = e.clientY;
+      lastMouseMove = performance.now();
     };
     window.addEventListener("mousemove", onMouse, { passive: true });
 
@@ -897,46 +899,54 @@ function InteractiveBg({ dark }) {
 
       const hb = getHueBase();
 
+      // Mouse activity factor: 1.0 when moving, smoothly transitions to 0 over 3 seconds when stationary
+      const mouseIdleTime = now - lastMouseMove;
+      const mouseActivity = Math.max(0, 1 - mouseIdleTime / 3000);
+
       // ── 1. LARGE CURSOR BLOOM ─────────────────────────────────────────
-      if (mouse.x > 0) {
-        const bloom = ctx.createRadialGradient(smooth.x, smooth.y, 0, smooth.x, smooth.y, 340);
-        bloom.addColorStop(0,   `hsla(${hb},100%,70%,${dark ? .12 : .08})`);
-        bloom.addColorStop(0.4, `hsla(${hb+40},100%,60%,${dark ? .05 : .03})`);
+      // Fades out completely within 3 seconds of mouse inactivity
+      if (mouse.x > 0 && mouseActivity > 0.01) {
+        const bloom = ctx.createRadialGradient(smooth.x, smooth.y, 0, smooth.x, smooth.y, 260);
+        bloom.addColorStop(0,   `hsla(${hb},100%,70%,${(dark ? .08 : .05) * mouseActivity})`);
+        bloom.addColorStop(0.4, `hsla(${hb+40},100%,60%,${(dark ? .03 : .02) * mouseActivity})`);
         bloom.addColorStop(1,   `hsla(${hb+80},100%,50%,0)`);
         ctx.beginPath();
-        ctx.arc(smooth.x, smooth.y, 340, 0, Math.PI * 2);
+        ctx.arc(smooth.x, smooth.y, 260, 0, Math.PI * 2);
         ctx.fillStyle = bloom;
         ctx.fill();
 
         // tight inner core dot
-        const core = ctx.createRadialGradient(smooth.x, smooth.y, 0, smooth.x, smooth.y, 22);
-        core.addColorStop(0, `hsla(${hb},100%,90%,${dark ? .55 : .4})`);
+        const core = ctx.createRadialGradient(smooth.x, smooth.y, 0, smooth.x, smooth.y, 16);
+        core.addColorStop(0, `hsla(${hb},100%,90%,${(dark ? .35 : .25) * mouseActivity})`);
         core.addColorStop(1, `hsla(${hb},100%,70%,0)`);
         ctx.beginPath();
-        ctx.arc(smooth.x, smooth.y, 22, 0, Math.PI * 2);
+        ctx.arc(smooth.x, smooth.y, 16, 0, Math.PI * 2);
         ctx.fillStyle = core;
         ctx.fill();
       }
 
       // ── COMET TRAIL ────────────────────────────────────────────────
-      trail.push({ x: mouse.x, y: mouse.y, t: now, h: hb });
+      // Only record trail while active, and fade out within 3s
+      if (mouseActivity > 0.01) {
+        trail.push({ x: mouse.x, y: mouse.y, t: now, h: hb });
+      }
       if (trail.length > MAX_TRAIL) trail.shift();
 
-      if (trail.length > 3) {
+      if (trail.length > 3 && mouseActivity > 0.01) {
         ctx.save();
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
         for (let i = 1; i < trail.length; i++) {
           const p = trail[i - 1], q = trail[i];
           const frac = i / trail.length;
-          const age  = Math.max(0, 1 - (now - q.t) / 500);
-          const a    = age * frac * (dark ? .6 : .45);
+          const age  = Math.max(0, 1 - (now - q.t) / 450);
+          const a    = age * frac * (dark ? .45 : .3) * mouseActivity;
           if (a < .005) continue;
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(q.x, q.y);
           ctx.strokeStyle = `hsla(${q.h + frac * 40},100%,72%,${a})`;
-          ctx.lineWidth   = frac * 3.5 + .3;
+          ctx.lineWidth   = frac * 2.5 + .2;
           ctx.stroke();
         }
         ctx.restore();
@@ -972,60 +982,66 @@ function InteractiveBg({ dark }) {
       });
 
       // ── 5. PARTICLES ──────────────────────────────────────────────────
-      const REPEL = 110, ATTRACT = 220;
+      // Reduce stars gathering: gently drift, and fade all mouse influence within 3 seconds of inactivity
+      const REPEL = 75, ATTRACT = 150;
       pts.forEach(p => {
         const dx   = smooth.x - p.x, dy = smooth.y - p.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < REPEL && dist > 0) {
-          const f = (1 - dist / REPEL) * .055;
-          p.vx -= (dx / dist) * f;
-          p.vy -= (dy / dist) * f;
-        } else if (dist < ATTRACT && dist > 0) {
-          const f = (1 - dist / ATTRACT) * .007;
-          p.vx += (dx / dist) * f;
-          p.vy += (dy / dist) * f;
-        }
-        // velocity sweep
-        if (dist < ATTRACT) {
-          const sw = (1 - dist / ATTRACT) * .014;
-          p.vx += vel.x * sw;
-          p.vy += vel.y * sw;
+        // Only pull towards mouse when mouse has been active in the last 3s, with reduced force
+        if (mouseActivity > 0.01) {
+          if (dist < REPEL && dist > 0) {
+            const f = (1 - dist / REPEL) * .025 * mouseActivity;
+            p.vx -= (dx / dist) * f;
+            p.vy -= (dy / dist) * f;
+          } else if (dist < ATTRACT && dist > 0) {
+            const f = (1 - dist / ATTRACT) * .0025 * mouseActivity;
+            p.vx += (dx / dist) * f;
+            p.vy += (dy / dist) * f;
+          }
+          if (dist < ATTRACT) {
+            const sw = (1 - dist / ATTRACT) * .006 * mouseActivity;
+            p.vx += vel.x * sw;
+            p.vy += vel.y * sw;
+          }
         }
 
-        p.vx *= .975; p.vy *= .975;
+        // Return to natural ambient drift when idle
+        p.vx = p.vx * .98 + (Math.random() - .5) * .02;
+        p.vy = p.vy * .98 + (Math.random() - .5) * .02;
         const spd = Math.sqrt(p.vx ** 2 + p.vy ** 2);
-        if (spd > 4) { p.vx = (p.vx / spd) * 4; p.vy = (p.vy / spd) * 4; }
+        if (spd > 2.2) { p.vx = (p.vx / spd) * 2.2; p.vy = (p.vy / spd) * 2.2; }
 
         p.x += p.vx; p.y += p.vy;
-        if (p.x < 0) { p.x = 0; p.vx *= -.9; }
-        if (p.x > W) { p.x = W; p.vx *= -.9; }
-        if (p.y < 0) { p.y = 0; p.vy *= -.9; }
-        if (p.y > H) { p.y = H; p.vy *= -.9; }
+        if (p.x < 0) { p.x = 0; p.vx *= -.8; }
+        if (p.x > W) { p.x = W; p.vx *= -.8; }
+        if (p.y < 0) { p.y = 0; p.vy *= -.8; }
+        if (p.y > H) { p.y = H; p.vy *= -.8; }
 
-        const prox   = Math.max(0, 1 - dist / ATTRACT);
+        // Boost radius/glow only during active cursor interaction, fading out completely in 3s
+        const prox   = Math.max(0, 1 - dist / ATTRACT) * mouseActivity;
         const breath = Math.sin(t * 1.2 + p.phase) * .3 + 1;
-        const r      = (p.baseR + prox * 3) * breath;
-        const alpha  = (dark ? 1 : .7) * (p.brightness + prox * .45);
+        const r      = (p.baseR + prox * 1.5) * breath;
+        const alpha  = (dark ? .8 : .6) * (p.brightness + prox * .3);
         const ph     = (hb + p.hOffset) % 360;
 
-        // glowing halo when near cursor
-        if (prox > .15) {
+        // glowing halo when near cursor (only while active)
+        if (prox > .2) {
           ctx.beginPath();
-          ctx.arc(p.x, p.y, r * 3.5, 0, Math.PI * 2);
-          ctx.fillStyle = `hsla(${ph},100%,65%,${prox * .12})`;
+          ctx.arc(p.x, p.y, r * 2.2, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${ph},100%,65%,${prox * .08})`;
           ctx.fill();
         }
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${ph},100%,72%,${Math.min(alpha, .95)})`;
+        ctx.fillStyle = `hsla(${ph},100%,72%,${Math.min(alpha, .85)})`;
         ctx.fill();
       });
 
       // ── 6. CONNECTION WEB (skipped on low-end devices) ────────────────
       if (!isLowEnd) {
-        const LINK = 140;
+        const LINK = 120;
         for (let i = 0; i < pts.length; i++) {
           for (let j = i + 1; j < pts.length; j++) {
             const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
@@ -1035,15 +1051,16 @@ function InteractiveBg({ dark }) {
             const mx = (pts[i].x + pts[j].x) * .5;
             const my = (pts[i].y + pts[j].y) * .5;
             const md = Math.sqrt((smooth.x - mx) ** 2 + (smooth.y - my) ** 2);
-            const boost  = Math.max(0, 1 - md / 320) * .35;
-            const base   = (1 - d / LINK) * (dark ? .07 : .04);
+            // Link highlight also fades within 3 seconds of mouse inactivity
+            const boost  = Math.max(0, 1 - md / 220) * .25 * mouseActivity;
+            const base   = (1 - d / LINK) * (dark ? .05 : .03);
             const lh     = (hb + (pts[i].hOffset + pts[j].hOffset) / 2) % 360;
 
             ctx.beginPath();
             ctx.moveTo(pts[i].x, pts[i].y);
             ctx.lineTo(pts[j].x, pts[j].y);
             ctx.strokeStyle = `hsla(${lh},100%,70%,${base + boost})`;
-            ctx.lineWidth   = .55 + boost * 1.2;
+            ctx.lineWidth   = .45 + boost * .8;
             ctx.stroke();
           }
         }
