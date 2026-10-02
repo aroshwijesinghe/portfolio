@@ -2184,37 +2184,91 @@ export default function Portfolio() {
                     <div className={`proj-compact-wrapper ${isExpanded ? "collapsed" : "open"}`}>
                       <div style={{ minHeight: 0, overflow: "hidden" }}>
                         <div className="proj-compact-row" style={{ display: "flex", alignItems: "center", gap: 22, width: "100%" }}>
-                        {/* Compact Preview Thumbnail (0.5 scale footprint) */}
-                        <div
-                          className="proj-compact-img"
-                          style={{
-                            width: 175,
-                            height: 110,
-                            borderRadius: 14,
-                            overflow: "hidden",
-                            border: `1.5px solid ${p.color}40`,
-                            background: `linear-gradient(135deg, ${p.color}15 0%, rgba(0,0,0,0.5) 100%)`,
-                            boxShadow: `0 8px 24px rgba(0,0,0,0.35)`,
-                            flexShrink: 0,
-                            position: "relative",
-                          }}
-                        >
-                          {p.image ? (
-                            <img
-                              src={p.image}
-                              alt={p.title}
-                              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                            />
-                          ) : (
-                            <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: p.color }}>
-                              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                                <circle cx="8.5" cy="8.5" r="1.5"/>
-                                <polyline points="21 15 16 10 5 21"/>
-                              </svg>
-                            </div>
-                          )}
-                        </div>
+                        {/* Compact Preview Thumbnail — shows all gallery images as a strip */}
+                        {p.gallery && p.gallery.length > 1 ? (
+                          <div
+                            className="proj-compact-img"
+                            style={{
+                              display: "flex",
+                              gap: 4,
+                              flexShrink: 0,
+                              height: 110,
+                              borderRadius: 14,
+                              overflow: "hidden",
+                              border: `1.5px solid ${p.color}40`,
+                              boxShadow: `0 8px 24px rgba(0,0,0,0.35)`,
+                              background: `linear-gradient(135deg, ${p.color}15 0%, rgba(0,0,0,0.5) 100%)`,
+                              maxWidth: 240,
+                            }}
+                          >
+                            {p.gallery.slice(0, 3).map((g, gi) => (
+                              <div
+                                key={gi}
+                                style={{
+                                  flex: gi === 0 ? "1.4" : "1",
+                                  minWidth: 0,
+                                  position: "relative",
+                                  borderRight: gi < p.gallery.slice(0,3).length - 1 ? `2px solid ${p.color}30` : "none",
+                                }}
+                              >
+                                <img
+                                  src={g.src}
+                                  alt={g.label}
+                                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                                />
+                                {gi > 0 && (
+                                  <div style={{
+                                    position: "absolute",
+                                    bottom: 4,
+                                    left: 4,
+                                    right: 4,
+                                    fontSize: "0.55rem",
+                                    color: "rgba(255,255,255,0.65)",
+                                    fontFamily: "'Fira Code',monospace",
+                                    textAlign: "center",
+                                    pointerEvents: "none",
+                                    whiteSpace: "nowrap",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                  }}>
+                                    {g.label}
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div
+                            className="proj-compact-img"
+                            style={{
+                              width: 175,
+                              height: 110,
+                              borderRadius: 14,
+                              overflow: "hidden",
+                              border: `1.5px solid ${p.color}40`,
+                              background: `linear-gradient(135deg, ${p.color}15 0%, rgba(0,0,0,0.5) 100%)`,
+                              boxShadow: `0 8px 24px rgba(0,0,0,0.35)`,
+                              flexShrink: 0,
+                              position: "relative",
+                            }}
+                          >
+                            {p.image ? (
+                              <img
+                                src={p.image}
+                                alt={p.title}
+                                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                              />
+                            ) : (
+                              <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: p.color }}>
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                                  <polyline points="21 15 16 10 5 21"/>
+                                </svg>
+                              </div>
+                            )}
+                          </div>
+                        )}
 
                         {/* Compact Details */}
                         <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 6 }}>
