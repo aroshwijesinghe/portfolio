@@ -110,7 +110,7 @@ const PROJECTS = [
       "Role-based access & automated ticket dispatching",
     ],
     tech: ["React", "Python", "ML", "Supabase", "RAG", "Chatbot"],
-    color: "#00d4ff",
+    color: "#00e5ff",
     image: "/projects/smart-asset.png",
     links: [
       { label: "Frontend", url: "https://github.com/aroshwijesinghe/PredictiX_Frontend" },
@@ -129,7 +129,7 @@ const PROJECTS = [
       "Official VS Code Marketplace extension with 100% local processing",
     ],
     tech: ["TypeScript", "VS Code API", "React", "RAG", "LLMs", "Vector Search"],
-    color: "#0ea5e9",
+    color: "#d946ef",
     image: "/projects/raglab.png",
     link: "https://github.com/aroshwijesinghe/RAGLab",
     demoLink: "https://marketplace.visualstudio.com/items?itemName=aroshwijesinghe.raglab&ssr=false#review-details",
@@ -161,7 +161,7 @@ const PROJECTS = [
       "Campaign management & order tracking",
     ],
     tech: ["React", "Python", "Supabase", "SQL"],
-    color: "#7c3aed",
+    color: "#8b5cf6",
     image: "/projects/bulkthreads.png",
     link: "https://github.com/aroshwijesinghe/clo-bulk",
     demoLink: "https://clo-bulk.vercel.app",
@@ -177,7 +177,7 @@ const PROJECTS = [
       "Categorized monthly transaction analytics",
     ],
     tech: ["Mobile", "Finance", "Productivity"],
-    color: "#22c55e",
+    color: "#14b8a6",
     image: "/projects/money-balancing.png",
     link: "https://github.com/aroshwijesinghe/money-balancing",
     demoLink: null,
@@ -193,7 +193,7 @@ const PROJECTS = [
       "Lightweight, responsive mobile interface",
     ],
     tech: ["Mobile", "Fitness", "Analytics"],
-    color: "#a855f7",
+    color: "#f43f5e",
     image: "/projects/tummy-boy.png",
     link: "https://github.com/aroshwijesinghe/Tummy_boy",
     demoLink: null,
@@ -209,7 +209,7 @@ const PROJECTS = [
       "Responsive fluid layout across all devices",
     ],
     tech: ["React", "Tailwind", "Framer Motion"],
-    color: "#f59e0b",
+    color: "#eab308",
     image: "/projects/portfolio.png",
     link: "https://github.com/aroshwijesinghe/portfoilo",
     demoLink: null,
@@ -1215,6 +1215,9 @@ export default function Portfolio() {
         .proj-link{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:50px;font-size:.82rem;font-weight:500;font-family:'Fira Code',monospace;text-decoration:none;transition:all .3s;border:1px solid;cursor:pointer}
         .proj-showcase-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:44px;align-items:center}
         .proj-compact-row{display:flex;align-items:center;gap:22px;width:100%}
+        .proj-list-card{transition:padding .4s cubic-bezier(.16,1,.3,1),border-color .35s ease,box-shadow .35s ease,border-radius .35s ease}
+        .proj-compact-wrapper{transition:max-height .45s cubic-bezier(.16,1,.3,1),opacity .25s ease;overflow:hidden}
+        .proj-expanded-wrapper{transition:max-height .55s cubic-bezier(.16,1,.3,1),opacity .4s ease .08s}
         @media(max-width:960px){.proj-showcase-grid{grid-template-columns:1fr !important;gap:28px !important;padding:24px !important}}
         @media(max-width:680px){.proj-compact-row{flex-direction:column;align-items:flex-start !important;gap:14px}.proj-compact-img{width:100% !important;height:140px !important}.proj-compact-expand{display:none !important}}
         @media(max-width:600px){.proj-contrib-grid{grid-template-columns:1fr !important}}
@@ -1817,21 +1820,28 @@ export default function Portfolio() {
                     onClick={() => setHoveredProject(hoveredProject === idx ? null : idx)}
                     style={{
                       background: t.bgAlt,
-                      border: `1.5px solid ${isExpanded ? p.color : t.gBorder}`,
-                      borderTop: `3px solid ${p.color}`,
+                      border: `2px solid ${isExpanded ? p.color : `${p.color}55`}`,
                       backdropFilter: "blur(20px)",
                       borderRadius: isExpanded ? 24 : 18,
                       overflow: "hidden",
                       padding: isExpanded ? "34px 38px" : "16px 22px",
                       boxShadow: isExpanded
-                        ? `0 24px 64px ${t.shadow}, 0 0 40px ${p.color}25`
-                        : `0 4px 18px ${t.shadow}`,
-                      transition: "all .35s cubic-bezier(.16, 1, .3, 1)",
+                        ? `0 24px 64px ${t.shadow}, 0 0 35px ${p.color}35`
+                        : `0 4px 18px ${t.shadow}, 0 0 14px ${p.color}15`,
                       cursor: isExpanded ? "default" : "pointer",
+                      position: "relative",
                     }}
                   >
-                    {isExpanded ? (
-                      /* EXPANDED VIEW: Exact original details from the featured layout */
+                    {/* EXPANDED VIEW: Exact original details from the featured layout */}
+                    <div
+                      className="proj-expanded-wrapper"
+                      style={{
+                        maxHeight: isExpanded ? 2200 : 0,
+                        opacity: isExpanded ? 1 : 0,
+                        overflow: isExpanded ? "visible" : "hidden",
+                        pointerEvents: isExpanded ? "auto" : "none",
+                      }}
+                    >
                       <div className="proj-showcase-grid">
                         {/* LEFT COLUMN: Large Preview Mockup */}
                         {(() => {
@@ -2099,8 +2109,17 @@ export default function Portfolio() {
                           </div>
                         </div>
                       </div>
-                    ) : (
-                      /* COMPACT 0.5 SIZE VIEW */
+                    </div>
+
+                    {/* COMPACT 0.5 SIZE VIEW */}
+                    <div
+                      className="proj-compact-wrapper"
+                      style={{
+                        maxHeight: isExpanded ? 0 : 240,
+                        opacity: isExpanded ? 0 : 1,
+                        pointerEvents: isExpanded ? "none" : "auto",
+                      }}
+                    >
                       <div className="proj-compact-row" style={{ display: "flex", alignItems: "center", gap: 22, width: "100%" }}>
                         {/* Compact Preview Thumbnail (0.5 scale footprint) */}
                         <div
@@ -2212,7 +2231,7 @@ export default function Portfolio() {
                           <span>↓</span>
                         </div>
                       </div>
-                    )}
+                    </div>
                   </div>
                 );
               })}
