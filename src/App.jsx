@@ -1119,6 +1119,47 @@ export default function Portfolio() {
   const [hoveredProject, setHoveredProject] = useState(null);
   const [activeGalleryImage, setActiveGalleryImage] = useState({});
 
+  /* smooth scroll & hover-intent debouncing to prevent card stutter during active scrolling */
+  const hoverTimeoutRef = useRef(null);
+  const isScrollingRef = useRef(false);
+  const scrollTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      isScrollingRef.current = true;
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+      scrollTimeoutRef.current = setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 140);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+      if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    };
+  }, []);
+
+  const handleCardMouseEnter = (idx) => {
+    if (isScrollingRef.current) return;
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredProject(idx);
+    }, 110);
+  };
+
+  const handleCardMouseLeave = () => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredProject(null);
+    }, 90);
+  };
+
+  const handleCardClick = (idx) => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    setHoveredProject(prev => (prev === idx ? null : idx));
+  };
+
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
   };
@@ -1247,9 +1288,11 @@ export default function Portfolio() {
         .proj-link{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:50px;font-size:.82rem;font-weight:500;font-family:'Fira Code',monospace;text-decoration:none;transition:all .3s;border:1px solid;cursor:pointer}
         .proj-showcase-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:44px;align-items:center}
         .proj-compact-row{display:flex;align-items:center;gap:22px;width:100%}
-        .proj-list-card{transition:padding .4s cubic-bezier(.16,1,.3,1),border-color .35s ease,box-shadow .35s ease,border-radius .35s ease}
-        .proj-compact-wrapper{transition:max-height .45s cubic-bezier(.16,1,.3,1),opacity .25s ease;overflow:hidden}
-        .proj-expanded-wrapper{transition:max-height .55s cubic-bezier(.16,1,.3,1),opacity .4s ease .08s}
+        .proj-list-card{transition:padding .75s cubic-bezier(.16,1,.3,1),border-color .45s ease,box-shadow .55s ease,border-radius .45s ease,transform .45s cubic-bezier(.16,1,.3,1);will-change:padding,border-color,box-shadow}
+        .proj-compact-wrapper{display:grid;grid-template-rows:1fr;transition:grid-template-rows .7s cubic-bezier(.16,1,.3,1),opacity .35s ease}
+        .proj-compact-wrapper.collapsed{grid-template-rows:0fr;opacity:0;pointer-events:none}
+        .proj-expanded-wrapper{display:grid;grid-template-rows:0fr;opacity:0;transform:translateY(12px);transition:grid-template-rows .8s cubic-bezier(.16,1,.3,1),opacity .5s ease .1s,transform .7s cubic-bezier(.16,1,.3,1);pointer-events:none}
+        .proj-expanded-wrapper.open{grid-template-rows:1fr;opacity:1;transform:translateY(0);pointer-events:auto}
         @media(max-width:960px){.proj-showcase-grid{grid-template-columns:1fr !important;gap:28px !important;padding:24px !important}}
         @media(max-width:680px){.proj-compact-row{flex-direction:column;align-items:flex-start !important;gap:14px}.proj-compact-img{width:100% !important;height:140px !important}.proj-compact-expand{display:none !important}}
         @media(max-width:600px){.proj-contrib-grid{grid-template-columns:1fr !important}}
@@ -1847,9 +1890,9 @@ export default function Portfolio() {
                   <div
                     key={idx}
                     className="glow-border proj-list-card"
-                    onMouseEnter={() => setHoveredProject(idx)}
-                    onMouseLeave={() => setHoveredProject(null)}
-                    onClick={() => setHoveredProject(hoveredProject === idx ? null : idx)}
+                    onMouseEnter={() => handleCardMouseEnter(idx)}
+                    onMouseLeave={handleCardMouseLeave}
+                    onClick={() => handleCardClick(idx)}
                     style={{
                       background: t.bgAlt,
                       border: `2px solid ${isExpanded ? p.color : `${p.color}55`}`,
@@ -1865,16 +1908,9 @@ export default function Portfolio() {
                     }}
                   >
                     {/* EXPANDED VIEW: Exact original details from the featured layout */}
-                    <div
-                      className="proj-expanded-wrapper"
-                      style={{
-                        maxHeight: isExpanded ? 2200 : 0,
-                        opacity: isExpanded ? 1 : 0,
-                        overflow: isExpanded ? "visible" : "hidden",
-                        pointerEvents: isExpanded ? "auto" : "none",
-                      }}
-                    >
-                      <div className="proj-showcase-grid">
+                    <div className={`proj-expanded-wrapper ${isExpanded ? "open" : "collapsed"}`}>
+                      <div style={{ minHeight: 0, overflow: isExpanded ? "visible" : "hidden" }}>
+                        <div className="proj-showcase-grid">
                         {/* LEFT COLUMN: Large Preview Mockup */}
                         {(() => {
                           const displayImg = (p.gallery && activeGalleryImage[idx]) || p.image;
@@ -2142,17 +2178,12 @@ export default function Portfolio() {
                         </div>
                       </div>
                     </div>
+                  </div>
 
                     {/* COMPACT 0.5 SIZE VIEW */}
-                    <div
-                      className="proj-compact-wrapper"
-                      style={{
-                        maxHeight: isExpanded ? 0 : 240,
-                        opacity: isExpanded ? 0 : 1,
-                        pointerEvents: isExpanded ? "none" : "auto",
-                      }}
-                    >
-                      <div className="proj-compact-row" style={{ display: "flex", alignItems: "center", gap: 22, width: "100%" }}>
+                    <div className={`proj-compact-wrapper ${isExpanded ? "collapsed" : "open"}`}>
+                      <div style={{ minHeight: 0, overflow: "hidden" }}>
+                        <div className="proj-compact-row" style={{ display: "flex", alignItems: "center", gap: 22, width: "100%" }}>
                         {/* Compact Preview Thumbnail (0.5 scale footprint) */}
                         <div
                           className="proj-compact-img"
@@ -2265,7 +2296,8 @@ export default function Portfolio() {
                       </div>
                     </div>
                   </div>
-                );
+                </div>
+              );
               })}
             </div>
           </div>
