@@ -211,8 +211,12 @@ const PROJECTS = [
     tech: ["React", "Tailwind", "Framer Motion"],
     color: "#eab308",
     image: "/projects/portfolio.png",
+    gallery: [
+      { label: "Hero Showcase", src: "/projects/portfolio-hero.png" },
+      { label: "Projects View", src: "/projects/portfolio-projects.png" },
+    ],
     link: "https://github.com/aroshwijesinghe/portfoilo",
-    demoLink: null,
+    demoLink: "https://portfolio-ruddy-two.vercel.app",
   },
   {
     title: "Smart Chair — Posture Analysis System",
