@@ -215,22 +215,6 @@ const PROJECTS = [
     demoLink: null,
   },
   {
-    title: "Advance Loop Solutions",
-    subtitle: "STARTUP & AI VENTURE",
-    desc: "Co-founded a technology company focused on delivering innovative software solutions and AI-driven products. Leading strategic direction, product development, and building a team to create real-world digital impact.",
-    contributions: [
-      "Co-founder & technical leadership",
-      "Architecting AI-driven digital products",
-      "Enterprise workflow automation",
-      "Full-stack cloud application deployment",
-    ],
-    tech: ["Startup", "AI", "Software", "Co-Founder"],
-    color: "#6366f1",
-    image: "/projects/advance-loop.png",
-    link: null,
-    demoLink: "https://www.linkedin.com/company/advance-loop-solution/?viewAsMember=true",
-  },
-  {
     title: "Smart Chair — Posture Analysis System",
     subtitle: "HARDWARE + AI UNIVERSITY PROJECT",
     desc: "Hardware + AI university project (CM-1900 Intelligent Machine) built as an AI student at University of Moratuwa. A smart chair that uses sensors and machine learning to analyse the user's sitting posture in real time and provide actionable feedback.",
