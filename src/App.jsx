@@ -1136,7 +1136,7 @@ export default function Portfolio() {
         .orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
         .thm{width:44px;height:44px;border-radius:50%;border:1px solid ${t.gBorderS};background:${t.glass};cursor:pointer;display:flex;align-items:center;justify-content:center;color:${t.text};transition:all .3s;backdrop-filter:blur(10px)}.thm:hover{background:${t.accent}18;border-color:${t.accent}55;transform:scale(1.1)}
         .proj-link{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:50px;font-size:.82rem;font-weight:500;font-family:'Fira Code',monospace;text-decoration:none;transition:all .3s;border:1px solid;cursor:pointer}
-        @media(max-width:768px){.hero-grid{flex-direction:column-reverse !important;text-align:center}.hero-btns{justify-content:center !important}.pgrid{grid-template-columns:1fr !important}.sgrid{grid-template-columns:1fr !important}.agrid{grid-template-columns:1fr !important}.cgrid{grid-template-columns:1fr !important}.nav-d{display:none !important}.mob-btn{display:flex !important}.htitle{font-size:2.2rem !important}.stitle{font-size:2rem !important}.hero-img{width:220px !important;height:220px !important}.srow{justify-content:center !important}}
+        @media(max-width:768px){.hero-grid{flex-direction:column-reverse !important;text-align:center}.hero-btns{justify-content:center !important}.pgrid{grid-template-columns:1fr !important}.sgrid{grid-template-columns:1fr !important}.agrid{grid-template-columns:1fr !important}.cgrid{grid-template-columns:1fr !important}.nav-d{display:none !important}.mob-btn{display:flex !important}.htitle{font-size:2.2rem !important}.stitle{font-size:2rem !important}.hero-img{width:240px !important;height:320px !important;margin:0 auto !important}.srow{justify-content:center !important}}
         @media(min-width:769px){.mob-btn{display:none !important}.mob-menu{display:none !important}}
       `}</style>
       <style>{`:root{--icon-nextjs-inner:${t.nextInner}}`}</style>
@@ -1374,13 +1374,50 @@ export default function Portfolio() {
               </div>
               <div style={{ flex: "0 0 auto" }}>
                 <div className="float-a" style={{ position: "relative" }}>
-                  <div className="hero-img" style={{ width: 300, height: 300, borderRadius: "50%", background: `linear-gradient(135deg,${t.accent}40,${t.accent2}40)`, padding: 3 }}>
-                    <div style={{ width: "100%", height: "100%", borderRadius: "50%", overflow: "hidden", background: t.bgAlt, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <img src="./profile.jpeg" alt={PROFILE.name} style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }}
-                        onError={e => { e.target.style.display = "none"; e.target.parentElement.innerHTML = `<div style="font-size:72px;font-weight:800;font-family:'Plus Jakarta Sans';color:${t.accent}">AW</div>`; }} />
+                  <div className="hero-img" style={{
+                    width: 310,
+                    height: 410,
+                    borderRadius: 28,
+                    background: `linear-gradient(135deg, ${t.accent}60, ${t.accent2}60, ${t.accent}20)`,
+                    padding: 3,
+                    boxShadow: `0 20px 50px ${t.accent}25, 0 0 30px ${t.accent}15`,
+                  }}>
+                    <div style={{
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: 25,
+                      overflow: "hidden",
+                      background: t.bgAlt,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}>
+                      <img
+                        src="./profile.jpeg"
+                        alt={PROFILE.name}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          objectPosition: "center 20%",
+                          borderRadius: 25,
+                          display: "block",
+                        }}
+                        onError={e => {
+                          e.target.style.display = "none";
+                          e.target.parentElement.innerHTML = `<div style="font-size:72px;font-weight:800;font-family:'Plus Jakarta Sans';color:${t.accent}">AW</div>`;
+                        }}
+                      />
                     </div>
                   </div>
-                  <div style={{ position: "absolute", inset: -15, borderRadius: "50%", border: `1px solid ${t.accent}25`, animation: "float 4s ease-in-out infinite reverse" }} />
+                  <div style={{
+                    position: "absolute",
+                    inset: -14,
+                    borderRadius: 38,
+                    border: `1px solid ${t.accent}30`,
+                    pointerEvents: "none",
+                    animation: "float 4s ease-in-out infinite reverse",
+                  }} />
                 </div>
               </div>
             </div>
