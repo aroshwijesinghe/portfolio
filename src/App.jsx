@@ -144,7 +144,7 @@ const PROJECTS = [
       "Journey analytics dashboard: distance, stops & mobility mode breakdown",
       "Multi-style map rendering with OpenStreetMap, Streets, Dark & Satellite",
     ],
-    tech: ["Next.js", "React", "Leaflet", "GPS Analytics", "Tailwind"],
+    tech: ["Next.js", "React", "GPS Analytics", "Tailwind"],
     color: "#10b981",
     image: "/projects/timeline-studio.png",
     link: "https://github.com/aroshwijesinghe/timeline_crack",
@@ -1093,14 +1093,8 @@ export default function Portfolio() {
   const [previewModal, setPreviewModal] = useState(null); // { image, title, color, demoLink, link }
   const [copied, setCopied] = useState(false);
 
-  /* featured project slider state */
-  const [currentProject, setCurrentProject] = useState(0);
-  const prevProject = useCallback(() => {
-    setCurrentProject((p) => (p === 0 ? PROJECTS.length - 1 : p - 1));
-  }, []);
-  const nextProject = useCallback(() => {
-    setCurrentProject((p) => (p === PROJECTS.length - 1 ? 0 : p + 1));
-  }, []);
+  /* project vertical list hover/expansion state */
+  const [hoveredProject, setHoveredProject] = useState(null);
 
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
@@ -1229,7 +1223,9 @@ export default function Portfolio() {
         .thm{width:44px;height:44px;border-radius:50%;border:1px solid ${t.gBorderS};background:${t.glass};cursor:pointer;display:flex;align-items:center;justify-content:center;color:${t.text};transition:all .3s;backdrop-filter:blur(10px)}.thm:hover{background:${t.accent}18;border-color:${t.accent}55;transform:scale(1.1)}
         .proj-link{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:50px;font-size:.82rem;font-weight:500;font-family:'Fira Code',monospace;text-decoration:none;transition:all .3s;border:1px solid;cursor:pointer}
         .proj-showcase-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:44px;align-items:center}
+        .proj-compact-row{display:flex;align-items:center;gap:22px;width:100%}
         @media(max-width:960px){.proj-showcase-grid{grid-template-columns:1fr !important;gap:28px !important;padding:24px !important}}
+        @media(max-width:680px){.proj-compact-row{flex-direction:column;align-items:flex-start !important;gap:14px}.proj-compact-img{width:100% !important;height:140px !important}.proj-compact-expand{display:none !important}}
         @media(max-width:600px){.proj-contrib-grid{grid-template-columns:1fr !important}}
         @media(max-width:768px){.hero-grid{flex-direction:column-reverse !important;text-align:center}.hero-btns{justify-content:center !important}.pgrid{grid-template-columns:1fr !important}.sgrid{grid-template-columns:1fr !important}.agrid{grid-template-columns:1fr !important}.cgrid{grid-template-columns:1fr !important}.nav-d{display:none !important}.mob-btn{display:flex !important}.htitle{font-size:2.2rem !important}.stitle{font-size:2rem !important}.hero-portrait-wrap{width:290px !important;max-width:88vw !important;margin:0 auto 16px !important}.hero-portrait-img{max-height:400px !important}.hero-badge-hide-mob{display:none !important}.srow{justify-content:center !important}}
         @media(min-width:769px){.mob-btn{display:none !important}.mob-menu{display:none !important}}
@@ -1704,315 +1700,357 @@ export default function Portfolio() {
                 <div style={{ width: 60, height: 3, background: `linear-gradient(90deg,${t.accent},transparent)`, borderRadius: 2, marginTop: 14 }} />
               </div>
 
-              {/* Slider Pagination & Controls */}
-              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                <span style={{ fontSize: "1rem", fontFamily: "'Fira Code',monospace", color: t.muted, fontWeight: 500 }}>
-                  0{currentProject + 1} <span style={{ opacity: 0.4 }}>/</span> 0{PROJECTS.length}
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <span style={{ fontSize: ".85rem", fontFamily: "'Fira Code',monospace", color: t.muted, background: `${t.accent}12`, border: `1px solid ${t.accent}30`, padding: "6px 14px", borderRadius: 30 }}>
+                  {PROJECTS.length} Projects • Hover to Expand
                 </span>
-                <div style={{ display: "flex", gap: 8 }}>
-                  <button
-                    onClick={prevProject}
-                    aria-label="Previous project"
-                    style={{
-                      width: 44,
-                      height: 44,
-                      borderRadius: "50%",
-                      border: `1.5px solid ${t.gBorder}`,
-                      background: t.bgAlt,
-                      color: t.text,
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: "1.2rem",
-                      transition: "all .2s ease",
-                    }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = t.accent; e.currentTarget.style.background = `${t.accent}15`; e.currentTarget.style.transform = "scale(1.05)"; }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = t.gBorder; e.currentTarget.style.background = t.bgAlt; e.currentTarget.style.transform = "scale(1)"; }}
-                  >
-                    ‹
-                  </button>
-                  <button
-                    onClick={nextProject}
-                    aria-label="Next project"
-                    style={{
-                      width: 44,
-                      height: 44,
-                      borderRadius: "50%",
-                      border: `1.5px solid ${t.accent}`,
-                      background: `linear-gradient(135deg, ${t.accent}, ${t.accent2})`,
-                      color: "#fff",
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: "1.2rem",
-                      transition: "all .2s ease",
-                      boxShadow: `0 4px 18px ${t.accent}40`,
-                    }}
-                    onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.08)"; }}
-                    onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; }}
-                  >
-                    ›
-                  </button>
-                </div>
               </div>
             </div>
 
-            {/* Featured Project Card */}
-            {(() => {
-              const p = PROJECTS[currentProject];
-              return (
-                <div
-                  key={currentProject}
-                  className="glow-border"
-                  style={{
-                    background: t.bgAlt,
-                    border: `1.5px solid ${t.gBorder}`,
-                    borderTop: `3px solid ${p.color}`,
-                    backdropFilter: "blur(20px)",
-                    borderRadius: 24,
-                    overflow: "hidden",
-                    padding: "38px",
-                    boxShadow: `0 20px 60px ${t.shadow}, 0 0 40px ${p.color}15`,
-                    transition: "all .3s ease",
-                  }}
-                >
-                  <div className="proj-showcase-grid">
-                    {/* LEFT COLUMN: Large Preview Mockup */}
-                    <div
-                      style={{
-                        position: "relative",
-                        borderRadius: 20,
-                        overflow: "hidden",
-                        border: `1.5px solid ${p.color}40`,
-                        background: `linear-gradient(135deg, ${p.color}15 0%, rgba(0,0,0,0.5) 100%)`,
-                        boxShadow: `0 16px 40px rgba(0,0,0,0.6), 0 0 30px ${p.color}20`,
-                        cursor: p.image ? "pointer" : "default",
-                        aspectRatio: "16 / 10",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                      onClick={() => {
-                        if (p.image) setPreviewModal({ image: p.image, title: p.title, color: p.color, demoLink: p.demoLink, link: p.link || (p.links && p.links[0]?.url) });
-                      }}
-                    >
-                      {p.image ? (
-                        <>
-                          <img
-                            src={p.image}
-                            alt={p.title}
-                            className="pcard-img"
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "cover",
-                              display: "block",
-                              transition: "transform .5s cubic-bezier(.16,1,.3,1)",
-                            }}
-                            onError={(e) => {
-                              e.currentTarget.style.display = "none";
-                              if (e.currentTarget.nextElementSibling) e.currentTarget.nextElementSibling.style.display = "flex";
-                            }}
-                          />
-                          <div
-                            style={{
-                              display: "none",
-                              position: "absolute",
-                              inset: 0,
-                              alignItems: "center",
-                              justifyContent: "center",
-                              flexDirection: "column",
-                              gap: 12,
-                              background: `radial-gradient(circle at 50% 50%, ${p.color}20 0%, ${t.bgAlt} 80%)`,
-                            }}
-                          >
-                            <div style={{ width: 56, height: 56, borderRadius: 16, background: `${p.color}20`, border: `1.5px dashed ${p.color}60`, display: "flex", alignItems: "center", justifyContent: "center", color: p.color, fontSize: "1.6rem" }}>
-                              🖼️
-                            </div>
-                            <span style={{ fontSize: ".85rem", color: t.faint, fontFamily: "'Fira Code',monospace" }}>
-                              Preview Coming Soon
-                            </span>
-                          </div>
-                          <div
-                            className="preview-zoom-btn"
-                            style={{
-                              position: "absolute",
-                              bottom: 14,
-                              right: 14,
-                              padding: "6px 14px",
-                              borderRadius: 20,
-                              background: "rgba(0,0,0,0.75)",
-                              backdropFilter: "blur(8px)",
-                              border: `1px solid ${p.color}60`,
-                              color: "#fff",
-                              fontSize: ".75rem",
-                              fontFamily: "'Fira Code',monospace",
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 6,
-                            }}
-                          >
-                            🔍 Click to Enlarge
-                          </div>
-                        </>
-                      ) : (
+            {/* Vertical Project List (0.5 Size by Default, Full Details on Hover) */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+              {PROJECTS.map((p, idx) => {
+                const isExpanded = hoveredProject === idx;
+                return (
+                  <div
+                    key={idx}
+                    className="glow-border proj-list-card"
+                    onMouseEnter={() => setHoveredProject(idx)}
+                    onMouseLeave={() => setHoveredProject(null)}
+                    onClick={() => setHoveredProject(hoveredProject === idx ? null : idx)}
+                    style={{
+                      background: t.bgAlt,
+                      border: `1.5px solid ${isExpanded ? p.color : t.gBorder}`,
+                      borderTop: `3px solid ${p.color}`,
+                      backdropFilter: "blur(20px)",
+                      borderRadius: isExpanded ? 24 : 18,
+                      overflow: "hidden",
+                      padding: isExpanded ? "34px 38px" : "16px 22px",
+                      boxShadow: isExpanded
+                        ? `0 24px 64px ${t.shadow}, 0 0 40px ${p.color}25`
+                        : `0 4px 18px ${t.shadow}`,
+                      transition: "all .35s cubic-bezier(.16, 1, .3, 1)",
+                      cursor: isExpanded ? "default" : "pointer",
+                    }}
+                  >
+                    {isExpanded ? (
+                      /* EXPANDED VIEW: Exact original details from the featured layout */
+                      <div className="proj-showcase-grid">
+                        {/* LEFT COLUMN: Large Preview Mockup */}
                         <div
                           style={{
-                            position: "absolute",
-                            inset: 0,
+                            position: "relative",
+                            borderRadius: 20,
+                            overflow: "hidden",
+                            border: `1.5px solid ${p.color}40`,
+                            background: `linear-gradient(135deg, ${p.color}15 0%, rgba(0,0,0,0.5) 100%)`,
+                            boxShadow: `0 16px 40px rgba(0,0,0,0.6), 0 0 30px ${p.color}20`,
+                            cursor: p.image ? "pointer" : "default",
+                            aspectRatio: "16 / 10",
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            flexDirection: "column",
-                            gap: 12,
-                            background: `radial-gradient(circle at 50% 50%, ${p.color}20 0%, ${t.bgAlt} 80%)`,
+                          }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (p.image) setPreviewModal({ image: p.image, title: p.title, color: p.color, demoLink: p.demoLink, link: p.link || (p.links && p.links[0]?.url) });
                           }}
                         >
-                          <div style={{ width: 56, height: 56, borderRadius: 16, background: `${p.color}20`, border: `1.5px dashed ${p.color}60`, display: "flex", alignItems: "center", justifyContent: "center", color: p.color, fontSize: "1.6rem" }}>
-                            🖼️
-                          </div>
-                          <span style={{ fontSize: ".85rem", color: t.faint, fontFamily: "'Fira Code',monospace" }}>
-                            Preview Coming Soon
-                          </span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* RIGHT COLUMN: Project Details */}
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <div style={{ fontSize: ".8rem", fontWeight: 700, color: p.color, letterSpacing: ".12em", textTransform: "uppercase", fontFamily: "'Fira Code',monospace", marginBottom: 8 }}>
-                        {p.subtitle || "FEATURED PROJECT"}
-                      </div>
-
-                      <h3 style={{ fontSize: "1.95rem", fontWeight: 700, lineHeight: 1.25, marginBottom: 16, color: t.text }}>
-                        {p.title}
-                      </h3>
-
-                      <p style={{ fontSize: ".98rem", lineHeight: 1.75, color: t.muted, marginBottom: 22 }}>
-                        {p.desc}
-                      </p>
-
-                      {/* Key Highlights */}
-                      {p.contributions && p.contributions.length > 0 && (
-                        <div style={{ marginBottom: 24 }}>
-                          <div style={{ fontSize: ".76rem", fontWeight: 700, color: t.faint, letterSpacing: ".12em", textTransform: "uppercase", fontFamily: "'Fira Code',monospace", marginBottom: 10 }}>
-                            Key Highlights
-                          </div>
-                          <div className="proj-contrib-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 16px" }}>
-                            {p.contributions.map((c, cIdx) => (
-                              <div key={cIdx} style={{ fontSize: ".85rem", color: t.muted, display: "flex", alignItems: "baseline", gap: 8, lineHeight: 1.5 }}>
-                                <span style={{ color: p.color, fontWeight: 700, flexShrink: 0 }}>→</span>
-                                <span>{c}</span>
+                          {p.image ? (
+                            <>
+                              <img
+                                src={p.image}
+                                alt={p.title}
+                                className="pcard-img"
+                                style={{
+                                  width: "100%",
+                                  height: "100%",
+                                  objectFit: "cover",
+                                  display: "block",
+                                  transition: "transform .5s cubic-bezier(.16,1,.3,1)",
+                                }}
+                                onError={(e) => {
+                                  e.currentTarget.style.display = "none";
+                                  if (e.currentTarget.nextElementSibling) e.currentTarget.nextElementSibling.style.display = "flex";
+                                }}
+                              />
+                              <div
+                                style={{
+                                  display: "none",
+                                  position: "absolute",
+                                  inset: 0,
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  flexDirection: "column",
+                                  gap: 12,
+                                  background: `radial-gradient(circle at 50% 50%, ${p.color}20 0%, ${t.bgAlt} 80%)`,
+                                }}
+                              >
+                                <div style={{ width: 56, height: 56, borderRadius: 16, background: `${p.color}20`, border: `1.5px dashed ${p.color}60`, display: "flex", alignItems: "center", justifyContent: "center", color: p.color, fontSize: "1.6rem" }}>
+                                  🖼️
+                                </div>
+                                <span style={{ fontSize: ".85rem", color: t.faint, fontFamily: "'Fira Code',monospace" }}>
+                                  Preview Coming Soon
+                                </span>
                               </div>
+                              <div
+                                className="preview-zoom-btn"
+                                style={{
+                                  position: "absolute",
+                                  bottom: 14,
+                                  right: 14,
+                                  padding: "6px 14px",
+                                  borderRadius: 20,
+                                  background: "rgba(0,0,0,0.75)",
+                                  backdropFilter: "blur(8px)",
+                                  border: `1px solid ${p.color}60`,
+                                  color: "#fff",
+                                  fontSize: ".75rem",
+                                  fontFamily: "'Fira Code',monospace",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: 6,
+                                }}
+                              >
+                                🔍 Click to Enlarge
+                              </div>
+                            </>
+                          ) : (
+                            <div
+                              style={{
+                                position: "absolute",
+                                inset: 0,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                flexDirection: "column",
+                                gap: 12,
+                                background: `radial-gradient(circle at 50% 50%, ${p.color}20 0%, ${t.bgAlt} 80%)`,
+                              }}
+                            >
+                              <div style={{ width: 56, height: 56, borderRadius: 16, background: `${p.color}20`, border: `1.5px dashed ${p.color}60`, display: "flex", alignItems: "center", justifyContent: "center", color: p.color, fontSize: "1.6rem" }}>
+                                🖼️
+                              </div>
+                              <span style={{ fontSize: ".85rem", color: t.faint, fontFamily: "'Fira Code',monospace" }}>
+                                Preview Coming Soon
+                              </span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* RIGHT COLUMN: Project Details */}
+                        <div style={{ display: "flex", flexDirection: "column" }}>
+                          <div style={{ fontSize: ".8rem", fontWeight: 700, color: p.color, letterSpacing: ".12em", textTransform: "uppercase", fontFamily: "'Fira Code',monospace", marginBottom: 8 }}>
+                            {p.subtitle || "FEATURED PROJECT"}
+                          </div>
+
+                          <h3 style={{ fontSize: "1.95rem", fontWeight: 700, lineHeight: 1.25, marginBottom: 16, color: t.text }}>
+                            {p.title}
+                          </h3>
+
+                          <p style={{ fontSize: ".98rem", lineHeight: 1.75, color: t.muted, marginBottom: 22 }}>
+                            {p.desc}
+                          </p>
+
+                          {/* Key Highlights */}
+                          {p.contributions && p.contributions.length > 0 && (
+                            <div style={{ marginBottom: 24 }}>
+                              <div style={{ fontSize: ".76rem", fontWeight: 700, color: t.faint, letterSpacing: ".12em", textTransform: "uppercase", fontFamily: "'Fira Code',monospace", marginBottom: 10 }}>
+                                Key Highlights
+                              </div>
+                              <div className="proj-contrib-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 16px" }}>
+                                {p.contributions.map((c, cIdx) => (
+                                  <div key={cIdx} style={{ fontSize: ".85rem", color: t.muted, display: "flex", alignItems: "baseline", gap: 8, lineHeight: 1.5 }}>
+                                    <span style={{ color: p.color, fontWeight: 700, flexShrink: 0 }}>→</span>
+                                    <span>{c}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Tech Stack Pills */}
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 26 }}>
+                            {p.tech.map(tc => (
+                              <span
+                                key={tc}
+                                style={{
+                                  padding: "5px 14px",
+                                  borderRadius: 50,
+                                  fontSize: ".8rem",
+                                  background: `${p.color}12`,
+                                  border: `1px solid ${p.color}35`,
+                                  color: p.color,
+                                  fontFamily: "'Fira Code',monospace",
+                                }}
+                              >
+                                {tc}
+                              </span>
                             ))}
                           </div>
+
+                          {/* Action Links */}
+                          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
+                            {p.links ? (
+                              p.links.map((l, lIdx) => (
+                                <a
+                                  key={lIdx}
+                                  href={l.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="proj-link"
+                                  style={{ color: p.color, borderColor: `${p.color}50`, background: `${p.color}12` }}
+                                  onMouseEnter={e => { e.currentTarget.style.background = `${p.color}25`; e.currentTarget.style.borderColor = p.color; e.currentTarget.style.transform = "translateY(-2px)"; }}
+                                  onMouseLeave={e => { e.currentTarget.style.background = `${p.color}12`; e.currentTarget.style.borderColor = `${p.color}50`; e.currentTarget.style.transform = ""; }}
+                                  onClick={e => e.stopPropagation()}
+                                >
+                                  {l.icon === "ext" ? I.ext : I.gh} {l.label}
+                                </a>
+                              ))
+                            ) : (
+                              p.link && (
+                                <a
+                                  href={p.link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="proj-link"
+                                  style={{ color: p.color, borderColor: `${p.color}50`, background: `${p.color}12` }}
+                                  onMouseEnter={e => { e.currentTarget.style.background = `${p.color}25`; e.currentTarget.style.borderColor = p.color; e.currentTarget.style.transform = "translateY(-2px)"; }}
+                                  onMouseLeave={e => { e.currentTarget.style.background = `${p.color}12`; e.currentTarget.style.borderColor = `${p.color}50`; e.currentTarget.style.transform = ""; }}
+                                  onClick={e => e.stopPropagation()}
+                                >
+                                  {I.gh} GitHub
+                                </a>
+                              )
+                            )}
+                            {p.demoLink && (
+                              <a
+                                href={p.demoLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="proj-link"
+                                style={{ color: "#fff", borderColor: p.color, background: `linear-gradient(135deg, ${p.color}, ${t.accent})` }}
+                                onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = `0 6px 20px ${p.color}50`; }}
+                                onMouseLeave={e => { e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = "none"; }}
+                                onClick={e => e.stopPropagation()}
+                              >
+                                {I.ext} {p.demoLink.includes("marketplace.visualstudio.com") ? "VS Code Marketplace" : p.demoLink.includes("linkedin.com") ? "View on LinkedIn" : "Live Demo"}
+                              </a>
+                            )}
+                          </div>
                         </div>
-                      )}
-
-                      {/* Tech Stack Pills */}
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 26 }}>
-                        {p.tech.map(tc => (
-                          <span
-                            key={tc}
-                            style={{
-                              padding: "5px 14px",
-                              borderRadius: 50,
-                              fontSize: ".8rem",
-                              background: `${p.color}12`,
-                              border: `1px solid ${p.color}35`,
-                              color: p.color,
-                              fontFamily: "'Fira Code',monospace",
-                            }}
-                          >
-                            {tc}
-                          </span>
-                        ))}
                       </div>
+                    ) : (
+                      /* COMPACT 0.5 SIZE VIEW */
+                      <div className="proj-compact-row" style={{ display: "flex", alignItems: "center", gap: 22, width: "100%" }}>
+                        {/* Compact Preview Thumbnail (0.5 scale footprint) */}
+                        <div
+                          className="proj-compact-img"
+                          style={{
+                            width: 175,
+                            height: 110,
+                            borderRadius: 14,
+                            overflow: "hidden",
+                            border: `1.5px solid ${p.color}40`,
+                            background: `linear-gradient(135deg, ${p.color}15 0%, rgba(0,0,0,0.5) 100%)`,
+                            boxShadow: `0 8px 24px rgba(0,0,0,0.35)`,
+                            flexShrink: 0,
+                            position: "relative",
+                          }}
+                        >
+                          {p.image ? (
+                            <img
+                              src={p.image}
+                              alt={p.title}
+                              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                            />
+                          ) : (
+                            <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: p.color, fontSize: "1.4rem" }}>
+                              🖼️
+                            </div>
+                          )}
+                        </div>
 
-                      {/* Action Links */}
-                      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
-                        {p.links ? (
-                          p.links.map((l, lIdx) => (
-                            <a
-                              key={lIdx}
-                              href={l.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="proj-link"
-                              style={{ color: p.color, borderColor: `${p.color}50`, background: `${p.color}12` }}
-                              onMouseEnter={e => { e.currentTarget.style.background = `${p.color}25`; e.currentTarget.style.borderColor = p.color; e.currentTarget.style.transform = "translateY(-2px)"; }}
-                              onMouseLeave={e => { e.currentTarget.style.background = `${p.color}12`; e.currentTarget.style.borderColor = `${p.color}50`; e.currentTarget.style.transform = ""; }}
-                            >
-                              {l.icon === "ext" ? I.ext : I.gh} {l.label}
-                            </a>
-                          ))
-                        ) : (
-                          p.link && (
-                            <a
-                              href={p.link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="proj-link"
-                              style={{ color: p.color, borderColor: `${p.color}50`, background: `${p.color}12` }}
-                              onMouseEnter={e => { e.currentTarget.style.background = `${p.color}25`; e.currentTarget.style.borderColor = p.color; e.currentTarget.style.transform = "translateY(-2px)"; }}
-                              onMouseLeave={e => { e.currentTarget.style.background = `${p.color}12`; e.currentTarget.style.borderColor = `${p.color}50`; e.currentTarget.style.transform = ""; }}
-                            >
-                              {I.gh} GitHub
-                            </a>
-                          )
-                        )}
-                        {p.demoLink && (
-                          <a
-                            href={p.demoLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="proj-link"
-                            style={{ color: "#fff", borderColor: p.color, background: `linear-gradient(135deg, ${p.color}, ${t.accent})` }}
-                            onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = `0 6px 20px ${p.color}50`; }}
-                            onMouseLeave={e => { e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = "none"; }}
-                          >
-                            {I.ext} {p.demoLink.includes("marketplace.visualstudio.com") ? "VS Code Marketplace" : p.demoLink.includes("linkedin.com") ? "View on LinkedIn" : "Live Demo"}
-                          </a>
-                        )}
+                        {/* Compact Details */}
+                        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 6 }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                            <span style={{ fontSize: ".72rem", fontWeight: 700, color: p.color, letterSpacing: ".12em", textTransform: "uppercase", fontFamily: "'Fira Code',monospace" }}>
+                              {p.subtitle || "FEATURED PROJECT"}
+                            </span>
+                            <span style={{ width: 4, height: 4, borderRadius: "50%", background: t.faint }} />
+                            <span style={{ fontSize: ".75rem", color: t.faint, fontFamily: "'Fira Code',monospace" }}>
+                              0{idx + 1}
+                            </span>
+                          </div>
+
+                          <h3 style={{ fontSize: "1.28rem", fontWeight: 700, color: t.text, margin: 0, lineHeight: 1.3 }}>
+                            {p.title}
+                          </h3>
+
+                          <p style={{
+                            fontSize: ".88rem",
+                            lineHeight: 1.5,
+                            color: t.muted,
+                            margin: 0,
+                            display: "-webkit-box",
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: "vertical",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}>
+                            {p.desc}
+                          </p>
+
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 2 }}>
+                            {p.tech.slice(0, 5).map(tc => (
+                              <span
+                                key={tc}
+                                style={{
+                                  padding: "2px 10px",
+                                  borderRadius: 50,
+                                  fontSize: ".74rem",
+                                  background: `${p.color}12`,
+                                  border: `1px solid ${p.color}30`,
+                                  color: p.color,
+                                  fontFamily: "'Fira Code',monospace",
+                                }}
+                              >
+                                {tc}
+                              </span>
+                            ))}
+                            {p.tech.length > 5 && (
+                              <span style={{ fontSize: ".72rem", color: t.faint, alignSelf: "center", fontFamily: "'Fira Code',monospace" }}>
+                                +{p.tech.length - 5}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Hover Indicator Pill */}
+                        <div
+                          className="proj-compact-expand"
+                          style={{
+                            flexShrink: 0,
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 6,
+                            padding: "8px 16px",
+                            borderRadius: 50,
+                            background: `${p.color}12`,
+                            border: `1px solid ${p.color}35`,
+                            color: p.color,
+                            fontSize: ".78rem",
+                            fontFamily: "'Fira Code',monospace",
+                            fontWeight: 600,
+                            transition: "all .2s ease",
+                          }}
+                        >
+                          <span>Explore</span>
+                          <span>↓</span>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
-                </div>
-              );
-            })()}
-
-            {/* Project Quick Selector Strip */}
-            <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap", marginTop: 36 }}>
-              {PROJECTS.map((proj, idx) => {
-                const isActive = idx === currentProject;
-                return (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentProject(idx)}
-                    style={{
-                      padding: "8px 18px",
-                      borderRadius: 50,
-                      border: isActive ? `1.5px solid ${proj.color}` : `1px solid ${t.gBorder}`,
-                      background: isActive ? `${proj.color}20` : t.bgAlt,
-                      color: isActive ? proj.color : t.faint,
-                      fontSize: ".82rem",
-                      fontFamily: "'Fira Code',monospace",
-                      cursor: "pointer",
-                      transition: "all .25s ease",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 8,
-                    }}
-                    onMouseEnter={e => { if (!isActive) e.currentTarget.style.borderColor = `${proj.color}80`; }}
-                    onMouseLeave={e => { if (!isActive) e.currentTarget.style.borderColor = t.gBorder; }}
-                  >
-                    <span style={{ fontWeight: 700 }}>0{idx + 1}</span>
-                    <span style={{ maxWidth: 140, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                      {proj.title.split("—")[0].trim()}
-                    </span>
-                  </button>
                 );
               })}
             </div>
