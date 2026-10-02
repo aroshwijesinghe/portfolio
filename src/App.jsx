@@ -1590,12 +1590,11 @@ export default function Portfolio() {
                       className="hero-portrait-img"
                       style={{
                         width: "100%",
-                        maxHeight: 530,
+                        height: "auto",
+                        maxHeight: 560,
                         objectFit: "contain",
                         display: "block",
                         filter: `drop-shadow(0 20px 40px rgba(0,0,0,0.65)) drop-shadow(0 0 35px ${t.accent}25)`,
-                        maskImage: "linear-gradient(to bottom, black 85%, transparent 100%)",
-                        WebkitMaskImage: "linear-gradient(to bottom, black 85%, transparent 100%)",
                       }}
                       onError={e => {
                         e.target.src = "/profile.png";
