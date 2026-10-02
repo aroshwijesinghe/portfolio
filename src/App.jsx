@@ -119,6 +119,22 @@ const PROJECTS = [
     demoLink: "https://predicti-x-frontend.vercel.app/",
   },
   {
+    title: "Timeline Studio",
+    subtitle: "INTERACTIVE GOOGLE MAPS TIMELINE & ANALYTICS",
+    desc: "Interactive, privacy-first Google Maps Timeline viewer. Replay visited routes with animated playback, GPS breadcrumbs, and travel analytics—100% client-side.",
+    contributions: [
+      "Client-side Google Maps Timeline JSON ingestion & local parsing",
+      "Animated GPS route replay with speed controls & directional breadcrumbs",
+      "Journey analytics dashboard: distance, stops & mobility mode breakdown",
+      "Multi-style map rendering with OpenStreetMap, Streets, Dark & Satellite",
+    ],
+    tech: ["Next.js", "React", "Leaflet", "GPS Analytics", "Tailwind"],
+    color: "#10b981",
+    image: "/projects/timeline-studio.png",
+    link: "https://github.com/aroshwijesinghe/timeline_crack",
+    demoLink: "https://timeline-theta-three.vercel.app",
+  },
+  {
     title: "BulkThreads",
     subtitle: "GROUP BUYING WHOLESALE PLATFORM",
     desc: "A group buying platform for premium clothing at wholesale prices. Features a React frontend, Python backend, Supabase Auth with JWT, Row Level Security, and comprehensive order management.",
@@ -1191,6 +1207,7 @@ export default function Portfolio() {
         .nl{position:relative;color:${t.muted};text-decoration:none;font-size:.9rem;font-weight:400;letter-spacing:.02em;transition:color .3s;cursor:pointer;background:none;border:none;font-family:'Plus Jakarta Sans',sans-serif;padding:4px 0}.nl:hover,.nl.on{color:${t.text}}.nl.on::after{content:'';position:absolute;bottom:-2px;left:0;width:100%;height:2px;background:${t.accent};border-radius:1px}
         input,textarea{width:100%;background:${t.inputBg};border:1px solid ${t.inputB};border-radius:12px;padding:14px 18px;color:${t.text};font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;transition:border-color .3s,box-shadow .3s;outline:none}input:focus,textarea:focus{border-color:${t.accent}80;box-shadow:0 0 20px ${t.accent}15}input::placeholder,textarea::placeholder{color:${t.faint}}textarea{resize:vertical;min-height:120px}
         .float-a{animation:float 6s ease-in-out infinite}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+        @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
         @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}.s1{animation:fadeInUp .8s .1s both}.s2{animation:fadeInUp .8s .2s both}.s3{animation:fadeInUp .8s .3s both}.s4{animation:fadeInUp .8s .4s both}.s5{animation:fadeInUp .8s .5s both}
         .orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
         .thm{width:44px;height:44px;border-radius:50%;border:1px solid ${t.gBorderS};background:${t.glass};cursor:pointer;display:flex;align-items:center;justify-content:center;color:${t.text};transition:all .3s;backdrop-filter:blur(10px)}.thm:hover{background:${t.accent}18;border-color:${t.accent}55;transform:scale(1.1)}
@@ -1198,7 +1215,7 @@ export default function Portfolio() {
         .proj-showcase-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:44px;align-items:center}
         @media(max-width:960px){.proj-showcase-grid{grid-template-columns:1fr !important;gap:28px !important;padding:24px !important}}
         @media(max-width:600px){.proj-contrib-grid{grid-template-columns:1fr !important}}
-        @media(max-width:768px){.hero-grid{flex-direction:column-reverse !important;text-align:center}.hero-btns{justify-content:center !important}.pgrid{grid-template-columns:1fr !important}.sgrid{grid-template-columns:1fr !important}.agrid{grid-template-columns:1fr !important}.cgrid{grid-template-columns:1fr !important}.nav-d{display:none !important}.mob-btn{display:flex !important}.htitle{font-size:2.2rem !important}.stitle{font-size:2rem !important}.hero-img{width:240px !important;height:320px !important;margin:0 auto !important}.srow{justify-content:center !important}}
+        @media(max-width:768px){.hero-grid{flex-direction:column-reverse !important;text-align:center}.hero-btns{justify-content:center !important}.pgrid{grid-template-columns:1fr !important}.sgrid{grid-template-columns:1fr !important}.agrid{grid-template-columns:1fr !important}.cgrid{grid-template-columns:1fr !important}.nav-d{display:none !important}.mob-btn{display:flex !important}.htitle{font-size:2.2rem !important}.stitle{font-size:2rem !important}.hero-portrait-wrap{width:290px !important;max-width:88vw !important;margin:0 auto 16px !important}.hero-portrait-img{max-height:400px !important}.hero-badge-hide-mob{display:none !important}.srow{justify-content:center !important}}
         @media(min-width:769px){.mob-btn{display:none !important}.mob-menu{display:none !important}}
       `}</style>
       <style>{`:root{--icon-nextjs-inner:${t.nextInner}}`}</style>
@@ -1435,51 +1452,156 @@ export default function Portfolio() {
                 </div>
               </div>
               <div style={{ flex: "0 0 auto" }}>
-                <div className="float-a" style={{ position: "relative" }}>
-                  <div className="hero-img" style={{
-                    width: 310,
-                    height: 410,
-                    borderRadius: 28,
-                    background: `linear-gradient(135deg, ${t.accent}60, ${t.accent2}60, ${t.accent}20)`,
-                    padding: 3,
-                    boxShadow: `0 20px 50px ${t.accent}25, 0 0 30px ${t.accent}15`,
-                  }}>
-                    <div style={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: 25,
-                      overflow: "hidden",
-                      background: t.bgAlt,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}>
-                      <img
-                        src="./profile.jpeg"
-                        alt={PROFILE.name}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          objectPosition: "center 20%",
-                          borderRadius: 25,
-                          display: "block",
-                        }}
-                        onError={e => {
-                          e.target.style.display = "none";
-                          e.target.parentElement.innerHTML = `<div style="font-size:72px;font-weight:800;font-family:'Plus Jakarta Sans';color:${t.accent}">AW</div>`;
-                        }}
-                      />
-                    </div>
-                  </div>
+                <div className="hero-portrait-wrap float-a" style={{ position: "relative", width: 380, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  {/* Atmospheric Studio Backlight Glow */}
                   <div style={{
                     position: "absolute",
-                    inset: -14,
-                    borderRadius: 38,
-                    border: `1px solid ${t.accent}30`,
+                    width: 440,
+                    height: 440,
+                    borderRadius: "50%",
+                    background: `radial-gradient(circle, ${t.accent}38 0%, ${t.accent2}20 50%, transparent 70%)`,
+                    filter: "blur(60px)",
                     pointerEvents: "none",
-                    animation: "float 4s ease-in-out infinite reverse",
+                    zIndex: 0,
                   }} />
+
+                  {/* Subtle Geometric Orbital Ring */}
+                  <div style={{
+                    position: "absolute",
+                    width: 410,
+                    height: 410,
+                    borderRadius: "50%",
+                    border: `1.5px dashed ${t.accent}35`,
+                    pointerEvents: "none",
+                    zIndex: 0,
+                    animation: "spin 35s linear infinite",
+                  }} />
+
+                  {/* Floating Tech Badge 1: Top Right */}
+                  <div style={{
+                    position: "absolute",
+                    top: 24,
+                    right: -16,
+                    background: t.glass,
+                    backdropFilter: "blur(16px)",
+                    border: `1px solid ${t.accent}50`,
+                    borderRadius: 30,
+                    padding: "7px 14px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    boxShadow: `0 12px 30px ${t.shadow}`,
+                    zIndex: 3,
+                    fontFamily: "'Fira Code', monospace",
+                    fontSize: ".82rem",
+                    color: t.accent,
+                    animation: "float 4.5s ease-in-out infinite",
+                  }}>
+                    <span style={{ width: 7, height: 7, borderRadius: "50%", background: t.accent, boxShadow: `0 0 10px ${t.accent}` }} />
+                    &lt;AI / ML&gt;
+                  </div>
+
+                  {/* Floating Tech Badge 2: Top Left */}
+                  <div className="hero-badge-hide-mob" style={{
+                    position: "absolute",
+                    top: 80,
+                    left: -20,
+                    width: 42,
+                    height: 42,
+                    borderRadius: "50%",
+                    background: t.glass,
+                    backdropFilter: "blur(16px)",
+                    border: `1px solid ${t.accent2}50`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    boxShadow: `0 10px 25px ${t.shadow}`,
+                    zIndex: 3,
+                    fontFamily: "'Fira Code', monospace",
+                    fontSize: "1rem",
+                    fontWeight: 700,
+                    color: t.accent2,
+                    animation: "float 5.5s ease-in-out infinite 1s",
+                  }}>
+                    {"{ }"}
+                  </div>
+
+                  {/* Floating Tech Badge 3: Mid Right */}
+                  <div className="hero-badge-hide-mob" style={{
+                    position: "absolute",
+                    bottom: 140,
+                    right: -24,
+                    width: 44,
+                    height: 44,
+                    borderRadius: "50%",
+                    background: t.glass,
+                    backdropFilter: "blur(16px)",
+                    border: `1px solid ${t.accent}50`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    boxShadow: `0 10px 25px ${t.shadow}`,
+                    zIndex: 3,
+                    fontFamily: "'Fira Code', monospace",
+                    fontSize: ".95rem",
+                    fontWeight: 700,
+                    color: t.accent,
+                    animation: "float 6s ease-in-out infinite 2s",
+                  }}>
+                    &lt;/&gt;
+                  </div>
+
+                  {/* Floating Tech Badge 4: Bottom Pill */}
+                  <div style={{
+                    position: "absolute",
+                    bottom: 12,
+                    background: t.glass,
+                    backdropFilter: "blur(16px)",
+                    border: `1px solid ${t.gBorderS}`,
+                    borderRadius: 30,
+                    padding: "6px 16px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    boxShadow: `0 12px 32px ${t.shadow}`,
+                    zIndex: 3,
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                    fontSize: ".82rem",
+                    fontWeight: 600,
+                    color: t.text,
+                    animation: "float 5s ease-in-out infinite 1.5s",
+                  }}>
+                    <span style={{ color: t.accent }}>⚡</span>
+                    Full-Stack &amp; AI Engineer
+                  </div>
+
+                  {/* Cutout Portrait with feathered bottom fade and subtle studio lighting */}
+                  <div style={{
+                    position: "relative",
+                    zIndex: 2,
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}>
+                    <img
+                      src="/profile-cutout.png"
+                      alt={PROFILE.name}
+                      className="hero-portrait-img"
+                      style={{
+                        width: "100%",
+                        maxHeight: 530,
+                        objectFit: "contain",
+                        display: "block",
+                        filter: `drop-shadow(0 20px 40px rgba(0,0,0,0.65)) drop-shadow(0 0 35px ${t.accent}25)`,
+                        maskImage: "linear-gradient(to bottom, black 85%, transparent 100%)",
+                        WebkitMaskImage: "linear-gradient(to bottom, black 85%, transparent 100%)",
+                      }}
+                      onError={e => {
+                        e.target.src = "/profile.png";
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
