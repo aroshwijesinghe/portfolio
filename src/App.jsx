@@ -101,7 +101,14 @@ const SKILLS = [
 const PROJECTS = [
   {
     title: "PredictiX — AI-Powered Asset Management",
+    subtitle: "AI & ML ENTERPRISE PLATFORM",
     desc: "AI-based system predicting product/asset maintenance needs with a prediction dashboard, sensor data visualization, maintenance events tracking, KPI metrics, and an integrated chatbot assistant.",
+    contributions: [
+      "AI maintenance need prediction dashboard",
+      "IoT sensor telemetry & KPI metrics",
+      "RAG-powered conversational Sidekick AI assistant",
+      "Role-based access & automated ticket dispatching",
+    ],
     tech: ["React", "Python", "ML", "Supabase", "RAG", "Chatbot"],
     color: "#00d4ff",
     image: "/projects/smart-asset.png",
@@ -113,7 +120,14 @@ const PROJECTS = [
   },
   {
     title: "BulkThreads",
+    subtitle: "GROUP BUYING WHOLESALE PLATFORM",
     desc: "A group buying platform for premium clothing at wholesale prices. Features a React frontend, Python backend, Supabase Auth with JWT, Row Level Security, and comprehensive order management.",
+    contributions: [
+      "Wholesale group-buying pooling architecture",
+      "Supabase Auth with JWT & Row Level Security",
+      "Dynamic threshold-based order batching",
+      "Campaign management & order tracking",
+    ],
     tech: ["React", "Python", "Supabase", "SQL"],
     color: "#7c3aed",
     image: "/projects/bulkthreads.png",
@@ -121,17 +135,15 @@ const PROJECTS = [
     demoLink: "https://clo-bulk.vercel.app",
   },
   {
-    title: "Tummy Boy — Pushup App",
-    desc: "Fitness tracking mobile application featuring workout tracking, rep counting, and detailed progress analytics with visual charts to help users stay consistent.",
-    tech: ["Mobile", "Fitness", "Analytics"],
-    color: "#a855f7",
-    image: "/projects/tummy-boy.png",
-    link: "https://github.com/aroshwijesinghe/Tummy_boy",
-    demoLink: null,
-  },
-  {
     title: "Money Balancing App",
+    subtitle: "FINANCE & EXPENSE TRACKING MOBILE APP",
     desc: "Finance and productivity mobile application helping users manage budgets, track expenses, balance income, and build better financial habits.",
+    contributions: [
+      "Personal & group expense balance calculation",
+      "Settlement suggestions & net debt optimization",
+      "PIN security & biometric app lock",
+      "Categorized monthly transaction analytics",
+    ],
     tech: ["Mobile", "Finance", "Productivity"],
     color: "#22c55e",
     image: "/projects/money-balancing.png",
@@ -139,8 +151,31 @@ const PROJECTS = [
     demoLink: null,
   },
   {
+    title: "Tummy Boy — Pushup App",
+    subtitle: "FITNESS & REPETITION TRACKING APP",
+    desc: "Fitness tracking mobile application featuring workout tracking, rep counting, and detailed progress analytics with visual charts to help users stay consistent.",
+    contributions: [
+      "Automated repetition counting & sensor tracking",
+      "Interactive workout analytics & visual charts",
+      "Consistency streak tracking & fitness goals",
+      "Lightweight, responsive mobile interface",
+    ],
+    tech: ["Mobile", "Fitness", "Analytics"],
+    color: "#a855f7",
+    image: "/projects/tummy-boy.png",
+    link: "https://github.com/aroshwijesinghe/Tummy_boy",
+    demoLink: null,
+  },
+  {
     title: "Portfolio Website",
+    subtitle: "PERSONAL DEVELOPER PORTFOLIO",
     desc: "This very website — a modern, responsive portfolio built with React featuring glassmorphism, smooth animations, dark/light mode, and futuristic aesthetics.",
+    contributions: [
+      "Custom interactive glassmorphic UI system",
+      "Dynamic dark & light mode styling engine",
+      "Featured project showcase with interactive previews",
+      "Responsive fluid layout across all devices",
+    ],
     tech: ["React", "Tailwind", "Framer Motion"],
     color: "#f59e0b",
     image: "/projects/portfolio.png",
@@ -149,7 +184,14 @@ const PROJECTS = [
   },
   {
     title: "Advance Loop Solutions",
+    subtitle: "STARTUP & AI VENTURE",
     desc: "Co-founded a technology company focused on delivering innovative software solutions and AI-driven products. Leading strategic direction, product development, and building a team to create real-world digital impact.",
+    contributions: [
+      "Co-founder & technical leadership",
+      "Architecting AI-driven digital products",
+      "Enterprise workflow automation",
+      "Full-stack cloud application deployment",
+    ],
     tech: ["Startup", "AI", "Software", "Co-Founder"],
     color: "#6366f1",
     image: "/projects/advance-loop.png",
@@ -158,7 +200,14 @@ const PROJECTS = [
   },
   {
     title: "Smart Chair — Posture Analysis System",
+    subtitle: "HARDWARE + AI UNIVERSITY PROJECT",
     desc: "Hardware + AI university project (CM-1900 Intelligent Machine) built as an AI student at University of Moratuwa. A smart chair that uses sensors and machine learning to analyse the user's sitting posture in real time and provide actionable feedback.",
+    contributions: [
+      "Pressure sensor matrix telemetry on sitting posture",
+      "ML classification for ergonomic posture health",
+      "Real-time feedback & corrective posture alerts",
+      "IoT hardware integration with embedded sensors",
+    ],
     tech: ["Hardware", "AI", "Sensors", "ML", "IoT"],
     color: "#f97316",
     image: "/projects/smart-chair.png",
@@ -1011,6 +1060,16 @@ export default function Portfolio() {
   const [contactModal, setContactModal] = useState(null); // "email" | "phone" | null
   const [previewModal, setPreviewModal] = useState(null); // { image, title, color, demoLink, link }
   const [copied, setCopied] = useState(false);
+
+  /* featured project slider state */
+  const [currentProject, setCurrentProject] = useState(0);
+  const prevProject = useCallback(() => {
+    setCurrentProject((p) => (p === 0 ? PROJECTS.length - 1 : p - 1));
+  }, []);
+  const nextProject = useCallback(() => {
+    setCurrentProject((p) => (p === PROJECTS.length - 1 ? 0 : p + 1));
+  }, []);
+
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
   };
@@ -1136,6 +1195,9 @@ export default function Portfolio() {
         .orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
         .thm{width:44px;height:44px;border-radius:50%;border:1px solid ${t.gBorderS};background:${t.glass};cursor:pointer;display:flex;align-items:center;justify-content:center;color:${t.text};transition:all .3s;backdrop-filter:blur(10px)}.thm:hover{background:${t.accent}18;border-color:${t.accent}55;transform:scale(1.1)}
         .proj-link{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:50px;font-size:.82rem;font-weight:500;font-family:'Fira Code',monospace;text-decoration:none;transition:all .3s;border:1px solid;cursor:pointer}
+        .proj-showcase-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:44px;align-items:center}
+        @media(max-width:960px){.proj-showcase-grid{grid-template-columns:1fr !important;gap:28px !important;padding:24px !important}}
+        @media(max-width:600px){.proj-contrib-grid{grid-template-columns:1fr !important}}
         @media(max-width:768px){.hero-grid{flex-direction:column-reverse !important;text-align:center}.hero-btns{justify-content:center !important}.pgrid{grid-template-columns:1fr !important}.sgrid{grid-template-columns:1fr !important}.agrid{grid-template-columns:1fr !important}.cgrid{grid-template-columns:1fr !important}.nav-d{display:none !important}.mob-btn{display:flex !important}.htitle{font-size:2.2rem !important}.stitle{font-size:2rem !important}.hero-img{width:240px !important;height:320px !important;margin:0 auto !important}.srow{justify-content:center !important}}
         @media(min-width:769px){.mob-btn{display:none !important}.mob-menu{display:none !important}}
       `}</style>
@@ -1493,164 +1555,247 @@ export default function Portfolio() {
 
         <Sec id="projects">
           <div style={{ maxWidth: 1200, margin: "0 auto", padding: "100px 24px" }}>
-            <h2 className="stitle" style={{ fontSize: "2.5rem", fontWeight: 700, marginBottom: 12, display: "flex", alignItems: "baseline", gap: "0.4ch", flexWrap: "wrap" }}>
-              <SplitText text="Featured" tag="span" splitType="chars" delay={60} duration={0.7} ease="power3.out" from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} threshold={0.2} rootMargin="-80px" textAlign="left" />
-              <SplitText text="Projects" tag="span" splitType="chars" delay={60} duration={0.7} ease="power3.out" from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} threshold={0.2} rootMargin="-80px" textAlign="left" />
-            </h2>
-            <div style={{ width: 60, height: 3, background: `linear-gradient(90deg,${t.accent},transparent)`, borderRadius: 2, marginBottom: 48 }} />
-            <div className="pgrid" style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 24 }}>
-              {PROJECTS.map((p, i) => (
-                <div key={i} className="pcard glow-border" style={{ background: t.bgAlt, border: `2px solid ${t.gBorder}`, borderTop: `3px solid ${p.color}`, backdropFilter: "blur(20px)", borderRadius: 20, overflow: "hidden", position: "relative", transition: "all .3s", display: "flex", flexDirection: "column" }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = p.color; e.currentTarget.style.boxShadow = `0 0 30px ${p.color}40, inset 0 0 20px ${p.color}15`; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = t.gBorder; e.currentTarget.style.boxShadow = "none"; }}>
+            {/* Header with Title and Slider Controls */}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 40, flexWrap: "wrap", gap: 20 }}>
+              <div>
+                <div style={{ fontSize: ".82rem", fontWeight: 700, color: t.accent, letterSpacing: ".15em", textTransform: "uppercase", fontFamily: "'Fira Code',monospace", marginBottom: 8 }}>
+                  Featured Work
+                </div>
+                <h2 className="stitle" style={{ fontSize: "2.8rem", fontWeight: 700, margin: 0, display: "flex", alignItems: "baseline", gap: "0.4ch", flexWrap: "wrap" }}>
+                  <SplitText text="Projects" tag="span" splitType="chars" delay={60} duration={0.7} ease="power3.out" from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} threshold={0.2} rootMargin="-80px" textAlign="left" />
+                </h2>
+                <div style={{ width: 60, height: 3, background: `linear-gradient(90deg,${t.accent},transparent)`, borderRadius: 2, marginTop: 14 }} />
+              </div>
 
-                  {/* Project Image Preview */}
-                  <div
+              {/* Slider Pagination & Controls */}
+              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                <span style={{ fontSize: "1rem", fontFamily: "'Fira Code',monospace", color: t.muted, fontWeight: 500 }}>
+                  0{currentProject + 1} <span style={{ opacity: 0.4 }}>/</span> 0{PROJECTS.length}
+                </span>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <button
+                    onClick={prevProject}
+                    aria-label="Previous project"
                     style={{
-                      position: "relative",
-                      width: "100%",
-                      height: 200,
-                      overflow: "hidden",
-                      background: `linear-gradient(180deg, ${p.color}14 0%, ${t.bgAlt} 100%)`,
-                      borderBottom: `1px solid ${t.gBorder}`,
-                      cursor: p.image ? "pointer" : "default",
+                      width: 44,
+                      height: 44,
+                      borderRadius: "50%",
+                      border: `1.5px solid ${t.gBorder}`,
+                      background: t.bgAlt,
+                      color: t.text,
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "1.2rem",
+                      transition: "all .2s ease",
                     }}
-                    onClick={() => {
-                      if (p.image) setPreviewModal({ image: p.image, title: p.title, color: p.color, demoLink: p.demoLink, link: p.link || (p.links && p.links[0]?.url) });
-                    }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = t.accent; e.currentTarget.style.background = `${t.accent}15`; e.currentTarget.style.transform = "scale(1.05)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = t.gBorder; e.currentTarget.style.background = t.bgAlt; e.currentTarget.style.transform = "scale(1)"; }}
                   >
-                    {p.image ? (
-                      <>
-                        <img
-                          src={p.image}
-                          alt={p.title}
-                          className="pcard-img"
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                            display: "block",
-                          }}
-                          onError={(e) => {
-                            e.currentTarget.style.display = "none";
-                            if (e.currentTarget.nextElementSibling) {
-                              e.currentTarget.nextElementSibling.style.display = "flex";
-                            }
-                          }}
-                        />
-                        <div
-                          style={{
-                            display: "none",
-                            position: "absolute",
-                            inset: 0,
-                            alignItems: "center",
-                            justifyContent: "center",
-                            flexDirection: "column",
-                            gap: 10,
-                            background: `radial-gradient(circle at 50% 50%, ${p.color}20 0%, ${t.bgAlt} 80%)`,
-                          }}
-                        >
+                    ‹
+                  </button>
+                  <button
+                    onClick={nextProject}
+                    aria-label="Next project"
+                    style={{
+                      width: 44,
+                      height: 44,
+                      borderRadius: "50%",
+                      border: `1.5px solid ${t.accent}`,
+                      background: `linear-gradient(135deg, ${t.accent}, ${t.accent2})`,
+                      color: "#fff",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "1.2rem",
+                      transition: "all .2s ease",
+                      boxShadow: `0 4px 18px ${t.accent}40`,
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.08)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; }}
+                  >
+                    ›
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Featured Project Card */}
+            {(() => {
+              const p = PROJECTS[currentProject];
+              return (
+                <div
+                  key={currentProject}
+                  className="glow-border"
+                  style={{
+                    background: t.bgAlt,
+                    border: `1.5px solid ${t.gBorder}`,
+                    borderTop: `3px solid ${p.color}`,
+                    backdropFilter: "blur(20px)",
+                    borderRadius: 24,
+                    overflow: "hidden",
+                    padding: "38px",
+                    boxShadow: `0 20px 60px ${t.shadow}, 0 0 40px ${p.color}15`,
+                    transition: "all .3s ease",
+                  }}
+                >
+                  <div className="proj-showcase-grid">
+                    {/* LEFT COLUMN: Large Preview Mockup */}
+                    <div
+                      style={{
+                        position: "relative",
+                        borderRadius: 20,
+                        overflow: "hidden",
+                        border: `1.5px solid ${p.color}40`,
+                        background: `linear-gradient(135deg, ${p.color}15 0%, rgba(0,0,0,0.5) 100%)`,
+                        boxShadow: `0 16px 40px rgba(0,0,0,0.6), 0 0 30px ${p.color}20`,
+                        cursor: p.image ? "pointer" : "default",
+                        aspectRatio: "16 / 10",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                      onClick={() => {
+                        if (p.image) setPreviewModal({ image: p.image, title: p.title, color: p.color, demoLink: p.demoLink, link: p.link || (p.links && p.links[0]?.url) });
+                      }}
+                    >
+                      {p.image ? (
+                        <>
+                          <img
+                            src={p.image}
+                            alt={p.title}
+                            className="pcard-img"
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                              display: "block",
+                              transition: "transform .5s cubic-bezier(.16,1,.3,1)",
+                            }}
+                            onError={(e) => {
+                              e.currentTarget.style.display = "none";
+                              if (e.currentTarget.nextElementSibling) e.currentTarget.nextElementSibling.style.display = "flex";
+                            }}
+                          />
                           <div
                             style={{
-                              width: 48,
-                              height: 48,
-                              borderRadius: 12,
-                              background: `${p.color}20`,
-                              border: `1.5px dashed ${p.color}60`,
-                              display: "flex",
+                              display: "none",
+                              position: "absolute",
+                              inset: 0,
                               alignItems: "center",
                               justifyContent: "center",
-                              color: p.color,
-                              fontSize: "1.3rem",
+                              flexDirection: "column",
+                              gap: 12,
+                              background: `radial-gradient(circle at 50% 50%, ${p.color}20 0%, ${t.bgAlt} 80%)`,
                             }}
                           >
-                            🖼️
+                            <div style={{ width: 56, height: 56, borderRadius: 16, background: `${p.color}20`, border: `1.5px dashed ${p.color}60`, display: "flex", alignItems: "center", justifyContent: "center", color: p.color, fontSize: "1.6rem" }}>
+                              🖼️
+                            </div>
+                            <span style={{ fontSize: ".85rem", color: t.faint, fontFamily: "'Fira Code',monospace" }}>
+                              Preview Coming Soon
+                            </span>
                           </div>
-                          <span style={{ fontSize: ".8rem", color: t.faint, fontFamily: "'Fira Code',monospace" }}>
-                            Preview Coming Soon
-                          </span>
-                        </div>
-                      </>
-                    ) : (
-                      <div
-                        style={{
-                          position: "absolute",
-                          inset: 0,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          flexDirection: "column",
-                          gap: 10,
-                          background: `radial-gradient(circle at 50% 50%, ${p.color}20 0%, ${t.bgAlt} 80%)`,
-                        }}
-                      >
+                          <div
+                            className="preview-zoom-btn"
+                            style={{
+                              position: "absolute",
+                              bottom: 14,
+                              right: 14,
+                              padding: "6px 14px",
+                              borderRadius: 20,
+                              background: "rgba(0,0,0,0.75)",
+                              backdropFilter: "blur(8px)",
+                              border: `1px solid ${p.color}60`,
+                              color: "#fff",
+                              fontSize: ".75rem",
+                              fontFamily: "'Fira Code',monospace",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 6,
+                            }}
+                          >
+                            🔍 Click to Enlarge
+                          </div>
+                        </>
+                      ) : (
                         <div
                           style={{
-                            width: 48,
-                            height: 48,
-                            borderRadius: 12,
-                            background: `${p.color}20`,
-                            border: `1.5px dashed ${p.color}60`,
+                            position: "absolute",
+                            inset: 0,
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            color: p.color,
-                            fontSize: "1.3rem",
+                            flexDirection: "column",
+                            gap: 12,
+                            background: `radial-gradient(circle at 50% 50%, ${p.color}20 0%, ${t.bgAlt} 80%)`,
                           }}
                         >
-                          🖼️
+                          <div style={{ width: 56, height: 56, borderRadius: 16, background: `${p.color}20`, border: `1.5px dashed ${p.color}60`, display: "flex", alignItems: "center", justifyContent: "center", color: p.color, fontSize: "1.6rem" }}>
+                            🖼️
+                          </div>
+                          <span style={{ fontSize: ".85rem", color: t.faint, fontFamily: "'Fira Code',monospace" }}>
+                            Preview Coming Soon
+                          </span>
                         </div>
-                        <span style={{ fontSize: ".8rem", color: t.faint, fontFamily: "'Fira Code',monospace" }}>
-                          Preview Coming Soon
-                        </span>
+                      )}
+                    </div>
+
+                    {/* RIGHT COLUMN: Project Details */}
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <div style={{ fontSize: ".8rem", fontWeight: 700, color: p.color, letterSpacing: ".12em", textTransform: "uppercase", fontFamily: "'Fira Code',monospace", marginBottom: 8 }}>
+                        {p.subtitle || "FEATURED PROJECT"}
                       </div>
-                    )}
 
-                    {/* Gradient fade overlay at bottom */}
-                    <div
-                      style={{
-                        position: "absolute",
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        height: 50,
-                        background: `linear-gradient(to top, ${t.bgAlt} 0%, transparent 100%)`,
-                        pointerEvents: "none",
-                      }}
-                    />
+                      <h3 style={{ fontSize: "1.95rem", fontWeight: 700, lineHeight: 1.25, marginBottom: 16, color: t.text }}>
+                        {p.title}
+                      </h3>
 
-                    {/* Hover badge to indicate preview/click */}
-                    {p.image && (
-                      <div
-                        className="preview-zoom-btn"
-                        style={{
-                          position: "absolute",
-                          top: 12,
-                          right: 12,
-                          padding: "5px 12px",
-                          borderRadius: 20,
-                          background: "rgba(0,0,0,0.65)",
-                          backdropFilter: "blur(8px)",
-                          border: `1px solid ${p.color}60`,
-                          color: "#fff",
-                          fontSize: ".72rem",
-                          fontFamily: "'Fira Code',monospace",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 6,
-                          opacity: 0,
-                          pointerEvents: "none",
-                        }}
-                      >
-                        🔍 Preview
+                      <p style={{ fontSize: ".98rem", lineHeight: 1.75, color: t.muted, marginBottom: 22 }}>
+                        {p.desc}
+                      </p>
+
+                      {/* Key Highlights */}
+                      {p.contributions && p.contributions.length > 0 && (
+                        <div style={{ marginBottom: 24 }}>
+                          <div style={{ fontSize: ".76rem", fontWeight: 700, color: t.faint, letterSpacing: ".12em", textTransform: "uppercase", fontFamily: "'Fira Code',monospace", marginBottom: 10 }}>
+                            Key Highlights
+                          </div>
+                          <div className="proj-contrib-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 16px" }}>
+                            {p.contributions.map((c, cIdx) => (
+                              <div key={cIdx} style={{ fontSize: ".85rem", color: t.muted, display: "flex", alignItems: "baseline", gap: 8, lineHeight: 1.5 }}>
+                                <span style={{ color: p.color, fontWeight: 700, flexShrink: 0 }}>→</span>
+                                <span>{c}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Tech Stack Pills */}
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 26 }}>
+                        {p.tech.map(tc => (
+                          <span
+                            key={tc}
+                            style={{
+                              padding: "5px 14px",
+                              borderRadius: 50,
+                              fontSize: ".8rem",
+                              background: `${p.color}12`,
+                              border: `1px solid ${p.color}35`,
+                              color: p.color,
+                              fontFamily: "'Fira Code',monospace",
+                            }}
+                          >
+                            {tc}
+                          </span>
+                        ))}
                       </div>
-                    )}
-                  </div>
 
-                  <div style={{ padding: 28, display: "flex", flexDirection: "column", flex: 1 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}>
-                      <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 36, height: 36, borderRadius: 10, background: `${p.color}15`, border: `1px solid ${p.color}30`, color: p.color, fontSize: ".85rem", fontWeight: 600, fontFamily: "'Fira Code',monospace" }}>0{i + 1}</div>
-                      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "flex-end" }}>
+                      {/* Action Links */}
+                      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
                         {p.links ? (
                           p.links.map((l, lIdx) => (
                             <a
@@ -1659,9 +1804,9 @@ export default function Portfolio() {
                               target="_blank"
                               rel="noopener noreferrer"
                               className="proj-link"
-                              style={{ color: p.color, borderColor: `${p.color}44`, background: `${p.color}10` }}
-                              onMouseEnter={e => { e.currentTarget.style.background = `${p.color}25`; e.currentTarget.style.borderColor = `${p.color}88`; e.currentTarget.style.transform = "translateY(-2px)"; }}
-                              onMouseLeave={e => { e.currentTarget.style.background = `${p.color}10`; e.currentTarget.style.borderColor = `${p.color}44`; e.currentTarget.style.transform = ""; }}
+                              style={{ color: p.color, borderColor: `${p.color}50`, background: `${p.color}12` }}
+                              onMouseEnter={e => { e.currentTarget.style.background = `${p.color}25`; e.currentTarget.style.borderColor = p.color; e.currentTarget.style.transform = "translateY(-2px)"; }}
+                              onMouseLeave={e => { e.currentTarget.style.background = `${p.color}12`; e.currentTarget.style.borderColor = `${p.color}50`; e.currentTarget.style.transform = ""; }}
                             >
                               {l.icon === "ext" ? I.ext : I.gh} {l.label}
                             </a>
@@ -1673,9 +1818,9 @@ export default function Portfolio() {
                               target="_blank"
                               rel="noopener noreferrer"
                               className="proj-link"
-                              style={{ color: p.color, borderColor: `${p.color}44`, background: `${p.color}10` }}
-                              onMouseEnter={e => { e.currentTarget.style.background = `${p.color}25`; e.currentTarget.style.borderColor = `${p.color}88`; e.currentTarget.style.transform = "translateY(-2px)"; }}
-                              onMouseLeave={e => { e.currentTarget.style.background = `${p.color}10`; e.currentTarget.style.borderColor = `${p.color}44`; e.currentTarget.style.transform = ""; }}
+                              style={{ color: p.color, borderColor: `${p.color}50`, background: `${p.color}12` }}
+                              onMouseEnter={e => { e.currentTarget.style.background = `${p.color}25`; e.currentTarget.style.borderColor = p.color; e.currentTarget.style.transform = "translateY(-2px)"; }}
+                              onMouseLeave={e => { e.currentTarget.style.background = `${p.color}12`; e.currentTarget.style.borderColor = `${p.color}50`; e.currentTarget.style.transform = ""; }}
                             >
                               {I.gh} GitHub
                             </a>
@@ -1687,26 +1832,52 @@ export default function Portfolio() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="proj-link"
-                            style={{ color: t.accent, borderColor: `${t.accent}44`, background: `${t.accent}10` }}
-                            onMouseEnter={e => { e.currentTarget.style.background = `${t.accent}25`; e.currentTarget.style.borderColor = `${t.accent}88`; e.currentTarget.style.transform = "translateY(-2px)"; }}
-                            onMouseLeave={e => { e.currentTarget.style.background = `${t.accent}10`; e.currentTarget.style.borderColor = `${t.accent}44`; e.currentTarget.style.transform = ""; }}
+                            style={{ color: "#fff", borderColor: p.color, background: `linear-gradient(135deg, ${p.color}, ${t.accent})` }}
+                            onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = `0 6px 20px ${p.color}50`; }}
+                            onMouseLeave={e => { e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = "none"; }}
                           >
-                            {I.ext} {p.demoLink.includes("linkedin.com") ? "LinkedIn" : "Live Site"}
+                            {I.ext} {p.demoLink.includes("linkedin.com") ? "View on LinkedIn" : "Live Demo"}
                           </a>
-                        )}
-                        {!p.links && !p.link && !p.demoLink && (
-                          <span style={{ fontSize: ".78rem", color: t.faint, fontFamily: "'Fira Code',monospace", padding: "8px 0" }}>Private</span>
                         )}
                       </div>
                     </div>
-                    <h3 style={{ fontSize: "1.25rem", fontWeight: 600, marginBottom: 12 }}>{p.title}</h3>
-                    <p style={{ fontSize: ".92rem", lineHeight: 1.7, color: t.faint, marginBottom: 20, flex: 1 }}>{p.desc}</p>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: "auto" }}>
-                      {p.tech.map(tc => <span key={tc} style={{ padding: "4px 12px", borderRadius: 50, fontSize: ".78rem", background: `${p.color}10`, border: `1px solid ${p.color}25`, color: p.color, fontFamily: "'Fira Code',monospace" }}>{tc}</span>)}
-                    </div>
                   </div>
                 </div>
-              ))}
+              );
+            })()}
+
+            {/* Project Quick Selector Strip */}
+            <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap", marginTop: 36 }}>
+              {PROJECTS.map((proj, idx) => {
+                const isActive = idx === currentProject;
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentProject(idx)}
+                    style={{
+                      padding: "8px 18px",
+                      borderRadius: 50,
+                      border: isActive ? `1.5px solid ${proj.color}` : `1px solid ${t.gBorder}`,
+                      background: isActive ? `${proj.color}20` : t.bgAlt,
+                      color: isActive ? proj.color : t.faint,
+                      fontSize: ".82rem",
+                      fontFamily: "'Fira Code',monospace",
+                      cursor: "pointer",
+                      transition: "all .25s ease",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                    }}
+                    onMouseEnter={e => { if (!isActive) e.currentTarget.style.borderColor = `${proj.color}80`; }}
+                    onMouseLeave={e => { if (!isActive) e.currentTarget.style.borderColor = t.gBorder; }}
+                  >
+                    <span style={{ fontWeight: 700 }}>0{idx + 1}</span>
+                    <span style={{ maxWidth: 140, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                      {proj.title.split("—")[0].trim()}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </Sec>
