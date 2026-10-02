@@ -227,6 +227,12 @@ const PROJECTS = [
     tech: ["Hardware", "AI", "Sensors", "ML", "IoT"],
     color: "#f97316",
     image: "/projects/smart-chair.png",
+    gallery: [
+      { label: "Showcase", src: "/projects/smart-chair.png" },
+      { label: "Prototype Setup", src: "/projects/smart-chair-setup.png" },
+      { label: "Sensor Internals", src: "/projects/smart-chair-hardware.png" },
+      { label: "Circuit Schematic", src: "/projects/smart-chair-circuit.png" },
+    ],
     link: null,
     demoLink: "https://www.linkedin.com/feed/update/urn:li:activity:7387849804007206912/",
   },
@@ -1079,6 +1085,7 @@ export default function Portfolio() {
 
   /* project vertical list hover/expansion state */
   const [hoveredProject, setHoveredProject] = useState(null);
+  const [activeGalleryImage, setActiveGalleryImage] = useState({});
 
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
@@ -1717,85 +1724,133 @@ export default function Portfolio() {
                       /* EXPANDED VIEW: Exact original details from the featured layout */
                       <div className="proj-showcase-grid">
                         {/* LEFT COLUMN: Large Preview Mockup */}
-                        <div
-                          style={{
-                            position: "relative",
-                            borderRadius: 20,
-                            overflow: "hidden",
-                            border: `1.5px solid ${p.color}40`,
-                            background: `linear-gradient(135deg, ${p.color}15 0%, rgba(0,0,0,0.5) 100%)`,
-                            boxShadow: `0 16px 40px rgba(0,0,0,0.6), 0 0 30px ${p.color}20`,
-                            cursor: p.image ? "pointer" : "default",
-                            aspectRatio: "16 / 10",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (p.image) setPreviewModal({ image: p.image, title: p.title, color: p.color, demoLink: p.demoLink, link: p.link || (p.links && p.links[0]?.url) });
-                          }}
-                        >
-                          {p.image ? (
-                            <>
-                              <img
-                                src={p.image}
-                                alt={p.title}
-                                className="pcard-img"
-                                style={{
-                                  width: "100%",
-                                  height: "100%",
-                                  objectFit: "cover",
-                                  display: "block",
-                                  transition: "transform .5s cubic-bezier(.16,1,.3,1)",
-                                }}
-                                onError={(e) => {
-                                  e.currentTarget.style.display = "none";
-                                  if (e.currentTarget.nextElementSibling) e.currentTarget.nextElementSibling.style.display = "flex";
-                                }}
-                              />
-                              <div
-                                style={{
-                                  display: "none",
-                                  position: "absolute",
-                                  inset: 0,
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  flexDirection: "column",
-                                  gap: 12,
-                                  background: `radial-gradient(circle at 50% 50%, ${p.color}20 0%, ${t.bgAlt} 80%)`,
-                                }}
-                              >
-                                <div style={{ width: 56, height: 56, borderRadius: 16, background: `${p.color}20`, border: `1.5px dashed ${p.color}60`, display: "flex", alignItems: "center", justifyContent: "center", color: p.color, fontSize: "1.6rem" }}>
-                                  🖼️
-                                </div>
-                                <span style={{ fontSize: ".85rem", color: t.faint, fontFamily: "'Fira Code',monospace" }}>
-                                  Preview Coming Soon
-                                </span>
-                              </div>
-                              <div
-                                className="preview-zoom-btn"
-                                style={{
-                                  position: "absolute",
-                                  bottom: 14,
-                                  right: 14,
-                                  padding: "6px 14px",
-                                  borderRadius: 20,
-                                  background: "rgba(0,0,0,0.75)",
-                                  backdropFilter: "blur(8px)",
-                                  border: `1px solid ${p.color}60`,
-                                  color: "#fff",
-                                  fontSize: ".75rem",
-                                  fontFamily: "'Fira Code',monospace",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: 6,
-                                }}
-                              >
-                                🔍 Click to Enlarge
-                              </div>
-                            </>
-                          ) : (
+                        {(() => {
+                          const displayImg = (p.gallery && activeGalleryImage[idx]) || p.image;
+                          return (
+                            <div
+                              style={{
+                                position: "relative",
+                                borderRadius: 20,
+                                overflow: "hidden",
+                                border: `1.5px solid ${p.color}40`,
+                                background: `linear-gradient(135deg, ${p.color}15 0%, rgba(0,0,0,0.5) 100%)`,
+                                boxShadow: `0 16px 40px rgba(0,0,0,0.6), 0 0 30px ${p.color}20`,
+                                cursor: displayImg ? "pointer" : "default",
+                                aspectRatio: "16 / 10",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                if (displayImg) setPreviewModal({ image: displayImg, title: p.title, color: p.color, demoLink: p.demoLink, link: p.link || (p.links && p.links[0]?.url) });
+                              }}
+                            >
+                              {displayImg ? (
+                                <>
+                                  <img
+                                    src={displayImg}
+                                    alt={p.title}
+                                    className="pcard-img"
+                                    style={{
+                                      width: "100%",
+                                      height: "100%",
+                                      objectFit: "cover",
+                                      display: "block",
+                                      transition: "transform .5s cubic-bezier(.16,1,.3,1)",
+                                    }}
+                                    onError={(e) => {
+                                      e.currentTarget.style.display = "none";
+                                      if (e.currentTarget.nextElementSibling) e.currentTarget.nextElementSibling.style.display = "flex";
+                                    }}
+                                  />
+                                  <div
+                                    style={{
+                                      display: "none",
+                                      position: "absolute",
+                                      inset: 0,
+                                      alignItems: "center",
+                                      justifyContent: "center",
+                                      flexDirection: "column",
+                                      gap: 12,
+                                      background: `radial-gradient(circle at 50% 50%, ${p.color}20 0%, ${t.bgAlt} 80%)`,
+                                    }}
+                                  >
+                                    <div style={{ width: 56, height: 56, borderRadius: 16, background: `${p.color}20`, border: `1.5px dashed ${p.color}60`, display: "flex", alignItems: "center", justifyContent: "center", color: p.color, fontSize: "1.6rem" }}>
+                                      🖼️
+                                    </div>
+                                    <span style={{ fontSize: ".85rem", color: t.faint, fontFamily: "'Fira Code',monospace" }}>
+                                      Preview Coming Soon
+                                    </span>
+                                  </div>
+
+                                  {/* Gallery Pill Selector if project has multiple images */}
+                                  {p.gallery && p.gallery.length > 1 && (
+                                    <div
+                                      style={{
+                                        position: "absolute",
+                                        bottom: 10,
+                                        left: 10,
+                                        right: 10,
+                                        zIndex: 6,
+                                        display: "flex",
+                                        gap: 6,
+                                        flexWrap: "wrap",
+                                      }}
+                                      onClick={(e) => e.stopPropagation()}
+                                    >
+                                      {p.gallery.map((g, gIdx) => {
+                                        const isSelected = displayImg === g.src;
+                                        return (
+                                          <button
+                                            key={gIdx}
+                                            onClick={() => setActiveGalleryImage(prev => ({ ...prev, [idx]: g.src }))}
+                                            style={{
+                                              padding: "4px 10px",
+                                              borderRadius: 20,
+                                              fontSize: ".7rem",
+                                              fontFamily: "'Fira Code', monospace",
+                                              fontWeight: 600,
+                                              border: `1.5px solid ${isSelected ? p.color : "rgba(255,255,255,0.22)"}`,
+                                              background: isSelected ? p.color : "rgba(10,12,18,0.85)",
+                                              color: isSelected ? "#fff" : "rgba(255,255,255,0.85)",
+                                              boxShadow: isSelected ? `0 4px 14px ${p.color}55` : "0 4px 12px rgba(0,0,0,0.5)",
+                                              backdropFilter: "blur(10px)",
+                                              cursor: "pointer",
+                                              transition: "all .2s ease",
+                                            }}
+                                          >
+                                            {g.label}
+                                          </button>
+                                        );
+                                      })}
+                                    </div>
+                                  )}
+
+                                  <div
+                                    className="preview-zoom-btn"
+                                    style={{
+                                      position: "absolute",
+                                      top: 12,
+                                      right: 12,
+                                      padding: "6px 14px",
+                                      borderRadius: 20,
+                                      background: "rgba(0,0,0,0.75)",
+                                      backdropFilter: "blur(8px)",
+                                      border: `1px solid ${p.color}60`,
+                                      color: "#fff",
+                                      fontSize: ".75rem",
+                                      fontFamily: "'Fira Code',monospace",
+                                      display: "flex",
+                                      alignItems: "center",
+                                      gap: 6,
+                                      zIndex: 7,
+                                    }}
+                                  >
+                                    🔍 Click to Enlarge
+                                  </div>
+                                </>
+                              ) : (
                             <div
                               style={{
                                 position: "absolute",
@@ -1817,6 +1872,8 @@ export default function Portfolio() {
                             </div>
                           )}
                         </div>
+                      );
+                    })()}
 
                         {/* RIGHT COLUMN: Project Details */}
                         <div style={{ display: "flex", flexDirection: "column" }}>
