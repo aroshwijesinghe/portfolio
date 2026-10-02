@@ -196,6 +196,12 @@ const PROJECTS = [
     tech: ["Mobile", "Fitness", "Analytics"],
     color: "#f43f5e",
     image: "/projects/tummy-boy.png",
+    gallery: [
+      { label: "App Overview", src: "/projects/tummy-boy.png" },
+      { label: "Workout Deck", src: "/projects/tummy-boy-deck.png" },
+      { label: "Exercise Catalog", src: "/projects/tummy-boy-catalog.png" },
+      { label: "Telemetry & Stats", src: "/projects/tummy-boy-metrics.png" },
+    ],
     link: "https://github.com/aroshwijesinghe/Tummy_boy",
     demoLink: null,
   },
