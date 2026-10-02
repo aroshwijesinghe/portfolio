@@ -34,6 +34,7 @@ const SKILLS = [
       { name: "Dart", icon: "dart" },
       { name: "PHP", icon: "php" },
       { name: "C", icon: "c" },
+      { name: "C++", icon: "cpp" },
       { name: "SQL", icon: "sql" },
     ],
   },
@@ -240,6 +241,27 @@ const PROJECTS = [
     link: null,
     demoLink: "https://www.linkedin.com/feed/update/urn:li:activity:7387849804007206912/",
   },
+  {
+    title: "Space Odyssey: Rogue Starship",
+    subtitle: "C++ & OPENGL 2D SPACE SHOOTER",
+    desc: "A 2D retro space shooter built with C++ and OpenGL (freeGLUT) for Semester 4 Computer Graphics course. Defend your starbase against waves of enemy fleets, collect scrap credits, upgrade weapons & shields, and defeat heavy boss carriers.",
+    contributions: [
+      "Custom 2D graphics engine with freeGLUT, OpenGL & C++11",
+      "3 selectable starships with unique speeds, shields & firing profiles",
+      "Dynamic wave scaling, mid-wave upgrade shop & boss carrier encounters",
+      "Particle effects, screen shake feedback, muzzle flashes & starfields",
+    ],
+    tech: ["C++", "OpenGL", "freeGLUT", "Game Dev", "Computer Graphics", "MinGW"],
+    color: "#6366f1",
+    image: "/projects/space-odyssey.png",
+    gallery: [
+      { label: "Gameplay Action", src: "/projects/space-odyssey-gameplay.png" },
+      { label: "Starship Hangar", src: "/projects/space-odyssey-ships.png" },
+      { label: "Main Menu", src: "/projects/space-odyssey-menu.png" },
+    ],
+    link: "https://github.com/aroshwijesinghe/cg_project",
+    demoLink: null,
+  },
 ];
 
 const TIMELINE = [
@@ -301,6 +323,12 @@ const LangIcons = {
     <svg viewBox="0 0 128 128" width="20" height="20">
       <path fill="#659AD2" d="M115.4 30.7L67.1 2.9c-1.7-1-4.5-1-6.2 0L12.6 30.7c-1.7 1-2.9 3.5-2.9 5.4v55.7c0 1.9 1.2 4.4 2.9 5.4l48.2 27.9c.9.5 1.9.7 3.1.7 1.2 0 2.3-.3 3.1-.7l48.3-27.9c1.7-1 2.9-3.5 2.9-5.4V36.1c.1-2-1.1-4.4-2.8-5.4z"/>
       <path fill="#fff" d="M64 88.5c17.4 0 28.8-12.9 32.3-22.2L80.6 57c-2.6 7.1-8.3 14.8-16.6 14.8-12.1 0-18.2-10.4-18.2-19.4 0-12.4 7.6-19.5 18.2-19.5 7.4 0 13.6 6.4 16.2 13.7l16.1-9C92.8 27.9 81.1 17.3 64 17.3 40.4 17.3 24 36 24 62.6c0 24.5 16.3 25.9 40 25.9z"/>
+    </svg>
+  ),
+  cpp: (
+    <svg viewBox="0 0 128 128" width="20" height="20">
+      <path fill="#00599C" d="M115.4 30.7L67.1 2.9c-1.7-1-4.5-1-6.2 0L12.6 30.7c-1.7 1-2.9 3.5-2.9 5.4v55.7c0 1.9 1.2 4.4 2.9 5.4l48.2 27.9c.9.5 1.9.7 3.1.7 1.2 0 2.3-.3 3.1-.7l48.3-27.9c1.7-1 2.9-3.5 2.9-5.4V36.1c.1-2-1.1-4.4-2.8-5.4z"/>
+      <path fill="#fff" d="M54.5 88.5c17.4 0 28.8-12.9 32.3-22.2L71.1 57c-2.6 7.1-8.3 14.8-16.6 14.8-12.1 0-18.2-10.4-18.2-19.4 0-12.4 7.6-19.5 18.2-19.5 7.4 0 13.6 6.4 16.2 13.7l16.1-9C83.3 27.9 71.6 17.3 54.5 17.3 30.9 17.3 14.5 36 14.5 62.6c0 24.5 16.3 25.9 40 25.9zm33.5-30.8h6.2v-6.2h5.4v6.2h6.2v5.4h-6.2v6.2h-5.4v-6.2H88v-5.4zm22 0h6.2v-6.2h5.4v6.2h6.2v5.4h-6.2v6.2h-5.4v-6.2H110v-5.4z"/>
     </svg>
   ),
   sql: (
@@ -2165,7 +2193,7 @@ export default function Portfolio() {
                             </span>
                             <span style={{ width: 4, height: 4, borderRadius: "50%", background: t.faint }} />
                             <span style={{ fontSize: ".75rem", color: t.faint, fontFamily: "'Fira Code',monospace" }}>
-                              0{idx + 1}
+                              {String(idx + 1).padStart(2, "0")}
                             </span>
                           </div>
 
