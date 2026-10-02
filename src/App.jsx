@@ -15,7 +15,7 @@ const PROFILE = {
   university: "University of Moratuwa",
   degree: "BSc (Hons) in Artificial Intelligence",
   year: "Third Year",
-  email: "aroshnimantha386@gmail.com",
+  email: "aroshwijesingha@gmail.com",
   phone: "+94 77 873 4776",
   github: "https://github.com/aroshwijesinghe",
   linkedin: "https://www.linkedin.com/in/arosh-wijesinghe-078423341/",
@@ -1101,7 +1101,7 @@ function Sec({ id, children, className }) {
   );
 }
 
-const CONTACT_EMAIL = "aroshnimantha386@gmail.com";
+const CONTACT_EMAIL = "aroshwijesingha@gmail.com";
 
 export default function Portfolio() {
   const [menuOpen, setMenu] = useState(false);
