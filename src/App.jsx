@@ -834,7 +834,6 @@ function InteractiveBg({ dark }) {
     const smooth = { x: window.innerWidth / 2,  y: window.innerHeight / 2 };
     const vel    = { x: 0, y: 0 };
     let   speed  = 0;
-    let   lastRipple = 0;
 
     const resize = () => { cv.width = window.innerWidth; cv.height = window.innerHeight; };
     resize();
@@ -882,22 +881,6 @@ function InteractiveBg({ dark }) {
       phase: Math.random() * Math.PI * 2,
     }));
 
-    // ── RIPPLES ──────────────────────────────────────────────────────────
-    const ripples = [];
-    const addRipple = (x, y, big = false) => {
-      const rings = big ? 3 : 2;
-      for (let k = 0; k < rings; k++) {
-        ripples.push({
-          x, y,
-          r: k * 18,
-          maxR: (big ? 260 : 160) + Math.random() * 60,
-          alpha: big ? .4 : .28,
-          speed: 2.8 + Math.random() * 1.6 - k * .3,
-          hOffset: getHueBase(),
-        });
-      }
-    };
-
     // ── COMET TRAIL ──────────────────────────────────────────────────────
     const trail = [];
     const MAX_TRAIL = 42;
@@ -935,24 +918,7 @@ function InteractiveBg({ dark }) {
         ctx.fill();
       }
 
-      // ── 2. RIPPLES ────────────────────────────────────────────────────
-      if (speed > 10 && now - lastRipple > 90) {
-        addRipple(mouse.x, mouse.y, speed > 22);
-        lastRipple = now;
-      }
-      for (let i = ripples.length - 1; i >= 0; i--) {
-        const rp = ripples[i];
-        rp.r     += rp.speed;
-        rp.alpha -= 0.007;
-        if (rp.alpha <= 0 || rp.r > rp.maxR) { ripples.splice(i, 1); continue; }
-        ctx.beginPath();
-        ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
-        ctx.strokeStyle = `hsla(${rp.hOffset},100%,70%,${rp.alpha})`;
-        ctx.lineWidth = 1.4;
-        ctx.stroke();
-      }
-
-      // ── 3. COMET TRAIL ────────────────────────────────────────────────
+      // ── COMET TRAIL ────────────────────────────────────────────────
       trail.push({ x: mouse.x, y: mouse.y, t: now, h: hb });
       if (trail.length > MAX_TRAIL) trail.shift();
 
