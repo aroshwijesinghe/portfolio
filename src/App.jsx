@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import emailjs from "@emailjs/browser";
 import SplitText from "./components/SplitText";
 import Particles from "./components/Particles";
+import ProgressiveImage from "./components/ProgressiveImage";
 
 
 const EJS_SERVICE_ID  = "service_avnf83h";
@@ -10,107 +11,113 @@ const EJS_PUBLIC_KEY  = "m7NQxsMPjSIHdY1Xf";
 emailjs.init({ publicKey: EJS_PUBLIC_KEY });
 
 const PROFILE = {
-  name: "Arosh Nimantha Wijesinghe",
-  tagline: "Building AI-powered solutions that solve real-world problems",
+  name: "Arosh Wijesinghe",
+  tagline: "Artificial Intelligence Undergraduate | AI/ML Internship Candidate",
   university: "University of Moratuwa",
   degree: "BSc (Hons) in Artificial Intelligence",
-  year: "Third Year",
+  year: "Third-Year Undergraduate",
+  location: "Moratuwa, Sri Lanka",
   email: "aroshwijesingha@gmail.com",
   phone: "+94 77 873 4776",
   github: "https://github.com/aroshwijesinghe",
   linkedin: "https://www.linkedin.com/in/arosh-wijesinghe-078423341/",
   careerGoal:
-    "Becoming an AI Engineer — building production AI systems, intelligent applications, and scalable pipelines that make real-world impact.",
-  about: `I am an undergraduate student at the University of Moratuwa pursuing a BSc (Hons) in Artificial Intelligence. I am passionate about building AI-powered software solutions that solve real-world problems. My interests include artificial intelligence, machine learning, deep learning, full-stack development, mobile app development, and startup innovation. I enjoy creating modern, user-friendly applications and continuously learning new technologies. My goal is to become an AI Engineer and entrepreneur who builds impactful digital products.`,
+    "Seeking an AI/ML internship to engineer scalable, high-impact predictive models, agentic RAG workflows, and generative AI systems in production.",
+  about: `Third-year BSc (Hons) in Artificial Intelligence undergraduate at the University of Moratuwa with hands-on experience developing end-to-end AI applications, from sub-second RAG architectures and agentic workflows to predictive maintenance models using survival analysis targeted for research publication. Possesses strong practical grounding across modern ML frameworks, computer vision pipelines, and full-stack cloud deployments. Seeking an AI/ML internship to engineer scalable, high-impact predictive models and generative AI systems in production.`,
 };
 
 const SKILLS = [
   {
-    category: "Languages",
+    category: "AI & Machine Learning",
+    items: [
+      { name: "PyTorch", icon: "pytorch" },
+      { name: "TensorFlow", icon: "tensorflow" },
+      { name: "Scikit-learn", icon: "scikitlearn" },
+      { name: "LightGBM", icon: "lightgbm" },
+      { name: "XGBoost", icon: "xgboost" },
+      { name: "BERT", icon: "bert" },
+      { name: "Transformers", icon: "transformers" },
+      { name: "OpenCV", icon: "opencv" },
+      { name: "MediaPipe", icon: "mediapipe" },
+      { name: "Pandas", icon: "pandas" },
+      { name: "NumPy", icon: "numpy" },
+    ],
+  },
+  {
+    category: "LLMs & Generative AI",
+    items: [
+      { name: "RAG Architecture", icon: "rag" },
+      { name: "Groq LLMs", icon: "llm" },
+      { name: "Gemini", icon: "gemini" },
+      { name: "GPT & DeepSeek", icon: "llm" },
+      { name: "Prompt Engineering", icon: "llm" },
+      { name: "Agentic Workflows", icon: "deeplearning" },
+      { name: "AI-Assisted Dev", icon: "vscode" },
+    ],
+  },
+  {
+    category: "Programming Languages",
     items: [
       { name: "Python", icon: "python" },
       { name: "Java", icon: "java" },
-      { name: "JavaScript", icon: "javascript" },
-      { name: "Dart", icon: "dart" },
-      { name: "PHP", icon: "php" },
       { name: "C", icon: "c" },
-      { name: "C++", icon: "cpp" },
+      { name: "Prolog", icon: "prolog" },
       { name: "SQL", icon: "sql" },
+      { name: "Dart", icon: "dart" },
+      { name: "JavaScript", icon: "javascript" },
+      { name: "PHP", icon: "php" },
+      { name: "HTML5/CSS3", icon: "html" },
     ],
   },
   {
-    category: "AI / ML",
+    category: "Web & Backend Frameworks",
     items: [
-      { name: "TensorFlow", icon: "tensorflow" },
-      { name: "Scikit-learn", icon: "scikitlearn" },
-      { name: "Pandas", icon: "pandas" },
-      { name: "NumPy", icon: "numpy" },
-      { name: "Matplotlib", icon: "matplotlib" },
-      { name: "Seaborn", icon: "seaborn" },
-      { name: "Jupyter", icon: "jupyter" },
-    ],
-  },
-  {
-    category: "Web Development",
-    items: [
+      { name: "FastAPI", icon: "fastapi" },
+      { name: "Flask", icon: "flask" },
       { name: "React", icon: "react" },
       { name: "Next.js", icon: "nextjs" },
       { name: "Tailwind CSS", icon: "tailwind" },
-      { name: "Firebase", icon: "firebase" },
-      { name: "HTML/CSS", icon: "html" },
-      { name: "Node.js", icon: "nodejs" },
+      { name: "REST APIs", icon: "fastapi" },
     ],
   },
   {
-    category: "Mobile Development",
+    category: "Databases & Storage",
     items: [
-      { name: "Flutter", icon: "flutter" },
-      { name: "Dart", icon: "dart" },
-    ],
-  },
-  {
-    category: "Databases",
-    items: [
-      { name: "MySQL", icon: "mysql" },
-      { name: "Supabase", icon: "supabase" },
       { name: "PostgreSQL", icon: "postgresql" },
+      { name: "Supabase", icon: "supabase" },
+      { name: "MySQL", icon: "mysql" },
+      { name: "MongoDB", icon: "mongodb" },
     ],
   },
   {
-    category: "Tools",
+    category: "Developer Tools & Cloud",
     items: [
       { name: "Git", icon: "git" },
       { name: "GitHub", icon: "github" },
       { name: "Docker", icon: "docker" },
-      { name: "Figma", icon: "figma" },
-    ],
-  },
-  {
-    category: "Currently Exploring",
-    items: [
-      { name: "LLMs", icon: "llm" },
-      { name: "MLOps", icon: "mlops" },
-      { name: "FastAPI", icon: "fastapi" },
-      { name: "Docker", icon: "docker" },
-      { name: "PostgreSQL", icon: "postgresql" },
-      { name: "Transformers", icon: "transformers" },
-      { name: "Deep Learning", icon: "deeplearning" },
+      { name: "CI/CD Pipelines", icon: "mlops" },
+      { name: "VS Code", icon: "vscode" },
+      { name: "Jupyter", icon: "jupyter" },
+      { name: "Google Colab", icon: "colab" },
+      { name: "Vercel", icon: "nextjs" },
+      { name: "Firebase", icon: "firebase" },
+      { name: "Kaggle", icon: "kaggle" },
     ],
   },
 ];
 
 const PROJECTS = [
   {
-    title: "PredictiX — AI-Powered Asset Management",
-    subtitle: "AI & ML ENTERPRISE PLATFORM",
-    desc: "AI-based system predicting product/asset maintenance needs with a prediction dashboard, sensor data visualization, maintenance events tracking, KPI metrics, and an integrated chatbot assistant.",
+    title: "PredictiX — AI-Powered Predictive Maintenance & Smart Ticket Categorization",
+    subtitle: "GROUP PROJECT • AI & ML ENTERPRISE PLATFORM",
+    desc: "AI-powered fleet and warehouse asset management platform integrating predictive maintenance, health scoring, and automated help desk workflows serving multi-tier operational dashboards.",
     contributions: [
-      "AI maintenance need prediction dashboard",
-      "IoT sensor telemetry & KPI metrics",
-      "RAG-powered conversational Sidekick AI assistant",
-      "Role-based access & automated ticket dispatching",
+      "Groq Llama-3.3-70B agent pipelines with RAG answering (<800ms latency) across 20+ Supabase PostgreSQL tables",
+      "Multi-class NLP classifiers for automated ticket categorization & triage, achieving 94% classification accuracy",
+      "Predictive maintenance pipelines using LightGBM v7 (58 features) & Weibull AFT survival analysis for 30-day failure risk & RUL estimation",
+      "Targeted for research paper publication; integrated with multi-tier dashboards & IoT telemetry",
     ],
-    tech: ["React", "Python", "ML", "Supabase", "RAG", "Chatbot"],
+    tech: ["Python", "FastAPI", "Supabase", "PostgreSQL", "RAG", "Groq LLMs", "LightGBM", "React", "Next.js"],
     color: "#00e5ff",
     image: "/projects/smart-asset.png",
     links: [
@@ -120,8 +127,46 @@ const PROJECTS = [
     demoLink: "https://predicti-x-frontend.vercel.app/",
   },
   {
+    title: "Smart Chair — AI & IoT Posture Analysis System",
+    subtitle: "CM-1900 INTELLIGENT MACHINE PROJECT",
+    desc: "Engineered a smart chair prototype to evaluate sitting posture in real-time, detecting ergonomic habits that cause discomfort, fatigue, and long-term musculoskeletal complications.",
+    contributions: [
+      "Four-stage diagnostic pipeline: seat weight distribution, lumbar pressure analysis, hip-to-upper-body angle checking, and lateral elevation monitoring",
+      "Integrated 4 load cells, 2 FSR 402 pressure sensors, ESP32 microcontrollers, and an ESP32-CAM streaming video to a Flask telemetry backend",
+      "Employed OpenCV and MediaPipe for real-time 30 FPS skeletal keypoint tracking, correlating pressure distribution with upper-body posture angles",
+      "Real-time posture health scoring, telemetry dashboard, and corrective ergonomic vibration alerts",
+    ],
+    tech: ["ESP32", "Flask", "OpenCV", "MediaPipe", "Load Cells", "FSR Sensors", "Python"],
+    color: "#f97316",
+    image: "/projects/smart-chair.png",
+    gallery: [
+      { label: "Showcase", src: "/projects/smart-chair.png" },
+      { label: "Prototype Setup", src: "/projects/smart-chair-setup.png" },
+      { label: "Sensor Internals", src: "/projects/smart-chair-hardware.png" },
+      { label: "Circuit Schematic", src: "/projects/smart-chair-circuit.png" },
+    ],
+    link: null,
+    demoLink: "https://www.linkedin.com/feed/update/urn:li:activity:7387849804007206912/",
+  },
+  {
+    title: "River Water Level Regression — Data Science Forecasting",
+    subtitle: "ACADEMIC ML PROJECT",
+    desc: "Developed regression forecasting models to predict river water levels based on historical hydrological data and rainfall precipitation features.",
+    contributions: [
+      "Conducted data cleaning, imputation, EDA, feature engineering, and residual diagnostics",
+      "Engineered rainfall precipitation lags, catchment runoff indicators, and hydrological feature sets",
+      "Multi-metric model evaluation and benchmarking using MAE, MSE, RMSE, and R-squared (R² = 0.94)",
+      "Built comparative forecasting pipelines using Scikit-learn, Statsmodels, and predictive visualization curves",
+    ],
+    tech: ["Python", "Pandas", "NumPy", "Scikit-learn", "Statsmodels", "Matplotlib", "Seaborn"],
+    color: "#38bdf8",
+    image: "/projects/river-water-level.png",
+    link: "https://github.com/aroshwijesinghe",
+    demoLink: null,
+  },
+  {
     title: "RAGLab — VS Code Extension",
-    subtitle: "VS CODE EXTENSION",
+    subtitle: "VS CODE EXTENSION • AI TOOLING",
     desc: "Interactive GUI Studio for RAG (Retrieval-Augmented Generation) in VS Code. Inspect document metrics, visually tune chunking strategies, simulate vector search, and optimize LLM context budgets—100% locally with zero cloud dependencies.",
     contributions: [
       "Visual document profiling & token boundary analysis",
@@ -134,6 +179,58 @@ const PROJECTS = [
     image: "/projects/raglab.png",
     link: "https://github.com/aroshwijesinghe/RAGLab",
     demoLink: "https://marketplace.visualstudio.com/items?itemName=aroshwijesinghe.raglab&ssr=false#review-details",
+  },
+  {
+    title: "BulkThreads — Group Buying Platform for Premium Clothing",
+    subtitle: "FULL-STACK WEB PLATFORM",
+    desc: "Created an e-commerce platform enabling buyers to pool orders, meet collective quantity thresholds, and unlock bulk wholesale pricing tiers.",
+    contributions: [
+      "Wholesale group-buying pooling architecture with campaign lifecycle workflows",
+      "Threshold progress tracking & dynamic batching based on buyer commitments",
+      "Secure REST APIs with FastAPI, Python, and role-based JWT authentication",
+      "Next.js 16 and Supabase PostgreSQL with Row Level Security (RLS)",
+    ],
+    tech: ["Next.js 16", "FastAPI", "Python", "Supabase PostgreSQL", "JWT"],
+    color: "#8b5cf6",
+    image: "/projects/bulkthreads.png",
+    link: "https://github.com/aroshwijesinghe/clo-bulk",
+    demoLink: "https://clo-bulk.vercel.app",
+  },
+  {
+    title: "Money Balancing App — Personal Finance & Expense Tracker",
+    subtitle: "CROSS-PLATFORM MOBILE APPLICATION",
+    desc: "Built a cross-platform mobile accounting application for tracking daily income, expenses, and recurring financial commitments with categorized budgeting analytics.",
+    contributions: [
+      "Engineered local offline persistence with SQLite for zero-latency, privacy-first financial tracking",
+      "Dynamic spending visualisations, categorized monthly budgets, and debt settlement analytics",
+      "Intuitive UI workflows for expense entry, recurring payments, and balance reconciliation",
+      "Native 60 FPS mobile performance built with Flutter and Dart",
+    ],
+    tech: ["Flutter", "Dart", "SQLite", "Mobile UI"],
+    color: "#14b8a6",
+    image: "/projects/money-balancing.png",
+    link: "https://github.com/aroshwijesinghe/money-balancing",
+    demoLink: null,
+  },
+  {
+    title: "Portfolio Website — Modern Interactive Showcase",
+    subtitle: "WEB APPLICATION • SHOWCASE",
+    desc: "Designed and deployed a responsive personal web showcase featuring dark/light themes, sleek glassmorphism styling, interactive micro-animations, and fast page performance.",
+    contributions: [
+      "Implemented component-driven architecture with Framer Motion transitions and automated Vercel CI/CD",
+      "Glassmorphic styling system with adaptive light/dark mode and fluid responsive layout across all viewports",
+      "Interactive project showcases, custom canvas backgrounds, and sub-second page performance",
+      "Dynamic contact modal and integrated direct email messaging",
+    ],
+    tech: ["React", "Tailwind CSS", "Framer Motion", "Vercel"],
+    color: "#eab308",
+    image: "/projects/portfolio.png",
+    gallery: [
+      { label: "Hero Showcase", src: "/projects/portfolio-hero.png" },
+      { label: "Projects View", src: "/projects/portfolio-projects.png" },
+    ],
+    link: "https://github.com/aroshwijesinghe/portfoilo",
+    demoLink: "https://portfolio-ruddy-two.vercel.app",
   },
   {
     title: "Timeline Studio",
@@ -150,38 +247,6 @@ const PROJECTS = [
     image: "/projects/timeline-studio.png",
     link: "https://github.com/aroshwijesinghe/timeline_crack",
     demoLink: "https://timeline-theta-three.vercel.app",
-  },
-  {
-    title: "BulkThreads",
-    subtitle: "GROUP BUYING WHOLESALE PLATFORM",
-    desc: "A group buying platform for premium clothing at wholesale prices. Features a React frontend, Python backend, Supabase Auth with JWT, Row Level Security, and comprehensive order management.",
-    contributions: [
-      "Wholesale group-buying pooling architecture",
-      "Supabase Auth with JWT & Row Level Security",
-      "Dynamic threshold-based order batching",
-      "Campaign management & order tracking",
-    ],
-    tech: ["React", "Python", "Supabase", "SQL"],
-    color: "#8b5cf6",
-    image: "/projects/bulkthreads.png",
-    link: "https://github.com/aroshwijesinghe/clo-bulk",
-    demoLink: "https://clo-bulk.vercel.app",
-  },
-  {
-    title: "Money Balancing App",
-    subtitle: "FINANCE & EXPENSE TRACKING MOBILE APP",
-    desc: "Finance and productivity mobile application helping users manage budgets, track expenses, balance income, and build better financial habits.",
-    contributions: [
-      "Personal & group expense balance calculation",
-      "Settlement suggestions & net debt optimization",
-      "PIN security & biometric app lock",
-      "Categorized monthly transaction analytics",
-    ],
-    tech: ["Mobile", "Finance", "Productivity"],
-    color: "#14b8a6",
-    image: "/projects/money-balancing.png",
-    link: "https://github.com/aroshwijesinghe/money-balancing",
-    demoLink: null,
   },
   {
     title: "Tummy Boy — Pushup App",
@@ -206,48 +271,6 @@ const PROJECTS = [
     demoLink: null,
   },
   {
-    title: "Portfolio Website",
-    subtitle: "PERSONAL DEVELOPER PORTFOLIO",
-    desc: "This very website — a modern, responsive portfolio built with React featuring glassmorphism, smooth animations, dark/light mode, and futuristic aesthetics.",
-    contributions: [
-      "Custom interactive glassmorphic UI system",
-      "Dynamic dark & light mode styling engine",
-      "Featured project showcase with interactive previews",
-      "Responsive fluid layout across all devices",
-    ],
-    tech: ["React", "Tailwind", "Framer Motion"],
-    color: "#eab308",
-    image: "/projects/portfolio.png",
-    gallery: [
-      { label: "Hero Showcase", src: "/projects/portfolio-hero.png" },
-      { label: "Projects View", src: "/projects/portfolio-projects.png" },
-    ],
-    link: "https://github.com/aroshwijesinghe/portfoilo",
-    demoLink: "https://portfolio-ruddy-two.vercel.app",
-  },
-  {
-    title: "Smart Chair — Posture Analysis System",
-    subtitle: "HARDWARE + AI UNIVERSITY PROJECT",
-    desc: "Hardware + AI university project (CM-1900 Intelligent Machine) built as an AI student at University of Moratuwa. A smart chair that uses sensors and machine learning to analyse the user's sitting posture in real time and provide actionable feedback.",
-    contributions: [
-      "Pressure sensor matrix telemetry on sitting posture",
-      "ML classification for ergonomic posture health",
-      "Real-time feedback & corrective posture alerts",
-      "IoT hardware integration with embedded sensors",
-    ],
-    tech: ["Hardware", "AI", "Sensors", "ML", "IoT"],
-    color: "#f97316",
-    image: "/projects/smart-chair.png",
-    gallery: [
-      { label: "Showcase", src: "/projects/smart-chair.png" },
-      { label: "Prototype Setup", src: "/projects/smart-chair-setup.png" },
-      { label: "Sensor Internals", src: "/projects/smart-chair-hardware.png" },
-      { label: "Circuit Schematic", src: "/projects/smart-chair-circuit.png" },
-    ],
-    link: null,
-    demoLink: "https://www.linkedin.com/feed/update/urn:li:activity:7387849804007206912/",
-  },
-  {
     title: "Space Odyssey: Rogue Starship",
     subtitle: "C++ & OPENGL 2D SPACE SHOOTER",
     desc: "A 2D retro space shooter built with C++ and OpenGL (freeGLUT) for Semester 4 Computer Graphics course. Defend your starbase against waves of enemy fleets, collect scrap credits, upgrade weapons & shields, and defeat heavy boss carriers.",
@@ -270,27 +293,97 @@ const PROJECTS = [
   },
 ];
 
-const TIMELINE = [
+const EDUCATION = [
   {
-    year: "2024 – Present",
-    title: "BSc (Hons) in Artificial Intelligence",
-    place: "University of Moratuwa",
-    desc: "Third year undergraduate specializing in AI, machine learning, and software engineering.",
-    active: true,
+    period: "2024 – 2028",
+    degree: "BSc (Hons) in Artificial Intelligence",
+    institution: "University of Moratuwa",
+    status: "Third-Year Undergraduate",
+    highlights: "Specializing in end-to-end AI applications, sub-second RAG architectures, agentic workflows, predictive maintenance models using survival analysis (Weibull AFT & LightGBM), and computer vision pipelines.",
+    color: "#00e5ff",
+    badge: "Current",
   },
   {
-    year: "2023",
-    title: "University Entrance",
-    place: "University of Moratuwa",
-    desc: "Enrolled in the Faculty of Information Technology with a focus on AI.",
-    active: false,
+    period: "2022",
+    degree: "GCE Advanced Level (Physical Science)",
+    institution: "Poramadulla Central College",
+    status: "AAB | Z-score: +2.0535",
+    highlights: "Combined Mathematics, ICT, and Physics with high academic distinction, qualifying for University of Moratuwa Faculty of Information Technology.",
+    color: "#a855f7",
+    badge: "Distinction",
+  },
+];
+
+const CERTIFICATIONS = [
+  {
+    title: "Intro to Machine Learning",
+    issuer: "Kaggle",
+    year: "2026",
+    color: "#20beff",
+    desc: "Hands-on model validation, feature engineering, decision trees, random forests, and competition-level regression pipelines.",
   },
   {
-    year: "2022",
-    title: "GCE Advanced Level",
-    place: "Sri Lanka",
-    desc: "Completed Advanced Level examinations, qualifying for university admission.",
-    active: false,
+    title: "Discovering Generative AI",
+    issuer: "Udacity",
+    year: "2025",
+    color: "#02b3e4",
+    desc: "Foundational and applied concepts of generative models, LLMs, transformer architectures, and prompt design.",
+  },
+  {
+    title: "Python Programming",
+    issuer: "CODL, University of Moratuwa",
+    year: "2024",
+    color: "#eab308",
+    desc: "Advanced data structures, object-oriented design, algorithmic problem solving, and Python computational pipelines.",
+  },
+  {
+    title: "Web Design",
+    issuer: "CODL, University of Moratuwa",
+    year: "Verified",
+    color: "#ec4899",
+    desc: "Responsive web UI architectures, semantic design, modern styling systems, and client-side web interactions.",
+  },
+];
+
+const LEADERSHIP_ACTIVITIES = [
+  {
+    title: "School Prefect",
+    org: "Poramadulla Central College",
+    desc: "Elected student leader responsible for student discipline, coordinating school-wide initiatives, and representing the student body.",
+  },
+  {
+    title: "Air Force Cadet",
+    org: "National Cadet Corps (NCC)",
+    desc: "Trained in aeronautics, leadership under pressure, precision drills, and teamwork discipline as an Air Force Cadet.",
+  },
+  {
+    title: "Advance Loop Solutions",
+    org: "Co-Founder & Developer",
+    desc: "Small software initiative co-founded with a colleague; completed client delivery as a learning and business experiment.",
+  },
+  {
+    title: "Languages",
+    org: "Bilingual Communication",
+    desc: "Sinhala (Native) & English (Proficient) — effective across technical documentation, academic writing, and team collaboration.",
+  },
+];
+
+const REFERENCES = [
+  {
+    name: "Mrs. K A Dilini T Kulawansa",
+    role: "Senior Lecturer",
+    dept: "Department of Computational Mathematics",
+    org: "Faculty of IT, University of Moratuwa",
+    email: "dilinik@uom.lk",
+    phone: null,
+  },
+  {
+    name: "Ms. Uvini Matara Arachchi",
+    role: "Senior Business Analyst",
+    dept: "Zone24x7 (Private) Limited",
+    org: "Colombo, Sri Lanka",
+    email: "uvinim@zone24x7.com",
+    phone: "+94 778 151 380",
   },
 ];
 
@@ -578,6 +671,88 @@ const LangIcons = {
       <circle cx="80" cy="88" r="8" fill="#818CF8"/>
       <circle cx="108" cy="64" r="8" fill="#A78BFA"/>
       <path stroke="#60A5FA" strokeWidth="1.5" fill="none" d="M32 64 L44 40 M32 64 L44 88 M60 40 L72 40 M60 40 L72 64 M60 40 L72 88 M60 88 L72 40 M60 88 L72 64 M60 88 L72 88 M88 40 L100 64 M88 64 L100 64 M88 88 L100 64"/>
+    </svg>
+  ),
+  pytorch: (
+    <svg viewBox="0 0 128 128" width="20" height="20">
+      <path fill="#EE4C2C" d="M68 20L60 28l13 13c-14 3-25 15-25 30 0 17 14 31 31 31s31-14 31-31c0-11-6-21-15-26l5-5c12 7 20 20 20 35 0 22-18 40-40 40S35 93 35 71c0-19 13-35 31-39l-13-12 8-8 27 27-20 21z"/>
+      <circle cx="85" cy="35" r="5" fill="#EE4C2C"/>
+    </svg>
+  ),
+  lightgbm: (
+    <svg viewBox="0 0 128 128" width="20" height="20">
+      <rect width="128" height="128" rx="16" fill="#1e3a8a"/>
+      <path fill="#38bdf8" d="M64 24L36 72h22L46 104l46-52H68l16-28z"/>
+    </svg>
+  ),
+  xgboost: (
+    <svg viewBox="0 0 128 128" width="20" height="20">
+      <rect width="128" height="128" rx="16" fill="#15803d"/>
+      <path fill="#86efac" d="M38 38l26 26-26 26h14l19-19 19 19h14L78 64l26-26H90L71 45 52 38z"/>
+    </svg>
+  ),
+  bert: (
+    <svg viewBox="0 0 128 128" width="20" height="20">
+      <rect width="128" height="128" rx="16" fill="#4338ca"/>
+      <path fill="#c7d2fe" d="M36 32h32c12 0 20 6 20 15 0 6-4 11-10 13 8 2 12 8 12 15 0 11-9 17-22 17H36V32zm16 12v14h14c5 0 8-2 8-7s-3-7-8-7H52zm0 24v16h16c6 0 9-3 9-8s-3-8-9-8H52z"/>
+    </svg>
+  ),
+  rag: (
+    <svg viewBox="0 0 128 128" width="20" height="20">
+      <rect width="128" height="128" rx="16" fill="#0369a1"/>
+      <path fill="#7dd3fc" d="M32 36h40v8H32zm0 18h64v8H32zm0 18h64v8H32zm0 18h40v8H32z"/>
+      <circle cx="92" cy="40" r="14" fill="#38bdf8" opacity=".8"/>
+      <path fill="#fff" d="M88 36l8 4-8 4v-8z"/>
+    </svg>
+  ),
+  mongodb: (
+    <svg viewBox="0 0 128 128" width="20" height="20">
+      <path fill="#10AA50" d="M64 12c-4 10-24 38-24 58 0 22 15 38 24 46 9-8 24-24 24-46 0-20-20-48-24-58z"/>
+      <path fill="#13AA52" d="M64 12v104c9-8 24-24 24-46 0-20-20-48-24-58z" opacity=".7"/>
+      <path fill="#fff" d="M64 48c-1 8-6 16-6 24 0 12 6 20 6 20s6-8 6-20c0-8-5-16-6-24z"/>
+    </svg>
+  ),
+  kaggle: (
+    <svg viewBox="0 0 128 128" width="20" height="20">
+      <rect width="128" height="128" rx="16" fill="#20beff"/>
+      <path fill="#fff" d="M42 32h14v64H42V32zm45 0H72L53 55l20 41h15L67 60l20-28z"/>
+    </svg>
+  ),
+  vscode: (
+    <svg viewBox="0 0 128 128" width="20" height="20">
+      <path fill="#007ACC" d="M96 20L72 42 42 20 24 30v68l18 10 30-22 24 22 18-8V28l-18-8zm-6 72L56 64l34-28v56z"/>
+    </svg>
+  ),
+  colab: (
+    <svg viewBox="0 0 128 128" width="20" height="20">
+      <path fill="#F9AB00" d="M44 44a20 20 0 0 0-20 20 20 20 0 0 0 20 20c8 0 14-4 17-10l-10-6c-2 4-5 6-7 6a10 10 0 0 1-10-10 10 10 0 0 1 10-10c2 0 5 2 7 6l10-6c-3-6-9-10-17-10z"/>
+      <path fill="#E37400" d="M84 44c-8 0-14 4-17 10l10 6c2-4 5-6 7-6a10 10 0 0 1 10 10 10 10 0 0 1-10 10c-2 0-5-2-7-6l-10 6c3 6 9 10 17 10a20 20 0 0 0 20-20 20 20 0 0 0-20-20z"/>
+    </svg>
+  ),
+  flask: (
+    <svg viewBox="0 0 128 128" width="20" height="20">
+      <path fill="#94a3b8" d="M52 24h24v12H68v18l24 38c3 5 0 12-6 12H42c-6 0-9-7-6-12l24-38V36h-8V24z"/>
+      <path fill="#38bdf8" d="M46 88l14-22 14 22c2 3 0 6-3 6H49c-3 0-5-3-3-6z"/>
+    </svg>
+  ),
+  mediapipe: (
+    <svg viewBox="0 0 128 128" width="20" height="20">
+      <rect width="128" height="128" rx="16" fill="#0284c7"/>
+      <circle cx="44" cy="44" r="10" fill="#fff"/>
+      <circle cx="84" cy="44" r="10" fill="#fff"/>
+      <circle cx="64" cy="84" r="10" fill="#fff"/>
+      <path stroke="#fff" strokeWidth="4" fill="none" d="M44 44 L84 44 L64 84 Z"/>
+    </svg>
+  ),
+  gemini: (
+    <svg viewBox="0 0 128 128" width="20" height="20">
+      <path fill="#4E82EE" d="M64 16C64 42.5 42.5 64 16 64C42.5 64 64 85.5 64 112C64 85.5 85.5 64 112 64C85.5 64 64 42.5 64 16Z"/>
+    </svg>
+  ),
+  prolog: (
+    <svg viewBox="0 0 128 128" width="20" height="20">
+      <rect width="128" height="128" rx="16" fill="#b91c1c"/>
+      <text x="64" y="80" textAnchor="middle" fill="#fff" fontSize="56" fontWeight="bold" fontFamily="monospace">:-</text>
     </svg>
   ),
 };
@@ -1108,35 +1283,6 @@ export default function Portfolio() {
   const [hoveredProject, setHoveredProject] = useState(null);
   const [activeGalleryImage, setActiveGalleryImage] = useState({});
 
-  /* desktop mode preference: default true on mobile/tablets, can be toggled manually */
-  const [isDesktopMode, setIsDesktopMode] = useState(() => {
-    const saved = localStorage.getItem("preferred_view_mode");
-    if (saved !== null) return saved === "desktop";
-    return true; // Default to desktop mode as requested
-  });
-
-  useEffect(() => {
-    let meta = document.querySelector('meta[name="viewport"]');
-    if (!meta) {
-      meta = document.createElement("meta");
-      meta.name = "viewport";
-      document.head.appendChild(meta);
-    }
-    if (isDesktopMode) {
-      meta.setAttribute("content", "width=1280, initial-scale=0.32, minimum-scale=0.2, maximum-scale=3.0, user-scalable=yes");
-    } else {
-      meta.setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes");
-    }
-  }, [isDesktopMode]);
-
-  const toggleDesktopMode = () => {
-    setIsDesktopMode(prev => {
-      const next = !prev;
-      localStorage.setItem("preferred_view_mode", next ? "desktop" : "mobile");
-      return next;
-    });
-  };
-
   /* smooth scroll & hover-intent debouncing to prevent card stutter during active scrolling */
   const hoverTimeoutRef = useRef(null);
   const isScrollingRef = useRef(false);
@@ -1187,7 +1333,13 @@ export default function Portfolio() {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
 
-  const typed = useTypingAnimation(["AI Engineer", "ML Enthusiast", "Full-Stack Developer", "Mobile App Builder", "Problem Solver"]);
+  const typed = useTypingAnimation([
+    "AI & Machine Learning Engineer",
+    "RAG & Agentic Workflow Architect",
+    "Predictive Maintenance Specialist",
+    "Computer Vision Developer",
+    "AI/ML Internship Candidate",
+  ]);
 
   /* hide loading screen quickly (< 1s) */
   useEffect(() => {
@@ -1227,7 +1379,7 @@ export default function Portfolio() {
           navRef.current.style.backdropFilter = scrolled ? "blur(20px)" : "none";
           navRef.current.style.borderBottom = scrolled ? `1px solid ${gBorder}` : "1px solid transparent";
         }
-        const ss = ["home", "about", "skills", "projects", "contact"];
+        const ss = ["home", "about", "skills", "projects", "credentials", "contact"];
         for (let i = ss.length - 1; i >= 0; i--) { const el = document.getElementById(ss[i]); if (el && el.getBoundingClientRect().top <= 200) { setActive(ss[i]); break; } }
       });
     };
@@ -1237,7 +1389,14 @@ export default function Portfolio() {
 
   const goTo = useCallback((id) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); setMenu(false); }, []);
 
-  const navs = [{ id: "home", l: "Home" }, { id: "about", l: "About" }, { id: "skills", l: "Skills" }, { id: "projects", l: "Projects" }, { id: "contact", l: "Contact" }];
+  const navs = [
+    { id: "home", l: "Home" },
+    { id: "about", l: "About" },
+    { id: "skills", l: "Skills" },
+    { id: "projects", l: "Projects" },
+    { id: "credentials", l: "Credentials" },
+    { id: "contact", l: "Contact" },
+  ];
 
   const handleSend = () => {
     if (!form.name || !form.email || !form.message) {
@@ -1487,16 +1646,26 @@ export default function Portfolio() {
                 padding: 12,
               }}
             >
-              <img
+              <ProgressiveImage
                 src={previewModal.image}
                 alt={previewModal.title}
+                accentColor={previewModal.color || "#00e5ff"}
                 style={{
+                  maxWidth: "100%",
+                  maxHeight: "70vh",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                imgStyle={{
                   maxWidth: "100%",
                   maxHeight: "70vh",
                   objectFit: "contain",
                   borderRadius: 12,
                   display: "block",
                 }}
+                priority={true}
+                autoLoadHighRes={true}
               />
             </div>
           </div>
@@ -1517,68 +1686,10 @@ export default function Portfolio() {
             <div className="nav-d" style={{ display: "flex", gap: 32, alignItems: "center" }}>
               {navs.map(n => <button key={n.id} className={`nl ${active === n.id ? "on" : ""}`} onClick={() => goTo(n.id)}>{n.l}</button>)}
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              {/* Desktop Mode Toggle Button */}
-              <button
-                onClick={toggleDesktopMode}
-                title={isDesktopMode ? "Desktop View is Active (Click to switch to Mobile view)" : "Mobile View is Active (Click to switch to Desktop view)"}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 6,
-                  padding: "6px 12px",
-                  borderRadius: 20,
-                  fontSize: ".75rem",
-                  fontFamily: "'Fira Code', monospace",
-                  fontWeight: 600,
-                  background: isDesktopMode ? `${t.accent}20` : t.glass,
-                  border: `1px solid ${isDesktopMode ? t.accent : t.gBorderS}`,
-                  color: isDesktopMode ? t.accent : t.muted,
-                  cursor: "pointer",
-                  transition: "all .3s ease",
-                }}
-              >
-                {isDesktopMode ? (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                    <line x1="8" y1="21" x2="16" y2="21"/>
-                    <line x1="12" y1="17" x2="12" y2="21"/>
-                  </svg>
-                ) : (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
-                    <line x1="12" y1="18" x2="12.01" y2="18"/>
-                  </svg>
-                )}
-                <span>{isDesktopMode ? "DESKTOP" : "MOBILE"}</span>
-              </button>
-
-              <button className="mob-btn" onClick={() => setMenu(!menuOpen)} style={{ background: "none", border: "none", color: t.text, cursor: "pointer", display: "none", alignItems: "center" }}>{menuOpen ? I.close : I.menu}</button>
-            </div>
+            <button className="mob-btn" onClick={() => setMenu(!menuOpen)} style={{ background: "none", border: "none", color: t.text, cursor: "pointer", display: "none", alignItems: "center" }}>{menuOpen ? I.close : I.menu}</button>
           </div>
           {menuOpen && <div className="mob-menu" style={{ position: "absolute", top: "100%", left: 0, right: 0, padding: "20px 24px", display: "flex", flexDirection: "column", gap: 16, background: t.navBg, backdropFilter: "blur(30px)", borderBottom: `1px solid ${t.gBorder}` }}>
             {navs.map(n => <button key={n.id} className="nl" onClick={() => goTo(n.id)} style={{ textAlign: "left", fontSize: "1.1rem" }}>{n.l}</button>)}
-            <button
-              onClick={() => { toggleDesktopMode(); setMenu(false); }}
-              style={{
-                alignSelf: "flex-start",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-                padding: "8px 16px",
-                borderRadius: 20,
-                fontSize: ".82rem",
-                fontFamily: "'Fira Code', monospace",
-                fontWeight: 600,
-                background: isDesktopMode ? `${t.accent}20` : t.glass,
-                border: `1px solid ${isDesktopMode ? t.accent : t.gBorderS}`,
-                color: isDesktopMode ? t.accent : t.muted,
-                cursor: "pointer",
-                marginTop: 6,
-              }}
-            >
-              {isDesktopMode ? "Switch to Mobile View" : "Switch to Desktop View"}
-            </button>
           </div>}
         </nav>
 
@@ -1587,7 +1698,7 @@ export default function Portfolio() {
             <div className="hero-grid" style={{ display: "flex", alignItems: "center", gap: 60 }}>
               <div style={{ flex: 1 }}>
                 <div className="s1" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: `${t.accent}12`, border: `1px solid ${t.accent}33`, borderRadius: 50, padding: "6px 16px", marginBottom: 24, fontSize: ".85rem", color: t.accent, fontFamily: "'Fira Code',monospace" }}>
-                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: t.accent, animation: "blink 2s infinite" }} /> Available for opportunities
+                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: t.accent, animation: "blink 2s infinite" }} /> Open for AI/ML Internship Opportunities
                 </div>
                 <h1 className="htitle s2" style={{ fontSize: "3.2rem", fontWeight: 800, lineHeight: 1.1, marginBottom: 8, letterSpacing: "-.02em", display: "flex", alignItems: "baseline", gap: "0.35ch", flexWrap: "wrap" }}>
                   <SplitText text="Hi, I'm" tag="span" splitType="chars" delay={55} duration={0.65} ease="power3.out" from={{ opacity: 0, y: 40 }} to={{ opacity: 1, y: 0 }} threshold={0} rootMargin="0px" textAlign="left" />
@@ -1595,8 +1706,11 @@ export default function Portfolio() {
                 </h1>
                 <div className="s3 cursor-blink" style={{ fontSize: "1.5rem", fontWeight: 300, color: t.muted, marginBottom: 24, fontFamily: "'Fira Code',monospace", minHeight: "2.2rem" }}>{typed}</div>
                 <p className="s4" style={{ fontSize: "1.05rem", lineHeight: 1.7, color: t.faint, marginBottom: 32, maxWidth: 520 }}>{PROFILE.tagline}. Currently pursuing {PROFILE.degree} at {PROFILE.university}.</p>
-                <div className="hero-btns s5" style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-                  <button className="btn-p" onClick={() => goTo("projects")}>View Projects {I.arr}</button>
+                <div className="hero-btns s5" style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
+                  <a href="/cv.pdf" download="Arosh_Wijesinghe_CV.pdf" className="btn-p" style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }}>
+                    {I.dl} Download CV
+                  </a>
+                  <button className="btn-o" onClick={() => goTo("projects")}>View Projects {I.arr}</button>
                   <button className="btn-o" onClick={() => goTo("contact")}>Contact Me</button>
                 </div>
                 <div className="srow s5" style={{ display: "flex", gap: 16, marginTop: 40 }}>
@@ -1734,7 +1848,7 @@ export default function Portfolio() {
                     <svg width="15" height="15" viewBox="0 0 24 24" fill={t.accent} style={{ filter: `drop-shadow(0 0 6px ${t.accent})`, flexShrink: 0 }}>
                       <path d="M13 2 L3 14 H12 L11 22 L21 10 H12 L13 2 Z"/>
                     </svg>
-                    Full-Stack &amp; AI Engineer
+                    AI &amp; ML Engineer
                   </div>
 
                   {/* Cutout Portrait with feathered bottom fade and subtle studio lighting */}
@@ -1746,11 +1860,20 @@ export default function Portfolio() {
                     alignItems: "center",
                     justifyContent: "center",
                   }}>
-                    <img
-                      src="/profile-cutout.png"
+                    <ProgressiveImage
+                      src="/profile-cutout.webp"
                       alt={PROFILE.name}
                       className="hero-portrait-img"
+                      accentColor={t.accent}
                       style={{
+                        width: "auto",
+                        maxWidth: "100%",
+                        height: "auto",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                      imgStyle={{
                         width: "auto",
                         maxWidth: "100%",
                         height: "auto",
@@ -1759,9 +1882,7 @@ export default function Portfolio() {
                         display: "block",
                         filter: `drop-shadow(0 20px 40px rgba(0,0,0,0.65)) drop-shadow(0 0 35px ${t.accent}25)`,
                       }}
-                      onError={e => {
-                        e.target.src = "/profile.png";
-                      }}
+                      priority={true}
                     />
                   </div>
                 </div>
@@ -1780,14 +1901,13 @@ export default function Portfolio() {
             <div className="agrid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "start" }}>
               <div>
                 <p style={{ fontSize: "1.05rem", lineHeight: 1.85, color: t.muted, marginBottom: 28 }}>{PROFILE.about}</p>
-                <div style={{ background: `linear-gradient(135deg,${t.accent}08,${t.accent2}08)`, border: `1px solid ${t.accent}25`, borderRadius: 16, padding: 24, marginBottom: 28 }}>
+                <div style={{ background: `linear-gradient(135deg,${t.accent}08,${t.accent2}08)`, border: `1px solid ${t.accent}25`, borderRadius: 16, padding: 24, marginBottom: 0 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
                     <span style={{ color: t.accent }}>{I.target}</span>
                     <span style={{ fontSize: ".82rem", fontWeight: 600, color: t.accent, letterSpacing: ".1em", textTransform: "uppercase", fontFamily: "'Fira Code',monospace" }}>Career Goal</span>
                   </div>
                   <p style={{ fontSize: ".98rem", lineHeight: 1.7, color: t.muted }}>{PROFILE.careerGoal}</p>
                 </div>
-                <a href="/cv.pdf" download="Arosh_Wijesinghe_CV.pdf" className="btn-p">{I.dl} Download CV</a>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                 {[
@@ -2010,21 +2130,20 @@ export default function Portfolio() {
                             >
                               {displayImg ? (
                                 <>
-                                  <img
+                                  <ProgressiveImage
                                     src={displayImg}
                                     alt={p.title}
                                     className="pcard-img"
-                                    style={{
+                                    accentColor={p.color}
+                                    style={{ width: "100%", height: "100%" }}
+                                    imgStyle={{
                                       width: "100%",
                                       height: "100%",
                                       objectFit: "cover",
                                       display: "block",
                                       transition: "transform .5s cubic-bezier(.16,1,.3,1)",
                                     }}
-                                    onError={(e) => {
-                                      e.currentTarget.style.display = "none";
-                                      if (e.currentTarget.nextElementSibling) e.currentTarget.nextElementSibling.style.display = "flex";
-                                    }}
+                                    priority={isExpanded}
                                   />
                                   <div
                                     style={{
@@ -2285,10 +2404,12 @@ export default function Portfolio() {
                                   borderRight: gi < p.gallery.slice(0,3).length - 1 ? `2px solid ${p.color}30` : "none",
                                 }}
                               >
-                                <img
+                                <ProgressiveImage
                                   src={g.src}
                                   alt={g.label}
-                                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                                  accentColor={p.color}
+                                  style={{ width: "100%", height: "100%" }}
+                                  imgStyle={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                                 />
                                 {gi > 0 && (
                                   <div style={{
@@ -2327,10 +2448,12 @@ export default function Portfolio() {
                             }}
                           >
                             {p.image ? (
-                              <img
+                              <ProgressiveImage
                                 src={p.image}
                                 alt={p.title}
-                                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                                accentColor={p.color}
+                                style={{ width: "100%", height: "100%" }}
+                                imgStyle={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                               />
                             ) : (
                               <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: p.color }}>
@@ -2431,37 +2554,223 @@ export default function Portfolio() {
           </div>
         </Sec>
 
-        {false && <Sec id="timeline">
+        <Sec id="credentials">
           <div style={{ maxWidth: 1200, margin: "0 auto", padding: "100px 24px" }}>
             <h2 className="stitle" style={{ fontSize: "2.5rem", fontWeight: 700, marginBottom: 12, display: "flex", alignItems: "baseline", gap: "0.4ch", flexWrap: "wrap" }}>
-              <SplitText text="My" tag="span" splitType="chars" delay={60} duration={0.7} ease="power3.out" from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} threshold={0.2} rootMargin="-80px" textAlign="left" />
-              <SplitText text="Journey" tag="span" splitType="chars" delay={60} duration={0.7} ease="power3.out" from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} threshold={0.2} rootMargin="-80px" textAlign="left" />
+              <SplitText text="Education &amp;" tag="span" splitType="chars" delay={60} duration={0.7} ease="power3.out" from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} threshold={0.2} rootMargin="-80px" textAlign="left" />
+              <SplitText text="Credentials" tag="span" splitType="chars" delay={60} duration={0.7} ease="power3.out" from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} threshold={0.2} rootMargin="-80px" textAlign="left" />
             </h2>
             <div style={{ width: 60, height: 3, background: `linear-gradient(90deg,${t.accent},transparent)`, borderRadius: 2, marginBottom: 48 }} />
-            <div style={{ maxWidth: 700, margin: "0 auto", position: "relative" }}>
-              <div style={{ position: "absolute", left: 20, top: 0, bottom: 0, width: 2, background: `linear-gradient(180deg,${t.accent},${t.accent}20)` }} />
-              {TIMELINE.map((item, i) => {
-                const timelineColors = ["#06b6d4", "#8b5cf6", "#f97316"];
-                const color = timelineColors[i % timelineColors.length];
-                return (
-                <div key={i} style={{ display: "flex", gap: 32, marginBottom: 40, position: "relative" }}>
-                  <div style={{ width: 42, height: 42, borderRadius: "50%", flexShrink: 0, background: item.active ? `linear-gradient(135deg,${t.accent},${t.accent2})` : t.glass, border: item.active ? "none" : `2px solid ${t.gBorderS}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: ".7rem", fontWeight: 600, color: item.active ? "#fff" : t.faint, fontFamily: "'Fira Code',monospace", zIndex: 1 }}>
-                    {item.active ? "NOW" : `'${item.year.slice(-2)}`}
+
+            <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1fr", gap: 36, alignItems: "start" }} className="cgrid">
+              {/* Left Column: Education & Leadership */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+                {/* Education */}
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+                    <div style={{ width: 36, height: 36, borderRadius: 10, background: `${t.accent}15`, border: `1px solid ${t.accent}35`, display: "flex", alignItems: "center", justifyContent: "center", color: t.accent }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                    </div>
+                    <h3 style={{ fontSize: "1.2rem", fontWeight: 700, color: t.text, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Education</h3>
                   </div>
-                  <div style={{ background: t.bgAlt, border: `2px solid ${t.gBorder}`, borderLeft: `4px solid ${color}`, backdropFilter: "blur(20px)", borderRadius: 16, padding: 24, flex: 1, transition: "all .3s", cursor: "pointer" }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = color; e.currentTarget.style.borderLeftColor = color; e.currentTarget.style.boxShadow = `0 0 25px ${color}40, inset 0 0 15px ${color}15`; }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = t.gBorder; e.currentTarget.style.borderLeftColor = color; e.currentTarget.style.boxShadow = "none"; }}>
-                    <div style={{ fontSize: ".78rem", color: t.accent, marginBottom: 6, fontFamily: "'Fira Code',monospace" }}>{item.year}</div>
-                    <h3 style={{ fontSize: "1.1rem", fontWeight: 600, marginBottom: 4 }}>{item.title}</h3>
-                    <div style={{ fontSize: ".88rem", color: t.faint, marginBottom: 8 }}>{item.place}</div>
-                    <p style={{ fontSize: ".9rem", lineHeight: 1.65, color: t.muted }}>{item.desc}</p>
+
+                  <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+                    {EDUCATION.map((edu, idx) => (
+                      <div key={idx} style={{
+                        background: t.bgAlt,
+                        border: `1.5px solid ${t.gBorder}`,
+                        borderLeft: `4px solid ${edu.color}`,
+                        borderRadius: 16,
+                        padding: "20px 22px",
+                        backdropFilter: "blur(20px)",
+                        transition: "all .3s ease",
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = edu.color; e.currentTarget.style.boxShadow = `0 10px 30px ${edu.color}25`; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = t.gBorder; e.currentTarget.style.borderLeftColor = edu.color; e.currentTarget.style.boxShadow = "none"; }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, marginBottom: 8, flexWrap: "wrap" }}>
+                          <div>
+                            <span style={{ fontSize: ".76rem", color: edu.color, fontFamily: "'Fira Code', monospace", fontWeight: 600 }}>{edu.period}</span>
+                            <h4 style={{ fontSize: "1.08rem", fontWeight: 700, color: t.text, marginTop: 2 }}>{edu.degree}</h4>
+                            <div style={{ fontSize: ".88rem", color: t.muted, fontWeight: 500 }}>{edu.institution}</div>
+                          </div>
+                          <span style={{
+                            fontSize: ".72rem",
+                            padding: "4px 10px",
+                            borderRadius: 20,
+                            background: `${edu.color}18`,
+                            border: `1px solid ${edu.color}45`,
+                            color: edu.color,
+                            fontFamily: "'Fira Code', monospace",
+                            fontWeight: 600,
+                          }}>{edu.badge}</span>
+                        </div>
+                        <div style={{ fontSize: ".82rem", color: edu.color, fontWeight: 600, marginBottom: 6, fontFamily: "'Fira Code', monospace" }}>{edu.status}</div>
+                        <p style={{ fontSize: ".86rem", lineHeight: 1.6, color: t.muted, margin: 0 }}>{edu.highlights}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              );
-              })}
+
+                {/* Leadership & Activities */}
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+                    <div style={{ width: 36, height: 36, borderRadius: 10, background: `${t.accent2}15`, border: `1px solid ${t.accent2}35`, display: "flex", alignItems: "center", justifyContent: "center", color: t.accent2 }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                    </div>
+                    <h3 style={{ fontSize: "1.2rem", fontWeight: 700, color: t.text, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Leadership &amp; Activities</h3>
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                    {LEADERSHIP_ACTIVITIES.map((act, idx) => (
+                      <div key={idx} style={{
+                        background: t.bgAlt,
+                        border: `1px solid ${t.gBorder}`,
+                        borderRadius: 14,
+                        padding: "16px 18px",
+                        backdropFilter: "blur(20px)",
+                        transition: "all .3s ease",
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = `${t.accent2}80`; e.currentTarget.style.transform = "translateY(-2px)"; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = t.gBorder; e.currentTarget.style.transform = ""; }}>
+                        <h4 style={{ fontSize: ".96rem", fontWeight: 700, color: t.text, marginBottom: 3 }}>{act.title}</h4>
+                        <div style={{ fontSize: ".76rem", color: t.accent2, fontFamily: "'Fira Code', monospace", marginBottom: 6 }}>{act.org}</div>
+                        <p style={{ fontSize: ".82rem", lineHeight: 1.5, color: t.muted, margin: 0 }}>{act.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Certifications & References */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+                {/* Certifications */}
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20, flexWrap: "wrap", gap: 8 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                      <div style={{ width: 36, height: 36, borderRadius: 10, background: "#10b98115", border: "1px solid #10b98135", display: "flex", alignItems: "center", justifyContent: "center", color: "#10b981" }}>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+                      </div>
+                      <h3 style={{ fontSize: "1.2rem", fontWeight: 700, color: t.text, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Certifications</h3>
+                    </div>
+                    <span style={{ fontSize: ".76rem", color: t.faint, fontFamily: "'Fira Code', monospace" }}>Verified Credentials</span>
+                  </div>
+
+                  <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                    {CERTIFICATIONS.map((cert, idx) => (
+                      <div key={idx} style={{
+                        background: t.bgAlt,
+                        border: `1px solid ${t.gBorder}`,
+                        borderRadius: 14,
+                        padding: "16px 18px",
+                        backdropFilter: "blur(20px)",
+                        display: "flex",
+                        alignItems: "flex-start",
+                        gap: 14,
+                        transition: "all .3s ease",
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = cert.color; e.currentTarget.style.boxShadow = `0 6px 20px ${cert.color}20`; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = t.gBorder; e.currentTarget.style.boxShadow = "none"; }}>
+                        <div style={{
+                          width: 40,
+                          height: 40,
+                          borderRadius: 10,
+                          background: `${cert.color}15`,
+                          border: `1px solid ${cert.color}40`,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: cert.color,
+                          flexShrink: 0,
+                          fontWeight: 700,
+                          fontFamily: "'Fira Code', monospace",
+                          fontSize: ".85rem",
+                        }}>
+                          {cert.issuer.slice(0, 2).toUpperCase()}
+                        </div>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
+                            <h4 style={{ fontSize: ".95rem", fontWeight: 700, color: t.text, margin: 0 }}>{cert.title}</h4>
+                            <span style={{ fontSize: ".74rem", color: cert.color, fontFamily: "'Fira Code', monospace" }}>{cert.year}</span>
+                          </div>
+                          <div style={{ fontSize: ".78rem", color: t.faint, marginTop: 2, marginBottom: 4 }}>{cert.issuer}</div>
+                          <p style={{ fontSize: ".82rem", lineHeight: 1.5, color: t.muted, margin: 0 }}>{cert.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* References */}
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+                    <div style={{ width: 36, height: 36, borderRadius: 10, background: "#f9731615", border: "1px solid #f9731635", display: "flex", alignItems: "center", justifyContent: "center", color: "#f97316" }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h3 style={{ fontSize: "1.2rem", fontWeight: 700, color: t.text, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>References</h3>
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 14 }}>
+                    {REFERENCES.map((ref, idx) => (
+                      <div key={idx} style={{
+                        background: t.bgAlt,
+                        border: `1px solid ${t.gBorder}`,
+                        borderRadius: 14,
+                        padding: "16px 20px",
+                        backdropFilter: "blur(20px)",
+                        transition: "all .3s ease",
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = `${t.accent}70`; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = t.gBorder; }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, flexWrap: "wrap" }}>
+                          <div>
+                            <h4 style={{ fontSize: ".98rem", fontWeight: 700, color: t.text, margin: 0 }}>{ref.name}</h4>
+                            <div style={{ fontSize: ".82rem", color: t.accent, fontWeight: 600, marginTop: 2 }}>{ref.role}</div>
+                            <div style={{ fontSize: ".8rem", color: t.muted }}>{ref.dept}</div>
+                            <div style={{ fontSize: ".78rem", color: t.faint }}>{ref.org}</div>
+                          </div>
+                          <div style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "flex-end" }}>
+                            <a href={`mailto:${ref.email}`} style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: 6,
+                              padding: "5px 12px",
+                              borderRadius: 20,
+                              background: `${t.accent}12`,
+                              border: `1px solid ${t.accent}35`,
+                              color: t.accent,
+                              fontSize: ".78rem",
+                              textDecoration: "none",
+                              fontFamily: "'Fira Code', monospace",
+                            }}>
+                              {I.mail} {ref.email}
+                            </a>
+                            {ref.phone && (
+                              <a href={`tel:${ref.phone.replace(/\\s/g, "")}`} style={{
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: 6,
+                                padding: "5px 12px",
+                                borderRadius: 20,
+                                background: t.glass,
+                                border: `1px solid ${t.gBorder}`,
+                                color: t.muted,
+                                fontSize: ".78rem",
+                                textDecoration: "none",
+                                fontFamily: "'Fira Code', monospace",
+                              }}>
+                                {I.phone} {ref.phone}
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </Sec>}
+        </Sec>
 
         <Sec id="contact">
           <div style={{ maxWidth: 1200, margin: "0 auto", padding: "100px 24px 60px" }}>
@@ -2556,7 +2865,7 @@ export default function Portfolio() {
 
         <footer style={{ position: "relative", zIndex: 1, borderTop: `1px solid ${t.gBorder}`, padding: "32px 24px" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
-            <div style={{ fontSize: ".85rem", color: t.faint }}>© 2026 Arosh Nimantha Wijesinghe. Built with passion & AI.</div>
+            <div style={{ fontSize: ".85rem", color: t.faint }}>© 2026 Arosh Wijesinghe. Built with passion &amp; AI.</div>
             <div style={{ display: "flex", gap: 20 }}>
               {[{ i: I.gh, h: PROFILE.github }, { i: I.li, h: PROFILE.linkedin }, { i: I.mail, h: `mailto:${PROFILE.email}` }].map((s, j) => (
                 <a key={j} href={s.h} target="_blank" rel="noopener noreferrer" style={{ color: t.faint, transition: "color .3s" }}
